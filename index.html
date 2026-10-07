@@ -58,7 +58,9 @@ p{margin:0}
 .top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
 .top-in{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;text-decoration:none;color:var(--fg)}
-.brand svg{width:20px;height:30px}
+.brand{position:relative;padding-inline-start:44px;align-self:stretch}
+.brand svg.logo{position:absolute;inset-inline-start:0;bottom:-12px;width:34px;height:44px;overflow:hidden}
+.brand svg.logo .flame{transform-box:fill-box;transform-origin:50% 100%}
 .brand small{display:block;font-family:var(--f-body);font-weight:600;font-size:.74rem;color:var(--flame);line-height:1.2;margin-top:4px}
 .top nav{display:flex;gap:18px;font-size:.92rem}
 .top nav a{color:var(--muted);text-decoration:none}
@@ -151,8 +153,8 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 .cap.open .journey{grid-template-rows:1fr}
 .journey>div{overflow:hidden}
 .jsteps{list-style:none;margin:0;padding:12px 8px 4px 0;position:relative}
-.rail{position:absolute;right:29px;top:34px;bottom:34px;width:2px;background:var(--line);border-radius:2px}
-.rail i{position:absolute;inset:0 0 auto 0;height:0;background:linear-gradient(var(--brand),var(--flame));border-radius:2px;transition:height 3.8s cubic-bezier(.4,0,.2,1)}
+.rail{position:absolute;right:28.5px;top:34px;bottom:34px;width:3px;background:var(--line);border-radius:2px}
+.rail i{position:absolute;inset:0 0 auto 0;height:0;background:var(--flame);box-shadow:0 0 8px color-mix(in srgb,var(--flame) 60%,transparent);border-radius:2px;transition:height 3.8s cubic-bezier(.4,0,.2,1)}
 .cap.play .rail i{height:100%}
 .jstep{display:flex;gap:16px;align-items:flex-start;padding:10px 0;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}
 .cap.play .jstep{opacity:1;transform:none}
@@ -165,16 +167,16 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 .jstep:last-child .ic{background:var(--brand);color:var(--on-brand);border-color:var(--brand);box-shadow:0 0 0 6px var(--brand-soft)}
 .jstep b{display:block;font-family:var(--f-display);font-weight:700;font-size:1rem;margin-top:2px}
 .jstep small{display:block;color:var(--muted);font-size:.9rem;line-height:1.6}
-.jfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line);margin-top:10px;padding-top:14px}
+.jfoot{display:flex;justify-content:flex-start;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line);margin-top:10px;padding-top:14px}
 .jfoot a{background:var(--brand);color:var(--on-brand);text-decoration:none;border-radius:12px;padding:9px 16px;font-weight:600;font-size:.95rem}
 .replay{background:none;border:0;color:var(--muted);font:500 .88rem var(--f-body);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 @media (prefers-reduced-motion:reduce){.journey,.jstep,.rail i,.jbtn svg{transition:none!important}}
 
-.hero{overflow:hidden}
-.hero>*:not(.bigcandle){position:relative;z-index:1}
-.bigcandle{position:absolute;left:-10px;bottom:-250px;width:170px;height:auto;color:color-mix(in srgb,var(--fg) 12%,transparent);pointer-events:none}
+#services{position:relative;overflow:hidden}
+#services>*:not(.bigcandle){position:relative;z-index:1}
+.bigcandle{position:absolute;left:0;top:40px;width:110px;height:auto;color:color-mix(in srgb,var(--fg) 12%,transparent);pointer-events:none;-webkit-mask-image:linear-gradient(#000 45%,transparent 80%);mask-image:linear-gradient(#000 45%,transparent 80%)}
 .bigcandle path.flame{fill:var(--flame);opacity:.9;transform-box:fill-box;transform-origin:50% 100%}
-@media (min-width:720px){.bigcandle{width:230px;left:4%;bottom:-300px}}
+@media (min-width:720px){.bigcandle{width:150px;left:3%}}
 .cap .top-row{flex-direction:row}
 .badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand-soft),color-mix(in srgb,var(--flame) 14%,transparent))}
 .cap .badge svg{width:26px;height:26px;stroke:var(--brand)}
@@ -183,6 +185,14 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 .cap .jstep:nth-child(4) .ic{color:color-mix(in srgb,var(--brand) 35%,var(--flame))}
 .cap .jstep:last-child .ic{background:linear-gradient(135deg,var(--brand),var(--flame));border:0;color:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--flame) 16%,transparent)}
 .btn,.jbtn,.q,.replay,.jfoot a,.cap h3,.group,.brand{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+
+.rail{display:none!important}
+.jstep{position:relative}
+.jstep:not(:last-child)::after{content:"";position:absolute;right:20.5px;top:56px;bottom:-8px;width:3px;border-radius:3px;background:var(--flame);box-shadow:0 0 8px color-mix(in srgb,var(--flame) 55%,transparent);transform:scaleY(0);transform-origin:top;transition:transform .6s ease}
+.cap.play .jstep::after{transform:scaleY(1)}
+.cap.play .jstep:nth-child(2)::after{transition-delay:.7s}
+.cap.play .jstep:nth-child(3)::after{transition-delay:1.7s}
+.cap.play .jstep:nth-child(4)::after{transition-delay:2.7s}
 </style>
 </head>
 <body>
@@ -190,7 +200,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 <header class="top">
   <div class="top-in">
     <a class="brand" href="#top">
-      <svg viewBox="0 0 40 60" aria-hidden="true"><path class="flame" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="var(--flame)"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2"/><rect x="12" y="28" width="16" height="29" rx="2.5" fill="none" stroke="var(--fg)" stroke-width="2"/></svg>
+      <svg class="logo" viewBox="0 0 40 52" aria-hidden="true"><path class="flame" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="var(--flame)"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="var(--fg)" stroke-width="2"/></svg>
       <span>علي الجنابي<small>استشارات رقمية</small></span>
     </a>
     <nav aria-label="أقسام الموقع">
@@ -202,7 +212,6 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 
 <main class="wrap" id="top">
   <section class="hero">
-    <svg class="bigcandle" viewBox="0 0 160 360" aria-hidden="true"><defs><radialGradient id="glow" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="var(--flame)" stop-opacity=".55"/><stop offset="1" stop-color="var(--flame)" stop-opacity="0"/></radialGradient></defs><circle cx="80" cy="62" r="62" fill="url(#glow)"/><path class="flame" d="M80 14C98 40 96 58 80 70C64 58 62 40 80 14Z" fill="var(--flame)"/><line x1="80" y1="70" x2="80" y2="84" stroke="currentColor" stroke-width="4"/><rect x="44" y="84" width="72" height="300" rx="10" fill="none" stroke="currentColor" stroke-width="5"/></svg>
     <span class="label rise d1">بغداد · نشتغل أونلاين لأي مكان</span>
     <h1 class="rise d2">فكرتك تصير <span class="rot" id="rot">مشروع</span><br>على أرض الواقع</h1>
     <p class="sub rise d3">شغل رقمي احترافي، بخطوات واضحة وبلا تعقيد.</p>
@@ -214,6 +223,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
   </section>
 
   <section class="sec" id="services">
+    <svg class="bigcandle" viewBox="0 0 160 360" aria-hidden="true"><defs><radialGradient id="glow" cx="50%" cy="60%" r="50%"><stop offset="0" stop-color="var(--flame)" stop-opacity=".55"/><stop offset="1" stop-color="var(--flame)" stop-opacity="0"/></radialGradient></defs><circle cx="80" cy="62" r="62" fill="url(#glow)"/><path class="flame" d="M80 14C98 40 96 58 80 70C64 58 62 40 80 14Z" fill="var(--flame)"/><line x1="80" y1="70" x2="80" y2="84" stroke="currentColor" stroke-width="4"/><rect x="44" y="84" width="72" height="300" rx="10" fill="none" stroke="currentColor" stroke-width="5"/></svg>
     <div class="sec-head reveal">
       <span class="label">الخدمات</span>
       <h2>شنو نكدر نسويلك؟</h2>
@@ -233,7 +243,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><div><b>تجربه من موبايلك</b><small>قبل ما ينزل، وتعدّل اللي تريده.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ينزل باسمك</b><small>رابط شغال ومفحوص، تحطه ببايو صفحتك.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ موقعك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ موقعك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
@@ -248,7 +258,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></span><div><b>كل تسجيل يوصلك مرتب</b><small>بجدول واحد، بلا ورق ولا ضياع.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>أرقامك جاهزة</b><small>كم واحد سجل، منو، ومتى، بنظرة وحدة.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ نظامك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ نظامك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
@@ -263,7 +273,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg></span><div><b>نصممها بهويتك</b><small>ألوانك وشعارك، وخط ينقرا من بعيد.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>تستلمها جاهزة</b><small>ملف تعدّل عليه، ونسخة تنعرض من الموبايل.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ عرضك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ عرضك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
@@ -278,7 +288,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نطبقها على كل شي</b><small>بطاقة، منيو، بروشور، أو ملزمة.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ملفات جاهزة للمطبعة</b><small>بدقة عالية، ونسخة للسوشيال.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ هويتك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ هويتك</a></div>
         </div></div>
       </article>
 
@@ -295,7 +305,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><div><b>نكتب ونمنتج</b><small>سيناريو، صوت، صورة، وموسيقى.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>تنزل بانتظام</b><small>بهوية ثابتة يتذكرها المتابع.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ قناتك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ قناتك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
@@ -310,7 +320,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><div><b>نسوي المشاهد والصوت</b><small>بلا كاميرا ولا ممثلين.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ريل جاهز للنشر</b><small>بمقاس إنستغرام وتيك توك.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ إعلانك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ إعلانك</a></div>
         </div></div>
       </article>
       <article class="cap wide reveal">
@@ -325,7 +335,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b>نجهز محتوى كل أسبوع</b><small>منشورات وريلز ونصوص الإعلان الممول.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>نقيس ونحسّن</b><small>نشوف شنو نجح ونزيده.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ حملتك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ حملتك</a></div>
         </div></div>
       </article>
 
@@ -342,7 +352,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L4 20h16L14 9V3"/></svg></span><div><b>نجربها بأقل كلفة</b><small>قبل ما تصرف فلوس هواية.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>خطة تمشي عليها</b><small>شنو تسوي هالأسبوع، والشهر الجاي.</small></div></li>
           </ol>
-          <div class="jfoot"><button class="replay" type="button">↻ عيد الحركة</button><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">احچيلي فكرتك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">احچيلي فكرتك</a></div>
         </div></div>
       </article>
     </div>
@@ -430,10 +440,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
     t.addEventListener('click',function(){
       var open=!c.classList.contains('open');
       c.classList.toggle('open',open);t.setAttribute('aria-expanded',open);
-      if(open){fit(c);setTimeout(function(){c.classList.add('play')},350)}else{c.classList.remove('play')}
-    });
-    c.querySelector('.replay').addEventListener('click',function(){
-      c.classList.remove('play');void c.offsetWidth;setTimeout(function(){c.classList.add('play')},60);
+      if(open){setTimeout(function(){c.classList.add('play')},350)}else{c.classList.remove('play')}
     });
   });
 })();
