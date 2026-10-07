@@ -41,7 +41,8 @@
   --brand:#7ea2ff; --brand-soft:rgba(126,162,255,.12); --flame:#f0b24c; --on-brand:#0f1420; --band:linear-gradient(135deg,#1a2747 0%,#26408f 100%); --band-fg:#f4f6fb; color-scheme:dark }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{overflow-x:clip}
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.8;margin:0;padding-bottom:env(safe-area-inset-bottom,0px)}
 img{max-width:100%}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:0 40px}
@@ -66,6 +67,8 @@ p{margin:0}
 .top nav a{color:var(--muted);text-decoration:none}
 .top nav a:hover{color:var(--fg)}
 @media (max-width:680px){.top nav{display:none}}
+.brand,.brand small{white-space:nowrap}
+@media (max-width:400px){.top-in{padding-inline:14px;gap:8px}.acts{gap:6px!important}.top .btn.sm{padding:7px 10px;font-size:.8rem}.top .theme{width:36px;height:36px}.brand{padding-inline-start:38px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:600;font-size:.98rem;text-decoration:none;font-family:var(--f-body);cursor:pointer;border:1px solid transparent;white-space:nowrap;transition:transform .2s,box-shadow .2s}
 .btn.main{background:var(--brand);color:var(--on-brand)}
 .btn.main:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--brand-soft)}
@@ -73,7 +76,8 @@ p{margin:0}
 .btn.sm{padding:8px 14px;font-size:.88rem}
 
 .hero{padding-block:76px 60px;display:grid;gap:24px;position:relative}
-.hero h1{font-size:clamp(2.3rem,7.6vw,4.8rem);font-weight:800;line-height:1.18}
+.hero h1{font-size:clamp(1.8rem,8vw,4.8rem);font-weight:800;line-height:1.18}
+.hero h1 .l1{white-space:nowrap}
 .rot{color:var(--brand);display:inline-block;min-width:4ch}
 .rot.swap{animation:swap .55s ease}
 @keyframes swap{0%{opacity:0;transform:translateY(.35em)}100%{opacity:1;transform:none}}
@@ -176,6 +180,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 #services>*:not(.bigcandle){position:relative;z-index:1}
 .bigcandle{position:absolute;left:0;top:40px;width:110px;height:auto;color:color-mix(in srgb,var(--fg) 12%,transparent);pointer-events:none;-webkit-mask-image:linear-gradient(#000 45%,transparent 80%);mask-image:linear-gradient(#000 45%,transparent 80%)}
 .bigcandle path.flame{fill:var(--flame);opacity:.9;transform-box:fill-box;transform-origin:50% 100%}
+@media (max-width:719px){.bigcandle{width:78px;left:-14px;top:30px}}
 @media (min-width:720px){.bigcandle{width:150px;left:3%}}
 .cap .top-row{flex-direction:row}
 .badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand-soft),color-mix(in srgb,var(--flame) 14%,transparent))}
@@ -244,7 +249,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 <main class="wrap" id="top">
   <section class="hero">
     <span class="label rise d1">بغداد · نشتغل أونلاين لأي مكان</span>
-    <h1 class="rise d2">فكرتك تصير <span class="rot" id="rot">مشروع</span><br>على أرض الواقع</h1>
+    <h1 class="rise d2"><span class="l1">فكرتك تصير <span class="rot" id="rot">مشروع</span></span><br>على أرض الواقع</h1>
     <p class="sub rise d3">نرتب فكرتك، ونسلمك شغل جاهز وواضح.</p>
     <div class="ctas rise d4">
       <a class="btn main" href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">احچيلي فكرتك</a>
