@@ -6,11 +6,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>علي الجنابي · استشارات رقمية</title>
-<meta name="description" content="مواقع للأعمال، أنظمة واستمارات، عروض تقديمية، محتوى وإعلانات بالذكاء الاصطناعي. فكرتك تصير مشروع على أرض الواقع.">
+<meta name="description" content="مواقع وأنظمة، هوية، عروض تقديمية، ومحتوى وإعلانات بالذكاء الاصطناعي. ونعلّم شباب العراق الذكاء الاصطناعي مجاناً.">
 <meta property="og:title" content="علي الجنابي · استشارات رقمية">
 <meta property="og:description" content="فكرتك تصير مشروع على أرض الواقع. احچيلي فكرتك بالواتساب.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://janabiai.com/">
+<link rel="alternate" hreflang="ar" href="https://janabiai.com/">
+<link rel="alternate" hreflang="en" href="https://janabiai.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://janabiai.com/">
 <meta property="og:image" content="https://janabiai.com/preview.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,7 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<script>try{var L=localStorage.getItem("lang");if(!L){var n=(navigator.languages&&navigator.languages[0])||navigator.language||"ar";if(!/^ar/i.test(n))location.replace("/en/")}else if(L==="en")location.replace("/en/")}catch(e){}</script>
+
 <style>
+html{direction:rtl}
 :root{
   --bg:#f7f6f2; --surface:#ffffff; --tint:#eef1f5; --line:#e1e3e8; --fg:#13213a; --muted:#5d6779;
   --brand:#1f4fd1; --brand-soft:rgba(31,79,209,.08); --flame:#e3a13a; --on-brand:#ffffff;
@@ -225,10 +231,51 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 .cap.play .jstep:nth-child(4) b{animation-delay:2.3s}
 .cap.play .jstep:nth-child(5) b{animation-delay:3.3s}
 @media (prefers-reduced-motion:reduce){.press{animation:none}.cap.play .jstep .ic{animation-duration:.01s;animation-delay:0s!important}}
+.lang{font:700 .8rem var(--f-display);letter-spacing:.04em}
+.paths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:680px}
+.pathcard{display:grid;gap:2px;padding:16px 18px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--fg);transition:transform .2s,border-color .2s;min-width:0}
+.pathcard:hover{transform:translateY(-2px);border-color:var(--brand)}
+.pathcard b{font-family:var(--f-display);font-size:1.15rem}
+.pathcard span{color:var(--brand);font-weight:600;font-size:.93rem}
+.pathcard.young{background:color-mix(in srgb,var(--flame) 10%,var(--surface));border-color:color-mix(in srgb,var(--flame) 40%,var(--line))}
+.pathcard.young span{color:color-mix(in srgb,var(--flame) 70%,var(--fg))}
+.pathcard.young:hover{border-color:var(--flame)}
+@media (max-width:520px){.paths{grid-template-columns:1fr}}
+.bridge-line{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:1.02rem;color:color-mix(in srgb,var(--flame) 75%,var(--fg))}
+/* youth line in hero */
+.youth-line{display:inline-flex;align-items:center;gap:10px;justify-self:start;max-width:100%;padding:8px 14px;border-radius:999px;background:color-mix(in srgb,var(--flame) 12%,transparent);color:var(--fg);text-decoration:none;font-weight:600;font-size:.95rem;line-height:1.6}
+.youth-line:hover{background:color-mix(in srgb,var(--flame) 22%,transparent)}
+.spark{flex:none;width:8px;height:8px;border-radius:50%;background:var(--flame);box-shadow:0 0 10px var(--flame)}
+/* youth section */
+.youth{background:var(--band);color:var(--band-fg);border-radius:24px;padding:clamp(24px,5vw,48px);display:grid;gap:26px;position:relative;overflow:hidden}
+.youth .label{color:var(--flame)}
+.youth .rot{color:var(--flame)}
+.btn.young-btn{background:color-mix(in srgb,var(--flame) 12%,var(--surface));border-color:color-mix(in srgb,var(--flame) 50%,var(--line));color:var(--fg);white-space:normal;text-align:start}
+.btn.young-btn:hover{border-color:var(--flame);transform:translateY(-2px)}
+.youth .sec-head p{color:color-mix(in srgb,var(--band-fg) 78%,transparent)}
+.path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:p}
+.path li{counter-increment:p;display:grid;gap:2px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);position:relative}
+.path li::before{content:counter(p);font-family:var(--f-display);font-weight:800;color:var(--flame);font-size:.95rem}
+.path li:last-child{background:color-mix(in srgb,var(--flame) 22%,transparent);border-color:color-mix(in srgb,var(--flame) 55%,transparent)}
+.path b{font-family:var(--f-display);font-size:1.1rem}
+.path span{font-size:.88rem;opacity:.8}
+.ycards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ycard{background:var(--surface);color:var(--fg);border-radius:18px;padding:20px;display:grid;gap:8px;align-content:start;min-width:0}
+.ycard h3{font-size:1.2rem;font-weight:700}
+.ycard p{color:var(--muted);font-size:.93rem}
+.soon{justify-self:start;font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--tint);color:var(--muted)}
+.soon.free{background:color-mix(in srgb,var(--flame) 18%,transparent);color:var(--fg)}
+.ybtn{justify-self:start;margin-top:4px;background:var(--brand-soft);color:var(--brand);text-decoration:none;border-radius:12px;padding:9px 14px;font-weight:600;font-size:.92rem}
+.partner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-top:20px;border-top:1px dashed rgba(255,255,255,.25)}
+.partner b{font-family:var(--f-display);font-size:1.15rem}
+.partner p{opacity:.8;font-size:.95rem}
+.partner .btn.main{background:var(--flame);color:#1a1205}
+@media (max-width:760px){.path,.ycards{grid-template-columns:1fr}}
+a.lang{text-decoration:none}
 </style>
 <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
-</head>
-<body>
+
+
 
 <header class="top">
   <div class="top-in">
@@ -237,9 +284,10 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
       <span>علي الجنابي<small>استشارات رقمية</small></span>
     </a>
     <nav aria-label="أقسام الموقع">
-      <a href="#services">الخدمات</a><a href="#process">طريقة الشغل</a><a href="#assistant">المساعد</a><a href="#contact">تواصل</a>
+      <a href="#services">الخدمات</a><a href="#process">طريقة الشغل</a><a href="#youth">شباب العراق</a><a href="#contact">تواصل</a>
     </nav>
     <div class="acts">
+      <a class="theme lang" id="lang" href="/en/" hreflang="en" lang="en" aria-label="English" title="English" onclick="try{localStorage.setItem('lang','en')}catch(e){}">EN</a>
       <button class="theme" id="theme" type="button" aria-label="الوضع الليلي"></button>
       <a class="btn main sm" href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ مشروعك</a>
     </div>
@@ -248,14 +296,12 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
 
 <main class="wrap" id="top">
   <section class="hero">
-    <span class="label rise d1">بغداد · نشتغل أونلاين لأي مكان</span>
     <h1 class="rise d2"><span class="l1">فكرتك تصير <span class="rot" id="rot">مشروع</span></span><br>على أرض الواقع</h1>
     <p class="sub rise d3">نرتب فكرتك، ونسلمك شغل جاهز وواضح.</p>
     <div class="ctas rise d4">
       <a class="btn main" href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">احچيلي فكرتك</a>
-      <a class="btn line" href="#services">شوف الخدمات</a>
+      <a class="btn young-btn" href="#youth"><span class="spark" aria-hidden="true"></span>مساحة الشباب: ابدأ رحلتك مع الذكاء الاصطناعي ←</a>
     </div>
-    <div class="promises rise d4"><span>تشوف نموذج قبل الدفع الكامل</span><span>التعديلات ضمن الاتفاق</span><span>نفحص حماية كل موقع قبل التسليم</span></div>
   </section>
 
   <section class="sec" id="services">
@@ -269,40 +315,72 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
       <div class="group">لشركتك ومحلك</div>
       <article class="cap reveal">
         <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="5" width="24" height="18" rx="2"/><path d="M3 10h24M8 15h8M8 19h12"/></svg></span><span class="n">01</span></div>
-        <h3>موقع لشغلك</h3>
-        <p>موقع يعرّف بشغلك ويوصل الزبون إلك بضغطة واتساب.</p>
+        <h3>موقع ونظام حجوزات</h3>
+        <p>موقع يعرّف بشغلك، ونظام يسجّل زبائنك ومواعيدك ويوصلك كلشي مرتب.</p>
         <button class="jbtn" type="button" aria-expanded="false" aria-controls="j1">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
         <div class="journey" id="j1"><div>
           <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><div><b>تحچيلي شنو تشتغل</b><small>وشنو تريد الزبون يسوي من يفتح الموقع.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نكتب ونرتب الصفحات</b><small>الخدمات، الصور، العنوان، وزر واتساب.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نرتب الصفحات والتسجيل</b><small>الخدمات، الصور، زر واتساب، ورابط حجز.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><div><b>تجربه من موبايلك</b><small>قبل ما ينزل، وتعدّل اللي تريده.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ينزل باسمك</b><small>رابط شغال ومفحوص، تحطه ببايو صفحتك.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ينزل باسمك</b><small>رابط شغال ومفحوص، وكل حجز يوصلك بجدول واحد.</small></div></li>
           </ol>
           <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ موقعك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="5" y="3" width="20" height="24" rx="2"/><path d="M10 10h10M10 15h10M10 20h6"/></svg></span><span class="n">02</span></div>
-        <h3>نظام تسجيل وحجوزات</h3>
-        <p>بدل الورق: رابط يسجل بيه الناس، وكل شي يوصلك مرتب.</p>
+        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M7 3h12l5 5v19H7z"/><path d="M19 3v5h5M11 14h9M11 18h9M11 22h6"/></svg></span><span class="n">02</span></div>
+        <h3>شعار وهوية ومطبوعات</h3>
+        <p>ألوان وشعار يمشون بكل شغلك، وتصاميم جاهزة للطباعة.</p>
         <button class="jbtn" type="button" aria-expanded="false" aria-controls="j2">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
         <div class="journey" id="j2"><div>
           <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></span><div><b>نحدد شنو تجمع</b><small>أسماء، مواعيد، طلبات، أو آراء.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span><div><b>نسوي رابط وباركود</b><small>الناس تسجل من موبايلها بدقيقة.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></span><div><b>كل تسجيل يوصلك مرتب</b><small>بجدول واحد، بلا ورق ولا ضياع.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>أرقامك جاهزة</b><small>كم واحد سجل، منو، ومتى، بنظرة وحدة.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4a3.5 3.5 0 0 1 0 7M18 14c2.4.6 4 2.8 4 6"/></svg></span><div><b>نفهم شغلك</b><small>منو زبونك، وشنو يميزك عن غيرك.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg></span><div><b>نختار شعارك وألوانك</b><small>هوية وحدة تعرفك بيها الناس.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نطبقها على كل شي</b><small>بطاقة، منيو، بروشور، أو ملزمة.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ملفات جاهزة للمطبعة</b><small>بدقة عالية، ونسخة للسوشيال.</small></div></li>
           </ol>
-          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ نظامك</a></div>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ هويتك</a></div>
+        </div></div>
+      </article>
+      <div class="group">لصفحتك وإعلاناتك</div>
+      <article class="cap reveal">
+        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="8" y="2" width="14" height="26" rx="3"/><path d="M13 12l5 3-5 3z"/></svg></span><span class="n">03</span></div>
+        <h3>إعلان فيديو بلا تصوير</h3>
+        <p>ريل قصير يشد من أول ثانية، بالذكاء الاصطناعي.</p>
+        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j3">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="journey" id="j3"><div>
+          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1"/></svg></span><div><b>تگلي شنو تبيع</b><small>المنتج، السعر، والعرض.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div><b>نكتب أول ثانية</b><small>الجملة اللي توقف الناس عن التمرير.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><div><b>نسوي المشاهد والصوت</b><small>بلا كاميرا ولا ممثلين.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ريل جاهز للنشر</b><small>بمقاس إنستغرام وتيك توك.</small></div></li>
+          </ol>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ إعلانك</a></div>
         </div></div>
       </article>
       <article class="cap reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="5" width="24" height="16" rx="2"/><path d="M15 21v5M10 26h10M8 16l4-4 3 2 5-5"/></svg></span><span class="n">03</span></div>
+        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M4 12v6l15 6V6z"/><path d="M19 10a4 4 0 0 1 0 10M8 18l2 8h4l-2-7"/></svg></span><span class="n">04</span></div>
+        <h3>محتوى وتسويق لصفحتك</h3>
+        <p>خطة شهرية ومحتوى منتظم بهوية ثابتة، بدل النشر العشوائي.</p>
+        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j4">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="journey" id="j4"><div>
+          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4a3.5 3.5 0 0 1 0 7M18 14c2.4.6 4 2.8 4 6"/></svg></span><div><b>نعرف زبونك</b><small>عمره، وين يتواجد، وشنو يشده.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><div><b>خطة لشهر كامل</b><small>هدف واضح، وشنو تنزل كل أسبوع.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b>نكتب ونمنتج</b><small>منشورات، ريلز، ونصوص الإعلان الممول.</small></div></li>
+            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>نقيس ونحسّن</b><small>نشوف شنو نجح ونزيده.</small></div></li>
+          </ol>
+          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ حملتك</a></div>
+        </div></div>
+      </article>
+      <div class="group">لفكرتك ومشروعك</div>
+      <article class="cap reveal">
+        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="5" width="24" height="16" rx="2"/><path d="M15 21v5M10 26h10M8 16l4-4 3 2 5-5"/></svg></span><span class="n">05</span></div>
         <h3>عروض تقديمية</h3>
-        <p>عرض مرتب بهويتك، ينعرض حتى من الموبايل.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j3">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j3"><div>
+        <p>عرض مرتب بهويتك للمستثمرين والشركاء، ينعرض حتى من الموبايل.</p>
+        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j5">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="journey" id="j5"><div>
           <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span><div><b>تحچيلنا فكرتك</b><small>منو جمهورك، وشنو تريدهم يطلعون بيه.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نرتب أفكارك خطوة بخطوة</b><small>بداية تشد، وسط يقنع، ونهاية تنحفظ.</small></div></li>
@@ -313,75 +391,11 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
         </div></div>
       </article>
       <article class="cap reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M7 3h12l5 5v19H7z"/><path d="M19 3v5h5M11 14h9M11 18h9M11 22h6"/></svg></span><span class="n">04</span></div>
-        <h3>شعار وهوية ومطبوعات</h3>
-        <p>ألوان وشعار يمشون بكل شغلك، وتصاميم جاهزة للطباعة.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j4">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j4"><div>
-          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4a3.5 3.5 0 0 1 0 7M18 14c2.4.6 4 2.8 4 6"/></svg></span><div><b>نفهم شغلك</b><small>منو زبونك، وشنو يميزك عن غيرك.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A1.6 1.6 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1"/><circle cx="12" cy="7" r="1"/><circle cx="16.5" cy="10.5" r="1"/></svg></span><div><b>نختار شعارك وألوانك</b><small>هوية وحدة تعرفك بيها الناس.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span><div><b>نطبقها على كل شي</b><small>بطاقة، منيو، بروشور، أو ملزمة.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ملفات جاهزة للمطبعة</b><small>بدقة عالية، ونسخة للسوشيال.</small></div></li>
-          </ol>
-          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ هويتك</a></div>
-        </div></div>
-      </article>
-
-      <div class="group">لصفحتك وإعلاناتك</div>
-      <article class="cap reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3" y="7" width="17" height="16" rx="2"/><path d="M20 12l7-4v14l-7-4"/></svg></span><span class="n">05</span></div>
-        <h3>إدارة قناتك ومحتواك</h3>
-        <p>نخطط، نكتب، ونمنتج حلقات منتظمة بهوية ثابتة.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j5">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j5"><div>
-          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><div><b>نحدد فكرة القناة</b><small>شنو تقدم، ولمنو.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b>خطة حلقات لشهر</b><small>تعرف شنو تنزل كل أسبوع.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><div><b>نكتب ونمنتج</b><small>سيناريو، صوت، صورة، وموسيقى.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>تنزل بانتظام</b><small>بهوية ثابتة يتذكرها المتابع.</small></div></li>
-          </ol>
-          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ قناتك</a></div>
-        </div></div>
-      </article>
-      <article class="cap reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="8" y="2" width="14" height="26" rx="3"/><path d="M13 12l5 3-5 3z"/></svg></span><span class="n">06</span></div>
-        <h3>إعلان فيديو بلا تصوير</h3>
-        <p>ريل قصير يشد من أول ثانية، بالذكاء الاصطناعي.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j6">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j6"><div>
-          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1"/></svg></span><div><b>تگلي شنو تبيع</b><small>المنتج، السعر، والعرض.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><div><b>نكتب أول ثانية</b><small>الجملة اللي توقف الناس عن التمرير.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><div><b>نسوي المشاهد والصوت</b><small>بلا كاميرا ولا ممثلين.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>ريل جاهز للنشر</b><small>بمقاس إنستغرام وتيك توك.</small></div></li>
-          </ol>
-          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ إعلانك</a></div>
-        </div></div>
-      </article>
-      <article class="cap wide reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M4 12v6l15 6V6z"/><path d="M19 10a4 4 0 0 1 0 10M8 18l2 8h4l-2-7"/></svg></span><span class="n">07</span></div>
-        <h3>خطة تسويق وسوشيال ميديا</h3>
-        <p>خطة نشر واضحة بدل النشر العشوائي.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j7">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j7"><div>
-          <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-6 7-6s7 2.5 7 6M16 4a3.5 3.5 0 0 1 0 7M18 14c2.4.6 4 2.8 4 6"/></svg></span><div><b>نعرف زبونك</b><small>عمره، وين يتواجد، وشنو يشده.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></span><div><b>نحدد هدف الشهر</b><small>مبيعات، متابعين، لو زيارات للمحل.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><div><b>نجهز محتوى كل أسبوع</b><small>منشورات وريلز ونصوص الإعلان الممول.</small></div></li>
-            <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>نقيس ونحسّن</b><small>نشوف شنو نجح ونزيده.</small></div></li>
-          </ol>
-          <div class="jfoot"><a href="https://wa.me/9647715110011" target="_blank" rel="noopener noreferrer">ابدأ حملتك</a></div>
-        </div></div>
-      </article>
-
-      <div class="group">وإذا بعدك بالفكرة</div>
-      <article class="cap wide reveal">
-        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3a8 8 0 0 0-4.5 14.6V21h9v-3.4A8 8 0 0 0 15 3z"/><path d="M11.5 25h7M12.5 28h5"/></svg></span><span class="n">08</span></div>
+        <div class="top-row"><span class="badge"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M15 3a8 8 0 0 0-4.5 14.6V21h9v-3.4A8 8 0 0 0 15 3z"/><path d="M11.5 25h7M12.5 28h5"/></svg></span><span class="n">06</span></div>
         <h3>من فكرة لمشروع</h3>
         <p>عندك فكرة وما تعرف منين تبدي؟ نحولها لخطة تنفذها.</p>
-        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j8">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
-        <div class="journey" id="j8"><div>
+        <button class="jbtn" type="button" aria-expanded="false" aria-controls="j6">شوف شلون نشتغلها <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="journey" id="j6"><div>
           <ol class="jsteps"><span class="rail" aria-hidden="true"><i></i></span>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span><div><b>تحچيلي فكرتك</b><small>حتى لو بسطرين.</small></div></li>
             <li class="jstep"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8"/></svg></span><div><b>نحسبها صح</b><small>الكلفة، الربح، وأسوأ احتمال.</small></div></li>
@@ -407,6 +421,47 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
     </ol>
   </section>
 
+  <section class="sec" id="youth">
+    <div class="youth reveal">
+      <div class="sec-head">
+        <span class="label">شباب العراق</span>
+        <h2>تعلّم الذكاء الاصطناعي،<br>و<span class="rot" id="rot2">طوّر مهاراتك</span></h2>
+        <p>مجاناً وبلا شهادات. تسلّح بأدوات المستقبل من موبايلك، واللي يثبت نفسه يشتغل ويانا بمشاريعنا.</p>
+      </div>
+      <ol class="path" aria-label="شلون تمشي الرحلة">
+        <li><b>تتعلم</b><span>دروس قصيرة بلهجتنا</span></li>
+        <li><b>تطبّق</b><span>تطلع بشغل بإيدك</span></li>
+        <li><b>تشتغل ويانا</b><span>المتميّز ينضم لفريقنا</span></li>
+      </ol>
+      <div class="ycards">
+        <article class="ycard">
+          <span class="soon">قريباً</span>
+          <h3>دروس مجانية</h3>
+          <p>شلون تحچي ويا الذكاء الاصطناعي، سيرتك الذاتية بـ10 دقايق، وشاب يسوي مشروع بيئي.</p>
+          <a class="ybtn" href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%AE%D8%A8%D9%91%D8%B1%D9%86%D9%8A%20%D8%A3%D9%88%D9%84%20%D9%85%D8%A7%20%D8%AA%D9%86%D8%B2%D9%84%20%D8%A7%D9%84%D8%AF%D8%B1%D9%88%D8%B3%20%D8%A7%D9%84%D9%85%D8%AC%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" rel="noopener noreferrer">خبّرني أول ما تنزل</a>
+        </article>
+        <article class="ycard">
+          <span class="soon free">مجاني هسه</span>
+          <h3>قيّم فكرتك</h3>
+          <p>عندك فكرة مشروع؟ جاوب على أسئلة قصيرة، ونرد عليك برأي واضح: شنو قوتها وشنو ينقصها.</p>
+          <a class="ybtn" href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%81%D9%83%D8%B1%D8%A9%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D9%82%D9%8A%D9%91%D9%85%D9%87%D8%A7" target="_blank" rel="noopener noreferrer">قيّم فكرتي</a>
+        </article>
+        <article class="ycard">
+          <span class="soon">قريباً</span>
+          <h3>المبادرة الخضراء</h3>
+          <p>شباب يستخدمون الذكاء الاصطناعي لأفكار تخدم البيئة. كل شاب نسويه قائد، وكل قائد ينتج قادة.</p>
+        </article>
+      </div>
+      <div class="partner">
+        <div>
+          <b>جهة داعمة، شريك، أو صانع محتوى؟</b>
+          <p>ترعى ورشة، توفّر أدوات، تفتح فرصة تدريب، أو تشارك قصتنا بصفحتك.</p>
+        </div>
+        <a class="btn main" href="https://wa.me/9647715110011?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D8%B9%D8%B1%D9%81%20%D8%A3%D9%83%D8%AB%D8%B1%20%D8%B9%D9%86%20%D8%AF%D8%B9%D9%85%20%D8%B4%D8%A8%D8%A7%D8%A8%20Janabi%20AI" target="_blank" rel="noopener noreferrer">تواصل ويانا</a>
+      </div>
+    </div>
+  </section>
+
   <section class="sec" id="assistant">
     <div class="sec-head reveal">
       <span class="label">المساعد</span>
@@ -428,6 +483,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
         <button class="q" type="button" data-a="إي، التعديلات البسيطة بعد التسليم علينا. والإضافات الجديدة نتفق عليها سوا.">تسوون تعديلات بعد التسليم؟</button>
         <button class="q" type="button" data-a="نتفق عليه من البداية: جزء قبل الشغل، والباقي بعد ما تشوف النموذج وتوافق.">شلون الدفع؟</button>
         <button class="q" type="button" data-a="إي، سوينا عروض واستمارات لورش تدريبية، ونكدر نسوي لجهتك نفس الشي.">تشتغلون للدوائر والمنظمات؟</button>
+        <button class="q" type="button" data-a="نعلّم الشباب أدوات الذكاء الاصطناعي مجاناً، واللي يثبت نفسه يشتغل ويانا بمشاريعنا. الدروس تنزل قريباً، دز اسمك بالواتساب حتى نخبرك.">شنو قصة مساحة الشباب؟</button>
         <button class="q" type="button" data-a="دز فكرتك بالواتساب، حتى لو سطرين. نرد عليك ونرتب الخطوة الأولى.">شلون أبدي؟</button>
       </div>
     </div>
@@ -446,7 +502,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
     </div>
   </section>
 
-  <footer><span>© 2026 علي الجنابي · بغداد</span></footer>
+  <footer><span>© 2026 Janabi AI · علي الجنابي · بغداد</span><span><bdi>ali@janabiai.com</bdi> · جزء من شغلنا يروح لتعليم شباب العراق مجاناً</span></footer>
 </main>
 
 <script>
@@ -466,6 +522,8 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
   var words=['مشروع','موقع','إعلان','قناة','نظام','حقيقة'],i=0,el=document.getElementById('rot');
   var still=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(!still){setInterval(function(){i=(i+1)%words.length;el.classList.remove('swap');void el.offsetWidth;el.textContent=words[i];el.classList.add('swap');},2400);}
+  var w2=['طوّر مهاراتك','ابدأ مشروعك','جهّز سيرتك','صمّم إعلانك','ابنِ مستقبلك','اشتغل ويانا'],j=0,el2=document.getElementById('rot2');
+  if(!still&&el2){setInterval(function(){j=(j+1)%w2.length;el2.classList.remove('swap');void el2.offsetWidth;el2.textContent=w2[j];el2.classList.add('swap');},2600);}
   var thread=document.getElementById('thread');
   document.querySelectorAll('.q').forEach(function(b){
     b.addEventListener('click',function(){
@@ -493,5 +551,7 @@ footer{border-top:1px solid var(--line);padding-block:24px;display:flex;justify-
   });
 })();
 </script>
-</body>
-</html>
+
+
+
+</body></html>
