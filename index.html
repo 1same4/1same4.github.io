@@ -554,4 +554,25 @@ a.lang{text-decoration:none}
 
 
 
+
+<!-- Siraj AI assistant bubble -->
+<style>
+#siraj-btn{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--flame,#f2b544);color:#111;font:700 15px/1 var(--f-body,Tahoma,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#siraj-btn:focus-visible{outline:3px solid var(--fg,#fff);outline-offset:3px}
+#siraj-panel{position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:9999;width:min(380px,calc(100vw - 32px));height:min(600px,calc(100dvh - 110px));border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.35);background:#0f1115;display:none}
+#siraj-panel.open{display:block}
+#siraj-panel iframe{width:100%;height:100%;border:0}
+#siraj-x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer}
+@media (max-width:520px){#siraj-panel{left:8px;width:calc(100vw - 16px);height:calc(100dvh - 96px)}}
+</style>
+<button id="siraj-btn" type="button" aria-controls="siraj-panel" aria-expanded="false">🕯️ اسأل سراج</button>
+<div id="siraj-panel" role="dialog" aria-label="Siraj">
+<button id="siraj-x" type="button" aria-label="إغلاق">×</button>
+</div>
+<script>
+(function(){var b=document.getElementById('siraj-btn'),p=document.getElementById('siraj-panel'),x=document.getElementById('siraj-x'),f=null;
+function t(o){if(o&&!f){f=document.createElement('iframe');f.src='https://janabi-agent.1same42002.workers.dev/';f.title='Siraj';f.allow='microphone';p.appendChild(f)}
+p.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}
+b.onclick=function(){t(!p.classList.contains('open'))};x.onclick=function(){t(false)};})();
+</script>
 </body></html>
