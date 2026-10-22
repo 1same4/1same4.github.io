@@ -137,9 +137,9 @@ function say(html,cls,done){var b=el('div','b s'+(cls?' '+cls:''));log.appendChi
   (function step(){i+=2;b.textContent=plain.slice(0,i);if(i<plain.length)setTimeout(step,20);else{b.classList.remove('car');b.innerHTML=html;think(false);down();done&&done()}})()}
 function me(t,hist){log.appendChild(el('div','b u',esc(t)));if(hist!==false)history.push({role:'user',text:t});down()}
 function clearOpts(){document.querySelectorAll('.opts,.chips').forEach(function(x){x.remove()})}
-var O={biz:['🏢','عندي شغل قائم','أريد أطوره وأزيد زبائني'],
-       idea:['💡','عندي فكرة مشروع','أريد أبديها صح من الصفر'],
-       learn:['🌱','أريد أتعلم','مساحة الشباب والمبادرة']};
+var O={biz:['🏢','مشروع شغّال عندي','أريد أكبّره وأزيد زبائني'],
+       idea:['💡','عندي فكرة','أريد أبديها صح من أول خطوة'],
+       learn:['🌱','أريد أتعلم','دروس ببلاش ومبادرة الشباب']};
 function options(){var w=el('div','opts');Object.keys(O).forEach(function(k,i){var o=O[k];
   var bt=el('button','op','<span class="e">'+o[0]+'</span><span><b>'+o[1]+'</b><small>'+o[2]+'</small></span><span class="ar">‹</span>');
   bt.type='button';bt.style.animationDelay=(i*.12)+'s';bt.onclick=function(){pick(k)};w.appendChild(bt)});log.appendChild(w);down()}
@@ -152,20 +152,20 @@ var ta=document.getElementById('t');
 function invite(q,ph){clearOpts();say(q,null,function(){ta.placeholder=ph;ta.focus({preventScroll:true})})}
 function pick(k){if(busy)return;busy=true;ding();clearOpts();me(O[k][1]+' — '+O[k][2]);
   setTimeout(function(){
-  if(k==='biz')say('ممتاز. شغلك ماشي، وإحنا هنا حتى نخلي الذكاء الاصطناعي يشيل عنك الشغل المتكرر، وإنت تتفرغ للإدارة. شنو اللي ناقصك؟',null,function(){
-    list([['🤖','وكيل ذكي، مثل سراج','يستلم زبائنك ٢٤ ساعة، يجاوبهم، ويرتب طلباتهم وحجوزاتهم.','الأقوى'],
-          ['🌐','موقع وحجوزات','واجهة سريعة باسمك، وكل طلب يوصلك بمكان واحد.'],
-          ['🎬','إعلانات بالذكاء الاصطناعي','ريلز احترافي يخطف العين، بدون تصوير.']]);
-    chips('biz',[chip('🔍 خلي سراج يطلعلك خطة',function(){invite('احچيلي بسطرين: شنو شغلك؟ وشنو أكثر شي يتعبك بيه هسه؟ وأطلعلك خطة.','مثلاً: عندي صالون بالمنصور، والحجوزات تضيع بالواتساب…')},true),
-      wa('💬 احچي ويا علي','هلا علي، عندي شغل وأريد أطوره')]);busy=false});
-  else if(k==='idea')say('خطوتك الأولى تبدي من هنا. نحوّل فكرتك من ورق لشغل حقيقي بالسوق:',null,function(){
-    list([['📊','خطة وعرض تقديمي','عرض مرتب يقنع أي شريك أو داعم.'],
-          ['🚀','انطلاقة رقمية كاملة','الهوية، الموقع، والوكيل الذكي، كلها مرة وحدة.']]);
-    chips('idea',[chip('🔍 احچيلي فكرتك',function(){invite('احچيلي فكرتك بسطرين، ومنو زبونها؟ وأگلك منين تبدي.','مثلاً: أريد أفتح محل قهوة متنقل بالجامعات…')},true),
-      wa('💬 احچي ويا علي','هلا علي، عندي فكرة مشروع وأريد أبديها')]);busy=false});
-  else say('مكانك الصح. هنا تستثمر بنفسك وتبني مهارات المستقبل:',null,function(){
-    list([['🌳','المبادرة الخضراء','شباب يستخدمون الذكاء الاصطناعي لخدمة بيئتنا.'],
-          ['🧠','دروس الذكاء الاصطناعي','من الصفر، بالعراقي، وبأدوات مجانية.','قريباً']]);
+  if(k==='biz')say('حلو. خلي الذكاء الاصطناعي يشيل عنك الشغل اليومي، وإنت ركّز على مشروعك. شنو تحتاج؟',null,function(){
+    list([['🤖','وكيل ذكي مثل سراج','يرد على زبائنك ليل ونهار، ويسجّل طلباتهم.','الأقوى'],
+          ['🌐','موقع باسمك','سريع، وكل طلب يوصلك بمكان واحد.'],
+          ['🎬','إعلانات بالذكاء الاصطناعي','ريلز يوقّف الناس، بلا تصوير.']]);
+    chips('biz',[chip('🔍 سراج يطلعلك خطة',function(){invite('احچيلي بسطرين: شنو مشروعك؟ وشنو أكثر شي يتعبك بيه؟ وأطلعلك خطة.','مثلاً: عندي صالون بالمنصور، والحجوزات تضيع بالواتساب…')},true),
+      wa('💬 احچي ويا علي','هلا علي، عندي مشروع شغّال وأريد أكبّره')]);busy=false});
+  else if(k==='idea')say('حلو، كل مشروع بدا بفكرة. نحوّلها لشغل حقيقي خطوة بخطوة:',null,function(){
+    list([['📊','خطة وعرض تقديمي','مرتب، ويقنع أي شريك أو داعم.'],
+          ['🚀','انطلاقة كاملة','الهوية والموقع والوكيل الذكي، سوا.']]);
+    chips('idea',[chip('🔍 احچيلي فكرتك',function(){invite('احچيلي فكرتك بسطرين، ومنو راح يشتريها؟ وأگلك منين تبدي.','مثلاً: أريد أفتح محل قهوة متنقل بالجامعات…')},true),
+      wa('💬 احچي ويا علي','هلا علي، عندي فكرة وأريد أبديها')]);busy=false});
+  else say('هلا بيك. هنا تتعلم ببلاش وتبني مهارة تنفعك:',null,function(){
+    list([['🧠','دروس الذكاء الاصطناعي','من الصفر، بالعراقي، وبأدوات مجانية.','قريباً'],
+          ['🌳','المبادرة الخضراء','شباب يستخدمون الذكاء الاصطناعي لخدمة بيئتهم.']]);
     chips('learn',[wa('🔔 خبّرني أول ما تنزل الدروس','هلا علي، خبّرني أول ما تنزل الدروس المجانية')]);busy=false});
   },350)}
 function clean(s){return s.split('⟦LEAD⟧')[0].replace(/\*\*|^#+\s*/gm,'')}
@@ -194,7 +194,7 @@ function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,
 ta.addEventListener('input',grow);
 ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();f.requestSubmit()}});
 f.onsubmit=function(e){e.preventDefault();var v=ta.value.trim();if(!v||busy)return;ta.value='';grow();ask(v)};
-setTimeout(function(){say('هلا بيك بـ<em>الجنابي AI</em> 👋\nآني سراج، شلون أضوّيلك الطريق اليوم؟','big',options)},500);
+setTimeout(function(){say('هلا بيك بـ<em>الجنابي AI</em> 👋\nآني سراج. شلون أساعدك اليوم؟','big',options)},500);
 })();
 </script>
 
