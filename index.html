@@ -86,6 +86,7 @@ p{margin:0}
 .hero h1 .l1{white-space:nowrap}
 .rot{color:var(--brand);display:inline-block;min-width:4ch}
 .rot.swap{animation:swap .55s ease}
+#rot{color:var(--flame)}
 @keyframes swap{0%{opacity:0;transform:translateY(.35em)}100%{opacity:1;transform:none}}
 .hero .sub{font-size:clamp(1.05rem,2.2vw,1.25rem);color:var(--muted);max-width:620px}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
@@ -513,7 +514,7 @@ a.lang{text-decoration:none}
   function dark(){var t=root.dataset.theme;return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches}
   function paint(){var d=dark();tb.innerHTML=d?sun:moon;tb.setAttribute('aria-label',d?'الوضع النهاري':'الوضع الليلي')}
   paint();
-  tb.addEventListener('click',function(){var n=dark()?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}paint()});
+  tb.addEventListener('click',function(){var n=dark()?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}paint();try{var fr=document.querySelector('#siraj-panel iframe');fr&&fr.contentWindow.postMessage({theme:n},location.origin)}catch(e){}});
   document.addEventListener('pointerdown',function(e){var b=e.target.closest('.btn,.jbtn,.jfoot a,.q,.theme');if(!b)return;b.classList.remove('press');void b.offsetWidth;b.classList.add('press')});
 })();
 </script>

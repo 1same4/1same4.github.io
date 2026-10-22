@@ -52,9 +52,9 @@ body.chat .hero{display:none}
 .menu button:hover,.menu button:focus-visible,.menu a:hover{background:color-mix(in srgb,var(--flame) 12%,transparent)}
 .menu button span,.menu a span{font-size:1.15rem;width:24px;text-align:center}
 .menu hr{border:0;border-top:1px solid var(--line);margin:4px 8px}
-main{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:16px max(18px,calc((100% - 640px)/2)) 16px}
+main{overflow-anchor:none;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:16px max(18px,calc((100% - 640px)/2)) 16px}
 #log{display:flex;flex-direction:column;gap:12px}
-.b{max-width:88%;padding:12px 16px;border-radius:20px;animation:in .35s ease both;white-space:pre-line}
+.b{max-width:88%;padding:12px 16px;border-radius:20px;animation:fade .3s ease both;white-space:pre-line}
 .s,.list{position:relative;margin-inline-start:36px}
 .s::before,.list::before{content:"";position:absolute;inset-inline-start:-36px;top:0;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 52'%3E%3Cpath d='M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z' fill='%23e3a13a'/%3E%3Cpath d='M20 23v5' stroke='%238a93a6' stroke-width='2.5'/%3E%3Crect x='11' y='28' width='18' height='40' rx='3' fill='none' stroke='%238a93a6' stroke-width='2.5'/%3E%3C/svg%3E") center 4px/16px auto no-repeat;overflow:hidden}
 .s{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-start-start-radius:6px}
@@ -64,6 +64,7 @@ main{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-ove
 .s.big em{font-style:normal;color:var(--flame)}
 .car::after{content:"";display:inline-block;width:2px;height:1em;background:var(--flame);margin-inline-start:3px;vertical-align:-3px;animation:blink .8s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .opts{display:flex;flex-direction:column;gap:10px;margin-top:4px}
 .op{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 70%,transparent);cursor:pointer;animation:in .4s ease both;transition:border-color .25s,transform .25s,background .25s;-webkit-tap-highlight-color:transparent}
@@ -167,6 +168,7 @@ son='<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5
 soff='<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>';
 function dark(){var d=R.dataset.theme;return d?d==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
 var tb=document.getElementById('theme');function ti(){tb.innerHTML=dark()?sun:moon}ti();
+addEventListener('storage',function(e){if(e.key==='theme'){var v=e.newValue;if(v==='dark'||v==='light')R.dataset.theme=v;else delete R.dataset.theme;ti()}});addEventListener('message',function(e){if(e.origin===location.origin&&e.data&&e.data.theme){R.dataset.theme=e.data.theme;ti()}});
 tb.onclick=function(){var n=dark()?'light':'dark';R.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}ti()};
 var on=true;try{on=localStorage.getItem('snd')!=='off'}catch(e){}
 
@@ -175,7 +177,9 @@ o.type='sine';o.frequency.setValueAtTime(740,t);o.frequency.exponentialRampToVal
 g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.035,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.45);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.5)}catch(e){}}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
 function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
-var SC=document.getElementById('sc');function down(){requestAnimationFrame(function(){SC.scrollTop=SC.scrollHeight})}
+var SC=document.getElementById('sc');function down(){SC.scrollTop=SC.scrollHeight;requestAnimationFrame(function(){SC.scrollTop=SC.scrollHeight})}
+(function(){function z(){if(window.scrollY||document.documentElement.scrollTop||document.body.scrollTop){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}}addEventListener('scroll',z,true);if(window.visualViewport)visualViewport.addEventListener('resize',function(){z();down()});if(window.ResizeObserver)new ResizeObserver(function(){down()}).observe(document.getElementById('log'))})();
+var TOUCH=matchMedia('(pointer:coarse)').matches;
 function think(v){BR.classList.toggle('think',v);HL.classList.toggle('think',v)}
 var history=[],busy=false;
 function say(html,cls,done){var b=el('div','b s'+(cls?' '+cls:''));log.appendChild(b);down();think(true);
@@ -197,7 +201,7 @@ function chips(except,extra){var w=el('div','chips');(extra||[]).forEach(functio
   Object.keys(O).forEach(function(k){if(k===except)return;w.appendChild(chip(O[k][0]+' '+O[k][1],function(){pick(k)}))});log.appendChild(w);down()}
 function list(rows){var w=el('div','list');rows.forEach(function(r){w.appendChild(el('div','li','<i>'+r[0]+'</i><div><b>'+r[1]+(r[3]?'<span class="tag">'+r[3]+'</span>':'')+'</b><small>'+r[2]+'</small></div>'))});log.appendChild(w);down()}
 var ta=document.getElementById('t');
-function invite(q,ph){clearOpts();say(q,null,function(){ta.placeholder=ph;ta.focus({preventScroll:true})})}
+function invite(q,ph){clearOpts();say(q,null,function(){ta.placeholder=ph;if(!TOUCH)ta.focus({preventScroll:true})})}
 function pick(k){if(busy)return;busy=true;ding();clearOpts();me(O[k][1]+' — '+O[k][2]);
   setTimeout(function(){
   if(k==='biz')say('حلو. خلي الذكاء الاصطناعي يشيل عنك الشغل اليومي، وإنت ركّز على مشروعك. شنو تحتاج؟',null,function(){
