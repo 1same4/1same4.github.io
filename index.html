@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>علي الجنابي · استشارات رقمية</title>
@@ -76,8 +76,8 @@ p{margin:0}
 .brand,.brand small{white-space:nowrap}
 @media (max-width:400px){.top-in{padding-inline:14px;gap:8px}.acts{gap:6px!important}.top .btn.sm{padding:7px 10px;font-size:.8rem}.top .theme{width:36px;height:36px}.brand{padding-inline-start:38px}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:12px;font-weight:600;font-size:.98rem;text-decoration:none;font-family:var(--f-body);cursor:pointer;border:1px solid transparent;white-space:nowrap;transition:transform .2s,box-shadow .2s}
-.btn.main{background:var(--brand);color:var(--on-brand)}
-.btn.main:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--brand-soft)}
+.btn.main{background:var(--flame);color:#13213a}
+.btn.main:hover{transform:translateY(-2px);box-shadow:0 8px 22px color-mix(in srgb,var(--flame) 40%,transparent)}
 .btn.line{border-color:var(--line);color:var(--fg);background:var(--surface)}
 .btn.sm{padding:8px 14px;font-size:.88rem}
 
@@ -574,7 +574,7 @@ a.lang{text-decoration:none}
 <script>
 (function(){var b=document.getElementById('siraj-btn'),p=document.getElementById('siraj-panel'),x=document.getElementById('siraj-x'),f=null;
 function t(o){if(o&&!f){f=document.createElement('iframe');f.src='/new/?embed=1';f.title='Siraj';f.allow='microphone';p.appendChild(f)}
-p.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}
+p.classList.toggle('open',o);b.setAttribute('aria-expanded',o);document.documentElement.style.overflow=(o&&innerWidth<=520)?'hidden':''}
 b.onclick=function(){t(!p.classList.contains('open'))};x.onclick=function(){t(false)};})();
 </script>
 </body></html>
