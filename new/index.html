@@ -33,14 +33,16 @@ p{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;color:inheri
 .brand.think .fl{animation-duration:.6s;filter:drop-shadow(0 0 6px var(--flame)) brightness(1.15)}
 .hero{display:grid;place-items:center;padding:6px 0 0}
 body.chat .hero{display:none}
-.halo{width:116px;height:116px;border-radius:50%;display:grid;place-items:end center;overflow:hidden;background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--flame) 30%,transparent),transparent 68%),var(--surface);border:1px solid var(--line);box-shadow:0 0 0 10px color-mix(in srgb,var(--flame) 8%,transparent),0 0 60px color-mix(in srgb,var(--flame) 35%,transparent);transition:box-shadow .4s}
-.halo svg{width:48px;height:72px}
+.halo{width:150px;height:150px;animation:breathe 3.6s ease-in-out infinite;border-radius:50%;display:grid;place-items:end center;overflow:hidden;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--flame) 40%,transparent),transparent 45%),var(--surface);border:1px solid var(--line);box-shadow:0 0 0 10px color-mix(in srgb,var(--flame) 8%,transparent),0 0 60px color-mix(in srgb,var(--flame) 35%,transparent);transition:box-shadow .4s}
+.halo svg{width:62px;height:93px}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 10px color-mix(in srgb,var(--flame) 8%,transparent),0 0 50px color-mix(in srgb,var(--flame) 28%,transparent)}50%{box-shadow:0 0 0 16px color-mix(in srgb,var(--flame) 12%,transparent),0 0 90px color-mix(in srgb,var(--flame) 48%,transparent)}}
 .halo.think{box-shadow:0 0 0 12px color-mix(in srgb,var(--flame) 16%,transparent),0 0 90px color-mix(in srgb,var(--flame) 60%,transparent)}
 .halo.think .fl{animation-duration:.6s}
-@keyframes flick{0%,100%{transform:scale(1)}45%{transform:scale(1.07,.95) rotate(-2deg)}75%{transform:scale(.96,1.05) rotate(2deg)}}
+@keyframes flick{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(.96,1.06) rotate(-4deg)}50%{transform:scale(1.05,.95) rotate(1deg)}75%{transform:scale(.97,1.04) rotate(4deg)}}
 .acts{display:flex;align-items:center;gap:8px}
 .ic{min-width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;padding:0 10px;font-weight:700;font-size:.85rem;-webkit-tap-highlight-color:transparent}
 .ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:400px){.top-in{padding-inline:14px}.acts{gap:6px}.ic{min-width:36px;height:36px;padding:0 8px}.brand{padding-inline-start:38px}#mb .t{display:none}}
 #mb{display:flex;gap:6px;padding:0 12px;font-size:.9rem;font-weight:600}
 #mb[aria-expanded="true"]{border-color:var(--flame);color:var(--flame)}
 .menu{position:absolute;inset-inline-end:max(14px,calc((100% - 760px)/2 + 18px));top:calc(100% + 8px);width:min(300px,calc(100% - 28px));background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:6px;box-shadow:0 16px 40px rgba(0,0,0,.16);transform-origin:top left;animation:pop .22s ease both}
@@ -66,7 +68,13 @@ main{max-width:640px;margin:0 auto;padding:24px 18px 130px}
 .opts{display:flex;flex-direction:column;gap:10px;margin-top:4px}
 .op{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;border-radius:18px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 70%,transparent);cursor:pointer;animation:in .4s ease both;transition:border-color .25s,transform .25s,background .25s;-webkit-tap-highlight-color:transparent}
 .op:hover,.op:focus-visible{border-color:var(--flame);transform:translateX(-4px);background:var(--surface)}
-.op .e{font-size:1.4rem;width:44px;height:44px;flex:none;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--flame) 14%,transparent)}
+.op{position:relative;overflow:hidden}
+.op::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,color-mix(in srgb,var(--flame) 22%,transparent) 50%,transparent 70%);transform:translateX(120%);animation:sweep 5s ease-in-out infinite;animation-delay:var(--d,0s);pointer-events:none}
+@keyframes sweep{0%,60%{transform:translateX(120%)}85%,100%{transform:translateX(-120%)}}
+.op .e{animation:glow 2.8s ease-in-out infinite;animation-delay:var(--d,0s);font-size:1.4rem;width:44px;height:44px;flex:none;border-radius:14px;display:grid;place-items:center;background:color-mix(in srgb,var(--flame) 14%,transparent)}
+.op .e i{font-style:normal;display:inline-block;animation:float 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.06)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--flame) 0%,transparent)}50%{box-shadow:0 0 18px 2px color-mix(in srgb,var(--flame) 45%,transparent)}}
 .op b{display:block;font-weight:600}
 .op small{display:block;color:var(--muted);font-size:.86rem;line-height:1.5}
 .op .ar{margin-inline-start:auto;color:var(--muted);font-size:1.1rem}
@@ -115,17 +123,17 @@ main{max-width:640px;margin:0 auto;padding:24px 18px 130px}
 <header class="top">
   <div class="top-in">
     <a class="brand" href="/new/"><svg viewBox="0 0 40 52" aria-hidden="true"><path class="fl" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="var(--fg)" stroke-width="2"/></svg><span>علي الجنابي<small>استشارات رقمية</small></span></a>
-    <button class="ic" id="mb" type="button" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>القائمة</button>
+    <div class="acts">
+    <a class="ic" href="/en/" lang="en" hreflang="en" aria-label="English">EN</a>
+    <button class="ic" id="theme" type="button" aria-label="الإنارة"></button>
+    <button class="ic" id="mb" type="button" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="t">القائمة</span></button>
+    </div>
   </div>
   <nav class="menu" id="menu" hidden aria-label="القائمة">
-    <button type="button" data-k="srv"><span>🧩</span>الخدمات</button>
-    <button type="button" data-k="how"><span>🛠️</span>طريقة الشغل</button>
-    <button type="button" data-k="learn"><span>🌱</span>شباب العراق</button>
-    <button type="button" data-k="call"><span>📞</span>تواصل</button>
-    <hr>
-    <a href="/en/" lang="en" hreflang="en"><span>🌐</span>English</a>
-    <button type="button" id="theme"></button>
-    <button type="button" id="snd"></button>
+    <a href="/#services"><span>🧩</span>الخدمات</a>
+    <a href="/#process"><span>🛠️</span>طريقة الشغل</a>
+    <a href="/#youth"><span>🌱</span>شباب العراق</a>
+    <a href="/#contact"><span>📞</span>تواصل</a>
   </nav>
 </header>
 
@@ -149,11 +157,10 @@ moon='<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 
 son='<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>',
 soff='<svg viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>';
 function dark(){var d=R.dataset.theme;return d?d==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
-var tb=document.getElementById('theme');function ti(){tb.innerHTML=dark()?'<span>☀️</span>الوضع الفاتح':'<span>🌙</span>الوضع الغامق'}ti();
+var tb=document.getElementById('theme');function ti(){tb.innerHTML=dark()?sun:moon}ti();
 tb.onclick=function(){var n=dark()?'light':'dark';R.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}ti()};
 var on=true;try{on=localStorage.getItem('snd')!=='off'}catch(e){}
-var sb=document.getElementById('snd');function si(){sb.innerHTML='<span>'+(on?'🔊':'🔇')+'</span>'+(on?'الصوت شغّال':'الصوت مطفي');sb.setAttribute('aria-pressed',on)}si();
-sb.onclick=function(){on=!on;try{localStorage.setItem('snd',on?'on':'off')}catch(e){}si();ding()};
+
 var ac;function ding(){if(!on)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();
 o.type='sine';o.frequency.setValueAtTime(740,t);o.frequency.exponentialRampToValueAtTime(1110,t+.12);
 g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.035,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.45);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.5)}catch(e){}}
@@ -173,8 +180,8 @@ var O={biz:['🏢','مشروع شغّال عندي','أريد أكبّره وأ�
        idea:['💡','عندي فكرة','أريد أبديها صح من أول خطوة'],
        learn:['🌱','أريد أتعلم','دروس ببلاش ومبادرة الشباب']};
 function options(){var w=el('div','opts');Object.keys(O).forEach(function(k,i){var o=O[k];
-  var bt=el('button','op','<span class="e">'+o[0]+'</span><span><b>'+o[1]+'</b><small>'+o[2]+'</small></span><span class="ar">‹</span>');
-  bt.type='button';bt.style.animationDelay=(i*.12)+'s';bt.onclick=function(){pick(k)};w.appendChild(bt)});log.appendChild(w);down()}
+  var bt=el('button','op','<span class="e"><i>'+o[0]+'</i></span><span><b>'+o[1]+'</b><small>'+o[2]+'</small></span><span class="ar">‹</span>');
+  bt.type='button';bt.style.animationDelay=(i*.12)+'s';bt.style.setProperty('--d',(i*.9)+'s');bt.onclick=function(){pick(k)};w.appendChild(bt)});log.appendChild(w);down()}
 function chip(t,fn,main){var c=el('button','chip'+(main?' main':''),t);c.type='button';c.onclick=fn;return c}
 function wa(t,msg){var a=el('a','chip',t);a.href=WA+'?text='+encodeURIComponent(msg);a.target='_blank';a.rel='noopener noreferrer';return a}
 function chips(except,extra){var w=el('div','chips');(extra||[]).forEach(function(x){w.appendChild(x)});
@@ -256,18 +263,6 @@ function menu(o){MN.hidden=!o;MB.setAttribute('aria-expanded',o)}
 MB.onclick=function(e){e.stopPropagation();ding();menu(MN.hidden)};
 document.addEventListener('click',function(e){if(!MN.hidden&&!MN.contains(e.target))menu(false)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')menu(false)});
-MN.querySelectorAll('[data-k]').forEach(function(b){b.onclick=function(){menu(false);if(busy)return;var k=b.dataset.k;
-  if(k==='srv')pick('biz');
-  else if(k==='learn')pick('learn');
-  else{busy=true;clearOpts();me(b.textContent.trim(),true);
-    setTimeout(function(){
-    if(k==='how')say('الشغل ويانا بسيط وواضح:',null,function(){
-      list([['💬','تحچيلي شنو تحتاج','وأني أفهم شغلك قبل أي شي.'],
-            ['🧪','نموذج أولي ببلاش','تشوفه وتجربه قبل ما تدفع.'],
-            ['🤝','50% تبدي و50% عند التسليم','وتعديلات لحد ما ترضى.']]);
-      chips(null);busy=false});
-    else say('تگدر تكتبلي هنا رقمك وعلي يحاچيك قريب، أو تحاچيه مباشرة على الواتساب: 07715110011',null,function(){chips(null);busy=false;ta.focus({preventScroll:true})});
-    },300)}}});
 var f=document.getElementById('f');
 function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,140)+'px'}
 ta.addEventListener('input',grow);
