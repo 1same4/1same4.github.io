@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src https://janabi-agent.1same42002.workers.dev; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src blob:; connect-src https://janabi-agent.1same42002.workers.dev; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
 <title>الجنابي AI · اسأل سراج</title>
 <meta name="theme-color" content="#1f4fd1">
@@ -30,7 +30,13 @@ p{margin:0}a{color:inherit;text-decoration:none}button{font:inherit;color:inheri
 .ic{min-width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;padding:0 10px;font-weight:700;font-size:.85rem;-webkit-tap-highlight-color:transparent}
 .ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 main{max-width:640px;margin:0 auto;padding:18px 18px 130px}
-.who{display:flex;flex-direction:column;align-items:center;gap:8px;margin:18px 0 28px;text-align:center}
+.who{display:flex;flex-direction:column;align-items:center;gap:8px;margin:18px 0 28px;text-align:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:4;padding:6px 0;background:linear-gradient(var(--bg) 80%,transparent)}
+.wt{display:flex;flex-direction:column;align-items:center;gap:2px}
+.who.mini{flex-direction:row;justify-content:center;gap:12px;margin:0 0 14px}
+.who.mini .wt{align-items:flex-start}
+.who.mini .av{width:46px;height:46px;box-shadow:0 0 0 4px color-mix(in srgb,var(--flame) 10%,transparent),0 0 22px color-mix(in srgb,var(--flame) 30%,transparent)}
+.who.mini .av svg{width:18px;height:28px}
+.who.mini b{font-size:1rem}
 .av{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);box-shadow:0 0 0 8px color-mix(in srgb,var(--flame) 10%,transparent),0 0 40px color-mix(in srgb,var(--flame) 30%,transparent)}
 .av svg{width:30px;height:46px;overflow:visible}
 .av .fl{fill:var(--flame);transform-box:fill-box;transform-origin:50% 100%;animation:flick 2.4s ease-in-out infinite}
@@ -70,6 +76,14 @@ main{max-width:640px;margin:0 auto;padding:18px 18px 130px}
 .field:focus-within{border-color:var(--flame);box-shadow:0 0 0 4px color-mix(in srgb,var(--flame) 18%,transparent),0 10px 30px rgba(0,0,0,.12)}
 .field textarea{flex:1;border:0;outline:0;background:transparent;color:var(--fg);font:inherit;font-size:16px;line-height:1.6;resize:none;padding:8px 0;max-height:140px}
 .field textarea::placeholder{color:var(--muted)}
+#mic{width:42px;height:42px;flex:none;border-radius:50%;border:1px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--fg);padding:0}
+#mic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#mic.rec{background:#d64545;border-color:#d64545;color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(214,69,69,.2)}}
+.vn{display:flex;align-items:center;gap:10px;min-width:180px}
+.vn button{width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.22);color:inherit;cursor:pointer;display:grid;place-items:center;font-size:13px;padding:0;flex:none}
+.vn .wf{flex:1;height:20px;opacity:.75;background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px)}
+.vn small{font-size:.78rem;opacity:.85}
 #go{width:42px;height:42px;flex:none;border-radius:50%;border:0;background:var(--flame);display:grid;place-items:center;cursor:pointer}
 #go svg{width:18px;height:18px;fill:none;stroke:#13213a;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transform:scaleX(-1)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -77,7 +91,7 @@ main{max-width:640px;margin:0 auto;padding:18px 18px 130px}
 .dots i{width:7px;height:7px;border-radius:50%;background:var(--flame);animation:bob 1s infinite ease-in-out}
 .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
 @keyframes bob{0%,100%{opacity:.3;transform:none}50%{opacity:1;transform:translateY(-4px)}}
-.av{transition:box-shadow .4s}
+.av{transition:box-shadow .4s,width .4s,height .4s}
 .av.think{box-shadow:0 0 0 10px color-mix(in srgb,var(--flame) 18%,transparent),0 0 70px color-mix(in srgb,var(--flame) 55%,transparent)}
 .av.think .fl{animation-duration:.7s;filter:brightness(1.2)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -96,20 +110,19 @@ main{max-width:640px;margin:0 auto;padding:18px 18px 130px}
 <main>
   <div class="who">
     <div class="av"><svg viewBox="0 0 40 60" aria-hidden="true"><path class="fl" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2.5"/><rect x="11" y="28" width="18" height="29" rx="3" fill="none" stroke="var(--fg)" stroke-width="2.5"/></svg></div>
-    <b>سراج</b>
-    <span class="on">مساعد الجنابي الذكي · متصل هسه</span>
+    <div class="wt"><b>سراج</b><span class="on">مساعد الجنابي الذكي · متصل هسه</span></div>
   </div>
   <div id="log" aria-live="polite"></div>
 </main>
 
 <form class="bar" id="f" autocomplete="off">
   <label class="sr" for="t">اكتب لسراج</label>
-  <div class="field"><textarea id="t" rows="1" maxlength="2000" placeholder="اكتب لسراج سؤالك أو فكرتك…"></textarea><button id="go" type="submit" aria-label="إرسال"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
+  <div class="field"><textarea id="t" rows="1" maxlength="2000" placeholder="اكتب لسراج سؤالك أو فكرتك…"></textarea><button id="mic" type="button" aria-label="بصمة صوتية"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button id="go" type="submit" aria-label="إرسال"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button></div>
 </form>
 
 <script>
 (function(){
-var R=document.documentElement,log=document.getElementById('log'),av=document.querySelector('.av');
+var R=document.documentElement,log=document.getElementById('log'),av=document.querySelector('.av'),W=document.querySelector('.who');
 var still=matchMedia('(prefers-reduced-motion:reduce)').matches;
 var API='https://janabi-agent.1same42002.workers.dev',WA='https://wa.me/9647715110011';
 var sun='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
@@ -135,7 +148,7 @@ function say(html,cls,done){var b=el('div','b s'+(cls?' '+cls:''));log.appendChi
   if(still){b.innerHTML=html;think(false);done&&done();return}
   var i=0;b.classList.add('car');
   (function step(){i+=2;b.textContent=plain.slice(0,i);if(i<plain.length)setTimeout(step,20);else{b.classList.remove('car');b.innerHTML=html;think(false);down();done&&done()}})()}
-function me(t,hist){log.appendChild(el('div','b u',esc(t)));if(hist!==false)history.push({role:'user',text:t});down()}
+function me(t,hist){W.classList.add('mini');log.appendChild(el('div','b u',esc(t)));if(hist!==false)history.push({role:'user',text:t});down()}
 function clearOpts(){document.querySelectorAll('.opts,.chips').forEach(function(x){x.remove()})}
 var O={biz:['🏢','مشروع شغّال عندي','أريد أكبّره وأزيد زبائني'],
        idea:['💡','عندي فكرة','أريد أبديها صح من أول خطوة'],
@@ -168,9 +181,9 @@ function pick(k){if(busy)return;busy=true;ding();clearOpts();me(O[k][1]+' — '+
           ['🌳','المبادرة الخضراء','شباب يستخدمون الذكاء الاصطناعي لخدمة بيئتهم.']]);
     chips('learn',[wa('🔔 خبّرني أول ما تنزل الدروس','هلا علي، خبّرني أول ما تنزل الدروس المجانية')]);busy=false});
   },350)}
-function clean(s){return s.split('⟦LEAD⟧')[0].replace(/\*\*|^#+\s*/gm,'')}
-async function ask(text){busy=true;clearOpts();me(text,false);
-  var body={text:text,history:history.slice(-12)};history.push({role:'user',text:text});
+function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
+async function ask(text,file){busy=true;clearOpts();if(!file)me(text,false);
+  var body={text:text,history:history.slice(-12),file:file||null};history.push({role:'user',text:text||'[بصمة صوتية]'});
   var w=el('div','b s dots','<i></i><i></i><i></i>');log.appendChild(w);down();think(true);var full='';
   try{var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){
@@ -180,15 +193,34 @@ async function ask(text){busy=true;clearOpts();me(text,false);
           try{var j=JSON.parse(line.slice(5));var c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];
             var t=ps.filter(function(p){return !p.thought}).map(function(p){return p.text||''}).join('');
             if(t){full+=t;w.className='b s';w.textContent=clean(full);down()}}catch(_){}}}
-      var k=full.indexOf('⟦LEAD⟧');
-      if(k>=0){try{var L=JSON.parse(full.slice(k+6).trim().split('\n')[0]);
-        var summary=history.slice(-10).map(function(m){return(m.role==='user'?'الزبون: ':'سراج: ')+m.text}).join('\n');
-        fetch(API+'/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:L.name,contact:L.contact,need:L.need,summary:summary})})}catch(_){}}
       full=clean(full).trim();
       if(full){w.className='b s';w.textContent=full;history.push({role:'model',text:full});ding()}else{w.className='b s';w.textContent='صار خلل، جرّب مرة ثانية'}}
     else{var d={};try{d=await r.json()}catch(_){}w.className='b s';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
   catch(e){w.className='b s';w.textContent='ماكو اتصال هسه، جرّب بعد شوية أو احچي ويا علي بالواتساب'}
   think(false);busy=false;down();chips(null)}
+var mic=document.getElementById('mic'),rec=null,chunks=[],recT=0;
+function b64(b){return new Promise(function(r){var fr=new FileReader();fr.onload=function(){r(String(fr.result).split(',')[1])};fr.readAsDataURL(b)})}
+function fmt(s){s=Math.round(s);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+async function wav(blob){var c=new(window.AudioContext||window.webkitAudioContext)(),buf=await c.decodeAudioData(await blob.arrayBuffer());c.close();
+  var rate=16000,len=Math.round(buf.duration*rate),off=new OfflineAudioContext(1,len,rate),src=off.createBufferSource();src.buffer=buf;src.connect(off.destination);src.start();
+  var out=(await off.startRendering()).getChannelData(0),v=new DataView(new ArrayBuffer(44+len*2));
+  function w(o,t){for(var i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))}
+  w(0,'RIFF');v.setUint32(4,36+len*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,len*2,true);
+  for(var i=0;i<len;i++){var x=Math.max(-1,Math.min(1,out[i]));v.setInt16(44+i*2,x<0?x*32768:x*32767,true)}
+  return{blob:new Blob([v],{type:'audio/wav'}),sec:buf.duration}}
+function voiceBubble(url,sec){W.classList.add('mini');var b=el('div','b u'),v=el('div','vn','<button type="button" aria-label="تشغيل">▶</button><span class="wf"></span><small>'+fmt(sec)+'</small>'),bt=v.firstChild,au=new Audio(url);
+  bt.onclick=function(){if(au.paused){au.play();bt.textContent='❚❚'}else{au.pause();bt.textContent='▶'}};au.onended=function(){bt.textContent='▶'};
+  b.appendChild(v);log.appendChild(b);down()}
+async function sendVoice(b){if(b.size<1500)return;var w;try{w=await wav(b)}catch(_){w={blob:b,sec:0}}
+  voiceBubble(URL.createObjectURL(w.blob),w.sec);ask('',{mime:(w.blob.type||'audio/webm').split(';')[0],data:await b64(w.blob)})}
+mic.onclick=async function(){
+  if(rec&&rec.state==='recording'){rec.stop();return}
+  if(busy)return;var ph0=ta.placeholder;
+  try{var st=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];rec=new MediaRecorder(st);
+    rec.ondataavailable=function(e){chunks.push(e.data)};
+    rec.onstop=function(){st.getTracks().forEach(function(t){t.stop()});mic.classList.remove('rec');clearTimeout(recT);ta.placeholder=ph0;sendVoice(new Blob(chunks,{type:rec.mimeType||'audio/webm'}))};
+    rec.start();mic.classList.add('rec');ta.placeholder='دا أسجّل… اضغط المايك مرة ثانية حتى توگف';recT=setTimeout(function(){if(rec&&rec.state==='recording')rec.stop()},60000)}
+  catch(e){ta.placeholder='ما گدرت أفتح المايك. اسمح للموقع باستخدامه'}};
 var f=document.getElementById('f');
 function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,140)+'px'}
 ta.addEventListener('input',grow);
