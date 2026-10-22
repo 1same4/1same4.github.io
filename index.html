@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src https://janabi-agent.1same42002.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>علي الجنابي · استشارات رقمية</title>
 <meta name="description" content="مواقع وأنظمة، هوية، عروض تقديمية، ومحتوى وإعلانات بالذكاء الاصطناعي. ونعلّم شباب العراق الذكاء الاصطناعي مجاناً.">
@@ -557,21 +557,23 @@ a.lang{text-decoration:none}
 
 <!-- Siraj AI assistant bubble -->
 <style>
-#siraj-btn{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--flame,#f2b544);color:#111;font:700 15px/1 var(--f-body,Tahoma,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#siraj-btn{overflow:hidden;position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--flame,#f2b544);color:#111;font:700 15px/1 var(--f-body,Tahoma,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#siraj-btn .sf{transform-box:fill-box;transform-origin:50% 100%;animation:sflick 3s ease-in-out infinite}
+@keyframes sflick{0%,100%{transform:scale(1) rotate(0)}25%{transform:scale(.96,1.06) rotate(-4deg)}50%{transform:scale(1.05,.95) rotate(1deg)}75%{transform:scale(.97,1.04) rotate(4deg)}}
 #siraj-btn:focus-visible{outline:3px solid var(--fg,#fff);outline-offset:3px}
-#siraj-panel{position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:9999;width:min(380px,calc(100vw - 32px));height:min(600px,calc(100dvh - 110px));border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.35);background:#0f1115;display:none}
+#siraj-panel{border:1px solid var(--line,#263048);position:fixed;left:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:9999;width:min(380px,calc(100vw - 32px));height:min(600px,calc(100dvh - 110px));border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.35);background:var(--bg,#0f1115);display:none}
 #siraj-panel.open{display:block}
 #siraj-panel iframe{width:100%;height:100%;border:0}
-#siraj-x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer}
+#siraj-x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:var(--surface,rgba(255,255,255,.12));color:var(--fg,#fff);border:1px solid var(--line,transparent);font-size:18px;cursor:pointer;z-index:2}
 @media (max-width:520px){#siraj-panel{left:8px;width:calc(100vw - 16px);height:calc(100dvh - 96px)}}
 </style>
-<button id="siraj-btn" type="button" aria-controls="siraj-panel" aria-expanded="false">🕯️ اسأل سراج</button>
+<button id="siraj-btn" type="button" aria-controls="siraj-panel" aria-expanded="false"><svg viewBox="0 0 40 52" width="16" height="21" aria-hidden="true"><path class="sf" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="#13213a"/><line x1="20" y1="23" x2="20" y2="28" stroke="#13213a" stroke-width="2.5"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="#13213a" stroke-width="2.5"/></svg><span>اسأل سراج</span></button>
 <div id="siraj-panel" role="dialog" aria-label="Siraj">
 <button id="siraj-x" type="button" aria-label="إغلاق">×</button>
 </div>
 <script>
 (function(){var b=document.getElementById('siraj-btn'),p=document.getElementById('siraj-panel'),x=document.getElementById('siraj-x'),f=null;
-function t(o){if(o&&!f){f=document.createElement('iframe');f.src='https://janabi-agent.1same42002.workers.dev/';f.title='Siraj';f.allow='microphone';p.appendChild(f)}
+function t(o){if(o&&!f){f=document.createElement('iframe');f.src='/new/?embed=1';f.title='Siraj';f.allow='microphone';p.appendChild(f)}
 p.classList.toggle('open',o);b.setAttribute('aria-expanded',o)}
 b.onclick=function(){t(!p.classList.contains('open'))};x.onclick=function(){t(false)};})();
 </script>

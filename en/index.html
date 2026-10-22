@@ -558,7 +558,7 @@ a.lang{text-decoration:none}.hero h1 .l1{white-space:normal}
 
 <!-- Siraj AI assistant bubble -->
 <style>
-#siraj-btn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--flame,#f2b544);color:#111;font:700 15px/1 var(--f-body,Tahoma,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#siraj-btn{overflow:hidden;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:9998;display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;border:0;cursor:pointer;background:var(--flame,#f2b544);color:#111;font:700 15px/1 var(--f-body,Tahoma,sans-serif);box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #siraj-btn:focus-visible{outline:3px solid var(--fg,#fff);outline-offset:3px}
 #siraj-panel{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:9999;width:min(380px,calc(100vw - 32px));height:min(600px,calc(100dvh - 110px));border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.35);background:#0f1115;display:none}
 #siraj-panel.open{display:block}
@@ -566,7 +566,7 @@ a.lang{text-decoration:none}.hero h1 .l1{white-space:normal}
 #siraj-x{position:absolute;top:10px;left:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer}
 @media (max-width:520px){#siraj-panel{right:8px;width:calc(100vw - 16px);height:calc(100dvh - 96px)}}
 </style>
-<button id="siraj-btn" type="button" aria-controls="siraj-panel" aria-expanded="false">🕯️ Ask Siraj</button>
+<button id="siraj-btn" type="button" aria-controls="siraj-panel" aria-expanded="false"><svg viewBox="0 0 40 52" width="16" height="21" aria-hidden="true"><path d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="#13213a"/><line x1="20" y1="23" x2="20" y2="28" stroke="#13213a" stroke-width="2.5"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="#13213a" stroke-width="2.5"/></svg><span>Ask Siraj</span></button>
 <div id="siraj-panel" role="dialog" aria-label="Siraj">
 <button id="siraj-x" type="button" aria-label="Close">×</button>
 </div>

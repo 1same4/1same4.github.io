@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
-<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>if(/[?&]embed=1/.test(location.search))document.documentElement.classList.add('embed');try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
 :root{--bg:#f7f6f2;--surface:#fff;--line:#e1e3e8;--fg:#13213a;--muted:#5d6779;--brand:#1f4fd1;--flame:#e3a13a;--me:#1f4fd1;--on-me:#fff;
 --f-display:"Alexandria","IBM Plex Sans Arabic",Tahoma,sans-serif;--f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;color-scheme:light}
@@ -117,6 +117,15 @@ main{max-width:640px;margin:0 auto;padding:24px 18px 130px}
 .dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
 @keyframes bob{0%,100%{opacity:.3;transform:none}50%{opacity:1;transform:translateY(-4px)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html.embed .top{display:none}
+html.embed main{padding-top:46px}
+html.embed .halo{width:96px;height:96px}
+html.embed .halo svg{width:40px;height:60px}
+html.embed body.chat .hero{display:grid;position:fixed;top:6px;inset-inline:0;z-index:3;pointer-events:none}
+html.embed body.chat .halo{width:44px;height:44px;box-shadow:0 0 0 4px color-mix(in srgb,var(--flame) 10%,transparent),0 0 20px color-mix(in srgb,var(--flame) 30%,transparent)}
+html.embed body.chat .halo svg{width:18px;height:27px}
+html.embed body.chat main{padding-top:58px}
+html.embed .s.big{font-size:1.05rem}
 </style>
 </head>
 <body>
