@@ -66,8 +66,13 @@ button{font:inherit}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
 .mark{width:38px;height:38px;flex:none}
 .word{display:grid;line-height:1.1}
-.word b{font:700 1.18rem var(--f-l);letter-spacing:-.01em;direction:ltr}
-.word b i{font-style:normal;color:var(--gold)}
+.word b{font:700 1.45rem var(--f-l);letter-spacing:-.02em;direction:ltr;line-height:1.05;white-space:nowrap}
+.word b i{font-style:normal;color:var(--gold);margin-left:.2em}
+.ii{position:relative;display:inline-block;width:.15em;height:.52em;background:currentColor;border-radius:.03em;margin:0 .045em 0 .05em}
+.ii svg{position:absolute;left:50%;bottom:.6em;width:.36em;height:.5em;transform:translateX(-50%);overflow:visible}
+.ii .flame{fill:var(--gold-2);transform-box:fill-box;transform-origin:50% 100%;animation:flick 3.4s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scale(1)}45%{transform:scale(1.08,.94) rotate(-3deg)}75%{transform:scale(.95,1.06) rotate(3deg)}}
+.word small{margin-top:5px}
 .word small{font:600 .7rem var(--f-b);color:var(--muted);margin-top:3px;white-space:nowrap}
 .top nav{display:flex;gap:20px;font-size:.93rem}
 .top nav a{color:var(--muted);text-decoration:none}
@@ -85,7 +90,7 @@ button{font:inherit}
 
 /* hero */
 .hero{padding-block:64px 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;position:relative}
-@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr);gap:34px;padding-top:40px}}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr);gap:18px;padding-top:22px;padding-bottom:24px}.hero-txt{gap:10px}.hero .sub{display:none}.hero h1{font-size:clamp(2rem,9vw,2.6rem)}.siraj-in{min-height:390px;max-height:470px}}
 .hero>*,.builder>*,.roi>*,.contact>*,.stage>*{min-width:0}
 .hero-txt{display:grid;gap:22px;align-content:center}
 .hero h1{font-size:clamp(2.2rem,6.4vw,4.4rem);font-weight:800;line-height:1.15}
@@ -108,7 +113,9 @@ button{font:inherit}
 .s-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
 .orb{width:42px;height:42px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,var(--gold-2),var(--gold) 55%,#7a4f0c);box-shadow:0 0 0 4px var(--brand-soft),0 0 22px color-mix(in srgb,var(--gold) 55%,transparent);animation:breathe 3.2s ease-in-out infinite}
 .orb{display:grid;place-items:center}.orb svg{width:40%;height:60%}.orb.think{animation-duration:.9s}
-.m.big{font-size:1.12rem;font-weight:500}
+.m.big{font-size:1.12rem;font-weight:500;border-color:color-mix(in srgb,var(--gold) 55%,var(--line));box-shadow:0 0 0 0 color-mix(in srgb,var(--gold) 40%,transparent);animation:up .35s ease both,callme 2.6s ease-in-out 1.2s 3}
+@keyframes callme{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--gold) 18%,transparent),0 0 26px color-mix(in srgb,var(--gold) 35%,transparent)}}
+.chip.call{animation:up .35s ease both}
 @keyframes breathe{50%{transform:scale(1.08);box-shadow:0 0 0 7px var(--brand-soft),0 0 30px color-mix(in srgb,var(--gold) 70%,transparent)}}
 .s-head b{font-family:var(--f-d);display:block;line-height:1.2}
 .s-head small{color:var(--muted);font-size:.8rem;display:flex;align-items:center;gap:6px}
@@ -142,7 +149,7 @@ button{font:inherit}
 
 /* builder demo */
 .builder{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
-@media (max-width:900px){.builder{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:900px){.builder{grid-template-columns:minmax(0,1fr)}.builder .stage{order:-1}}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:18px;box-shadow:var(--shadow)}
 .panel h3{font-size:1rem;color:var(--muted);font-weight:700}
 .seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:8px}
@@ -198,9 +205,18 @@ button{font:inherit}
 .card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--gold) 60%,var(--line))}
 .card .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--brand-soft),color-mix(in srgb,var(--gold) 16%,transparent))}
 .card .ic svg{width:27px;height:27px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.card .n{position:absolute;top:18px;left:20px;font:700 2.4rem var(--f-l);color:var(--line)}
+.ch{display:flex;justify-content:space-between;align-items:center}
+.card .n{font:700 2.2rem var(--f-l);color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--gold) 55%,transparent)}
+.card{padding:28px 24px}
+.card h3{font-size:1.4rem}
+.card>p{color:var(--fg);opacity:.82}
+.get{list-style:none;margin:2px 0 4px;padding:0;display:grid;gap:8px}
+.get li{display:flex;gap:10px;align-items:center;font-size:.95rem}
+.get li::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;background:var(--brand-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12l4 4 8-8' fill='none' stroke='%23E2A43A' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.cbtn{margin-top:6px;width:100%}
+.card .ic{box-shadow:0 0 24px -6px color-mix(in srgb,var(--gold) 55%,transparent)}
 .card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--gold-2),transparent);opacity:0;transition:opacity .3s}
-.card:hover::before{opacity:1}
+.card::before{opacity:.7}.card:hover::before{opacity:1}
 .card h3{font-size:1.3rem}
 .card p{color:var(--muted);font-size:.96rem}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
@@ -311,8 +327,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 <header class="top">
   <div class="top-in">
     <a class="logo" href="#top" aria-label="Janabi AI">
-      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0F1D4A"/><rect x=".75" y=".75" width="62.5" height="62.5" rx="15.25" fill="none" stroke="#E2A43A" stroke-opacity=".35" stroke-width="1.5"/><path d="M32 9c8 10 8 17 0 22c-8-5-8-12 0-22z" fill="#E2A43A"/><path d="M22 37h20v4.5h-5.5v8.5a8.5 8.5 0 0 1-17 0h5.5a3 3 0 0 0 6 0v-8.5H22z" fill="#F3EEE2"/></svg>
-      <span class="word"><b>Janabi <i>AI</i></b><small>حلول واستشارات رقمية</small></span>
+      <span class="word"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b><small>حلول واستشارات رقمية</small></span>
     </a>
     <nav aria-label="الأقسام"><a href="#try">جرّب گدامك</a><a href="#services">خدماتنا</a><a href="#roi">احسب توفيرك</a><a href="#impact">أثرنا</a><a href="#contact">تواصل</a></nav>
     <div class="acts">
@@ -368,7 +383,6 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
           <button type="button" data-s="warm" aria-pressed="false"><i><b style="background:#f6efe3"></b><b style="background:#8a4b2a"></b></i>دافي</button>
           <button type="button" data-s="fresh" aria-pressed="false"><i><b style="background:#ffffff"></b><b style="background:#0f9b8e"></b></i>حديث</button>
         </div>
-        <button class="btn gold go" id="build" type="button">ابنيلي النموذج ✦</button>
       </div>
       <div class="stage">
         <div class="phone"><div class="screen" id="screen">
@@ -391,31 +405,28 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     <div class="sec-head"><span class="label">خدماتنا</span><h2>ثلاث خدمات. كل وحدة تخلص شغل حقيقي</h2><p>أي شي يخص الإنترنت نشتغله: نسمع فكرتك، ندرسها، ونسلّمك شي يشتغل.</p></div>
     <div class="svc">
       <article class="card">
-        <span class="n ltr">01</span>
-        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9l2 2-2 2M12 13h4"/></svg></span>
+        <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9l2 2-2 2M12 13h4"/></svg></span><span class="n ltr">01</span></div>
         <h3>مواقع وأنظمة ووكلاء أذكياء</h3>
-        <p>موقع يعرّف بشغلك، نظام يرتب حجوزاتك وطلباتك، ووكيل ذكي مثل سراج يرد على زبائنك ليل ونهار.</p>
-        <div class="tags"><span>مواقع</span><span>تطبيقات</span><span>منيو QR</span><span>حجوزات</span><span>وكيل ذكي</span></div>
+        <p>شغلك يشتغل أونلاين ليل ونهار، حتى وأنت نايم.</p>
+        <ul class="get"><li>موقع وتطبيق باسمك</li><li>منيو بالباركود وحجوزات</li><li>وكيل ذكي يرد على زبائنك</li></ul>
         <div class="sample"><span>النموذج الخام</span><em>قيد البناء</em></div>
-        <a class="try" href="#try">جرّبه گدامك ←</a>
+        <a class="btn gold cbtn" href="#try">جرّبه گدامك</a>
       </article>
       <article class="card">
-        <span class="n ltr">02</span>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8l5.5-.8z"/></svg></span>
+        <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8l5.5-.8z"/></svg></span><span class="n ltr">02</span></div>
         <h3>هوية وتصميم</h3>
-        <p>من الشعار والكارت، للافتة والواجهة وديكور المحل. هوية وحدة تخلي الناس تتذكرك من أول نظرة.</p>
-        <div class="tags"><span>شعار</span><span>كارت</span><span>لافتات</span><span>واجهة وديكور</span><span>ريلز إعلانية</span></div>
+        <p>هوية وحدة تخلي الناس تتذكرك من أول نظرة.</p>
+        <ul class="get"><li>شعار وكارت</li><li>لافتة، واجهة، وديكور</li><li>ريلز إعلانية بالذكاء الاصطناعي</li></ul>
         <div class="sample"><span>النموذج الخام</span><em>قيد البناء</em></div>
-        <a class="try" href="#contact">اطلب تصميمك ←</a>
+        <a class="btn ghost cbtn" href="#contact">اطلب هويتك</a>
       </article>
       <article class="card">
-        <span class="n ltr">03</span>
-        <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span>
+        <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="n ltr">03</span></div>
         <h3>استشارات ودراسة مشاريع</h3>
-        <p>عندك فكرة؟ نحسبها وياك: الكلفة، الربح، وأسوأ احتمال. ونجربها بأقل كلفة قبل ما تخاطر.</p>
-        <div class="tags"><span>دراسة فكرة</span><span>خطة تنفيذ</span><span>تجربة بأقل كلفة</span></div>
+        <p>نحسب فكرتك قبل ما تصرف عليها دينار.</p>
+        <ul class="get"><li>الكلفة والربح وأسوأ احتمال</li><li>تجربة بأقل كلفة</li><li>خطة تمشي عليها خطوة بخطوة</li></ul>
         <div class="sample"><span>نموذج دراسة</span><em>قيد البناء</em></div>
-        <a class="try" href="#" data-ask="عندي فكرة مشروع وأريد رأيكم بيها">اسأل سراج عن فكرتك ←</a>
+        <a class="btn ghost cbtn" href="#" data-ask="عندي فكرة مشروع وأريد رأيكم بيها">اسأل سراج عن فكرتك</a>
       </article>
     </div>
   </section>
@@ -460,7 +471,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
   <section class="sec reveal" id="who">
     <div class="sec-head"><span class="label">المؤسس</span><h2>خبرة من الميدان، مو من الكتب</h2></div>
     <div class="founder">
-      <div class="avatar"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="#E2A43A"/><rect x="12" y="28" width="16" height="29" rx="2.5" fill="none" stroke="#F3EEE2" stroke-width="3"/></svg><em>الصورة قريباً</em></div>
+      <div class="avatar"><svg viewBox="0 0 40 60" aria-hidden="true"><path d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z" fill="#E2A43A"/><rect x="12" y="28" width="16" height="29" rx="2.5" fill="none" stroke="#F3EEE2" stroke-width="3"/></svg></div>
       <div>
         <h3>علي الجنابي</h3>
         <span class="role">مؤسس Janabi AI</span>
@@ -590,8 +601,8 @@ var S={lux:{bg:'#0f1424',fg:'#f3eee2',acc:'#d4a24c',on:'#1b1404',hero:'linear-gr
  fresh:{bg:'#ffffff',fg:'#0d2a2a',acc:'#0f9b8e',on:'#fff',hero:'linear-gradient(135deg,#d9f4f0,#bfe8f5)',hfg:'#0d2a2a',card:'#f0f6f6'}};
 var sec='food',sty='lux',scr=$('screen');
 function pressGroup(g,attr,val){g.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset[attr]===val)})}
-$('sector').onclick=function(e){var b=e.target.closest('button');if(!b)return;sec=b.dataset.k;pressGroup(this,'k',sec);$('bn').placeholder=D[sec].ph;render(false)};
-$('style').onclick=function(e){var b=e.target.closest('button');if(!b)return;sty=b.dataset.s;pressGroup(this,'s',sty);render(false)};
+$('sector').onclick=function(e){var b=e.target.closest('button');if(!b)return;sec=b.dataset.k;pressGroup(this,'k',sec);$('bn').placeholder=D[sec].ph;render(true)};
+$('style').onclick=function(e){var b=e.target.closest('button');if(!b)return;sty=b.dataset.s;pressGroup(this,'s',sty);render(true)};
 function nm(){var v=$('bn').value.trim();return v||D[sec].ph.replace('مثلاً: ','')}
 function render(anim){var d=D[sec],s=S[sty],n=nm();
   scr.style.setProperty('--p-bg',s.bg);scr.style.setProperty('--p-fg',s.fg);scr.style.setProperty('--p-acc',s.acc);scr.style.setProperty('--p-on',s.on);scr.style.setProperty('--p-hero',s.hero);scr.style.setProperty('--p-hfg',s.hfg);scr.style.setProperty('--p-card',s.card);
@@ -611,8 +622,9 @@ function qr(n){var msg='أريد نموذج مثل '+n;
   var url=WA+'?text='+encodeURIComponent(msg);
   try{var q=qrcode(0,'L');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:3,margin:2,scalable:true})}catch(e){$('qr').textContent='QR'}
   $('qn').textContent='باركود '+n}
-$('build').onclick=function(){render(true);if(innerWidth<900)$('screen').scrollIntoView({behavior:still?'auto':'smooth',block:'center'})};
-$('bn').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();render(true)}});
+var bt;$('bn').addEventListener('input',function(){clearTimeout(bt);bt=setTimeout(function(){render(true)},700)});
+$('bn').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur();clearTimeout(bt);render(true)}});
+$('bn').addEventListener('change',function(){if(innerWidth<900)$('screen').scrollIntoView({behavior:still?'auto':'smooth',block:'center'})});
 render(false);
 if('IntersectionObserver' in window){var seen=false;new IntersectionObserver(function(es){if(es[0].isIntersecting&&!seen){seen=true;render(true)}},{threshold:.45}).observe($('screen'))}
 
@@ -621,16 +633,17 @@ var RW=['المطاعم والكوفيات','العيادات','المتاجر',
 if(!still&&rot)setInterval(function(){ri=(ri+1)%RW.length;rot.textContent=RW[ri];rot.classList.remove('sw');void rot.offsetWidth;rot.classList.add('sw')},2400);
 
 /* interactive field: gold dots that drift and move away from finger / mouse */
-(function(){var c=$('fx');if(!c||still)return;var x=c.getContext('2d'),P=[],W,H,dpr=Math.min(2,devicePixelRatio||1),m={x:-999,y:-999},run=true;
+(function(){var c=$('fx');if(!c||still)return;var touch=matchMedia('(pointer:coarse)').matches,x=c.getContext('2d'),P=[],W,H,dpr=Math.min(touch?1.5:2,devicePixelRatio||1),m={x:-999,y:-999},run=true;
   function size(){var r=c.getBoundingClientRect();W=r.width;H=r.height;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
-    var n=Math.round(Math.max(42,Math.min(80,W*H/8000)));P=[];for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.8+.9})}
+    var n=touch?26:Math.round(Math.max(42,Math.min(80,W*H/8000)));P=[];for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.8+.9})}
   function col(a){return dark()?'rgba(226,164,58,'+a+')':'rgba(154,100,9,'+a+')'}
+  var sy=scrollY,ly=scrollY;addEventListener('scroll',function(){sy=scrollY},{passive:true});
   function tick(){if(!run)return;x.clearRect(0,0,W,H);
     for(var i=0;i<P.length;i++){var p=P[i],dx=p.x-m.x,dy=p.y-m.y,d=Math.sqrt(dx*dx+dy*dy);
-      if(d<110){p.vx+=dx/d*.08;p.vy+=dy/d*.08}p.vx*=.985;p.vy*=.985;p.vx+=(Math.random()-.5)*.01;p.vy+=(Math.random()-.5)*.01;p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle=col(.9);x.fill();
+      if(d<110){p.vx+=dx/d*.08;p.vy+=dy/d*.08}p.vx*=.985;p.vy*=.985;p.vx+=(Math.random()-.5)*.01;p.vy+=(Math.random()-.5)*.01;p.x+=p.vx;p.y+=p.vy+(sy-ly)*.25*p.r/2;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle=col(.9);x.fill();
       for(var j=i+1;j<P.length;j++){var q=P[j],e=Math.hypot(p.x-q.x,p.y-q.y);if(e<100){x.strokeStyle=col((1-e/100)*.4);x.lineWidth=.8;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}}
-    requestAnimationFrame(tick)}
+    ly=sy;requestAnimationFrame(tick)}
   function pt(e){var r=c.getBoundingClientRect(),t=e.touches?e.touches[0]:e;m.x=t.clientX-r.left;m.y=t.clientY-r.top}
   var hero=document.querySelector('.hero');hero.addEventListener('pointermove',pt);hero.addEventListener('touchmove',pt,{passive:true});
   hero.addEventListener('pointerleave',function(){m.x=m.y=-999});hero.addEventListener('touchend',function(){m.x=m.y=-999});
