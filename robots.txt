@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /v2/
+Disallow: /archive/
+Disallow: /new/
+Disallow: /tools/
+
+Sitemap: https://janabiai.com/sitemap.xml
