@@ -91,12 +91,14 @@ button{font:inherit}
 .hero h1{font-size:clamp(2.2rem,6.4vw,4.4rem);font-weight:800;line-height:1.15}
 .hero h1 .g{background:linear-gradient(120deg,var(--gold-2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .rotline{font:700 clamp(1.15rem,2.6vw,1.5rem) var(--f-d);color:var(--muted)}
+.rot{margin-inline-start:6px}
 .rot{color:var(--fg);display:inline-block;border-bottom:3px solid var(--gold);padding-bottom:2px}
 .rot.sw{animation:sw .5s ease}
 @keyframes sw{from{opacity:0;transform:translateY(.4em)}to{opacity:1;transform:none}}
 .hero .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.15rem);max-width:560px}
 .ctas{display:flex;flex-wrap:wrap;gap:12px}
-.glow{position:absolute;inset:0 -20px;pointer-events:none;z-index:-1;background-image:radial-gradient(color-mix(in srgb,var(--gold) 38%,transparent) 1.2px,transparent 1.4px);background-size:22px 22px;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 75% 40%,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse 60% 70% at 75% 40%,#000 0%,transparent 70%);opacity:.7}
+.field-bg{position:absolute;inset:-40px -20px 0;width:calc(100% + 40px);height:calc(100% + 40px);z-index:-1;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 85% 90% at 60% 45%,#000 45%,transparent 90%);mask-image:radial-gradient(ellipse 85% 90% at 60% 45%,#000 45%,transparent 90%)}
+.glow-old{position:absolute;inset:0 -20px;pointer-events:none;z-index:-1;background-image:radial-gradient(color-mix(in srgb,var(--gold) 38%,transparent) 1.2px,transparent 1.4px);background-size:22px 22px;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 75% 40%,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse 60% 70% at 75% 40%,#000 0%,transparent 70%);opacity:.7}
 
 /* siraj card */
 .siraj{position:relative;border-radius:24px;padding:1.5px;background:conic-gradient(from var(--a,0deg),transparent 0 70%,var(--gold-2) 80%,transparent 90%);animation:beam 6s linear infinite}
@@ -143,9 +145,12 @@ button{font:inherit}
 @media (max-width:900px){.builder{grid-template-columns:minmax(0,1fr)}}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:grid;gap:18px;box-shadow:var(--shadow)}
 .panel h3{font-size:1rem;color:var(--muted);font-weight:700}
-.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:8px}
 .seg button,.styles button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:14px;padding:10px 6px;cursor:pointer;display:grid;gap:2px;place-items:center;font-size:.88rem;font-weight:600}
 .seg button span{font-size:1.4rem;line-height:1}
+.seg button{font-size:.82rem;text-align:center;line-height:1.3}
+.phone.on{box-shadow:0 30px 60px -25px rgba(0,0,0,.55),inset 0 0 0 2px #2a3150,0 0 0 3px color-mix(in srgb,var(--gold) 60%,transparent),0 0 40px color-mix(in srgb,var(--gold) 40%,transparent);transition:box-shadow .4s}
+.caret::after{content:"|";animation:bl .8s infinite;margin-inline-start:1px}
 .seg button[aria-pressed="true"],.styles button[aria-pressed="true"]{border-color:var(--gold);background:var(--brand-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 18%,transparent)}
 .styles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .styles button i{display:flex;gap:3px}.styles button i b{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
@@ -176,7 +181,7 @@ button{font:inherit}
 .p-bot i{width:22px;height:22px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#f0bc5e,#c98a1c)}
 .p-bot span{background:var(--p-card,#f4f4f4);border-radius:12px 12px 12px 4px;padding:6px 9px;font-size:11px}
 .side{display:grid;gap:14px;justify-items:center;text-align:center;width:100%}
-.qrbox{background:#fff;border-radius:18px;padding:14px;box-shadow:var(--shadow);display:grid;gap:6px;justify-items:center;color:#0F1D4A;width:190px}
+.qrbox{transition:opacity .6s;background:#fff;border-radius:18px;padding:14px;box-shadow:var(--shadow);display:grid;gap:6px;justify-items:center;color:#0F1D4A;width:190px}
 .qrbox svg{width:150px;height:150px;display:block}
 .qrbox small{font-size:.75rem;line-height:1.4}
 .ticks{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.88rem;color:var(--muted);text-align:start;width:min(100%,240px)}
@@ -203,6 +208,7 @@ button{font:inherit}
 .card .try{margin-top:4px;justify-self:start;font-weight:600;font-size:.92rem;color:var(--gold);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
 .sample{border:1.5px dashed var(--line);border-radius:14px;padding:10px 12px;font-size:.85rem;color:var(--muted);display:flex;justify-content:space-between;gap:8px;align-items:center}
 .sample em{font-style:normal;font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--tint)}
+
 
 /* ROI */
 .roi{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
@@ -281,7 +287,7 @@ input[type=range]{width:100%;accent-color:var(--gold);height:28px}
 .cl:hover{border-color:var(--gold)}
 .cl svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .cl b{font-weight:600;display:block;font-size:.95rem}
-.cl small{color:var(--muted);font-family:var(--f-l);font-size:.9rem}
+.cl small{color:var(--muted);font-size:.86rem}
 .note{font-size:.85rem;color:var(--muted);min-height:1.3em}
 footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.86rem;color:var(--muted)}
 
@@ -312,7 +318,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     <div class="acts">
       <a class="ibtn" href="/en/" id="en" lang="en" aria-label="EN English">EN</a>
       <button class="ibtn" id="theme" type="button" aria-label="تبديل الوضع"></button>
-      <a class="btn gold sm" href="#contact">ابدأ مشروعك</a>
+      <a class="btn gold sm" href="#siraj">ابدأ مشروعك</a>
     </div>
   </div>
 </header>
@@ -320,10 +326,11 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 <main id="top">
 <div class="wrap">
   <section class="hero">
-    <div class="glow"></div>
+    <canvas class="field-bg" id="fx" aria-hidden="true"></canvas>
     <div class="hero-txt">
       <span class="label">Janabi AI · حلول واستشارات رقمية · بغداد</span>
       <h1>فكرتك تصير<br><span class="g">مشروع شغّال</span></h1>
+      <p class="rotline">حلول ذكية لـ<span class="rot" id="rot">المطاعم والكوفيات</span></p>
       <p class="sub">نبني المواقع والأنظمة والوكلاء الأذكياء، نصمم هويتك، وندرس فكرتك قبل ما تصرف عليها. من فكرة على ورق، لمشروع يشتغل ويجيب زبائن.</p>
     </div>
 
@@ -340,26 +347,22 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     </div>
   </section>
 
-  <div class="proof">
-    <div class="pf"><b class="ltr">96/100</b><strong>سرعة مفحوصة</strong><span>موقعنا ياخذ 96 من 100 بفحص Google. ونسلّمك نفس الفحص ويا كل موقع نبنيه.</span></div>
-    <div class="pf"><b class="ltr">24/7</b><strong>مساعد ما ينام</strong><span>سراج يرد على زبائنك بأي وقت، حتى وأنت نايم.</span></div>
-    <div class="pf"><b class="ltr">2017</b><strong>خبرة من الميدان</strong><span>طباعة، سياحة، وشركة خاصة. واليوم كل هالخبرة بالذكاء الاصطناعي.</span></div>
-  </div>
 
   <section class="sec reveal" id="try">
-    <div class="sec-head"><span class="label">جرّب بنفسك</span><h2>اختار نوع شغلك، وشوف موقعك يتبنى</h2><p>اكتب اسم محلك واختار الستايل. خلال ثواني يتركب نموذج موقعك، ويطلع باركود باسمك. هذا مو فيديو، يتبنى هسه گدامك.</p></div>
+    <div class="sec-head"><span class="label">جرّب بنفسك</span><h2>اختار نوع شغلك، وشوف موقعك يتبنى</h2><p>اكتب اسم شغلك واختار الستايل. خلال ثواني يتركب نموذج موقعك، ويطلع باركود باسمك. هذا مو فيديو، يتبنى هسه گدامك.</p></div>
     <div class="builder">
       <div class="panel">
-        <h3>١. شنو نوع شغلك؟</h3>
+        <h3>نوع شغلك</h3>
         <div class="seg" id="sector">
-          <button type="button" data-k="cafe" aria-pressed="true"><span>☕</span>كوفي</button>
-          <button type="button" data-k="food" aria-pressed="false"><span>🍽️</span>مطعم</button>
+          <button type="button" data-k="food" aria-pressed="true"><span>☕</span>مطعم وكوفي</button>
           <button type="button" data-k="clinic" aria-pressed="false"><span>🩺</span>عيادة</button>
+          <button type="button" data-k="shop" aria-pressed="false"><span>🛍️</span>متجر</button>
           <button type="button" data-k="co" aria-pressed="false"><span>🏢</span>شركة</button>
+          <button type="button" data-k="org" aria-pressed="false"><span>🏛️</span>مؤسسة</button>
         </div>
-        <h3>٢. اسم محلك</h3>
-        <div class="field"><input id="bn" maxlength="28" placeholder="مثلاً: كوفي الياسمين" aria-label="اسم المحل"></div>
-        <h3>٣. الستايل</h3>
+        <h3>اسم شغلك</h3>
+        <div class="field"><input id="bn" maxlength="28" placeholder="مثلاً: كوفي الياسمين" aria-label="اسم شغلك"></div>
+        <h3>الستايل</h3>
         <div class="styles" id="style">
           <button type="button" data-s="lux" aria-pressed="true"><i><b style="background:#111827"></b><b style="background:#d4a24c"></b></i>فخم</button>
           <button type="button" data-s="warm" aria-pressed="false"><i><b style="background:#f6efe3"></b><b style="background:#8a4b2a"></b></i>دافي</button>
@@ -484,6 +487,14 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     </div>
   </section>
 
+  <section class="sec reveal" id="why"><div class="sec-head"><span class="label">ليش Janabi AI</span><h2>أرقام تحچي عنا</h2></div>
+  <div class="proof" style="padding:0">
+    <div class="pf"><b class="ltr">96/100</b><strong>سرعة مفحوصة</strong><span>موقعنا ياخذ 96 من 100 بفحص Google. ونسلّمك نفس الفحص ويا كل موقع نبنيه.</span></div>
+    <div class="pf"><b class="ltr">24/7</b><strong>مساعد ما ينام</strong><span>سراج يرد على زبائنك بأي وقت، حتى وأنت نايم.</span></div>
+    <div class="pf"><b class="ltr">2017</b><strong>خبرة من الميدان</strong><span>طباعة، سياحة، وشركة خاصة. واليوم كل هالخبرة بالذكاء الاصطناعي.</span></div>
+  </div>
+  </section>
+
   <section class="sec reveal" id="contact">
     <div class="contact">
       <div class="cbox">
@@ -493,15 +504,15 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
         <div class="ctas"><a class="btn gold" href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20Janabi%20AI%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%81%D9%83%D8%B1%D8%A9%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D8%A8%D8%AF%D9%8A" target="_blank" rel="noopener">راسلنا على واتساب</a><button class="btn ghost" type="button" data-ask="أريد أبدي مشروع، شنو تحتاج تعرف مني؟">اسأل سراج</button></div>
       </div>
       <div class="clinks">
-        <a class="cl" href="https://wa.me/9647715110011" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg><span><b>واتساب ومكالمة</b><small class="ltr" id="ph1">07715110011</small></span></a>
-        <a class="cl" href="mailto:ali@janabiai.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><b>الإيميل</b><small class="ltr">ali@janabiai.com</small></span></a>
-        <a class="cl" href="https://www.instagram.com/1same4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg><span><b>إنستغرام</b><small class="ltr">@1same4</small></span></a>
-        <button class="cl" type="button" id="copy" style="font:inherit;cursor:pointer;text-align:start"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg><span><b>انسخ الرقم</b><small class="note" id="cn">بغداد، العراق</small></span></button>
+        <a class="cl" href="https://wa.me/9647715110011" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg><span><b>واتساب</b><small>رد سريع، كتابة أو صوت</small></span></a>
+        <a class="cl" href="mailto:ali@janabiai.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><b>الإيميل</b><small>للشركات والعروض الرسمية</small></span></a>
+        <a class="cl" href="https://www.instagram.com/1same4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg><span><b>إنستغرام</b><small>شوف شغلنا يومياً</small></span></a>
+        <button class="cl" type="button" id="copy" style="font:inherit;cursor:pointer;text-align:start"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg><span><b>انسخ رقم الهاتف</b><small class="note" id="cn">بغداد، العراق</small></span></button>
       </div>
     </div>
   </section>
 
-  <footer><span>© 2026 <span class="ltr">Janabi AI</span> · علي الجنابي · بغداد</span><span class="ltr">ali@janabiai.com</span><span>نعلّم شباب العراق الذكاء الاصطناعي ببلاش</span></footer>
+  <footer><span>© 2026 <span class="ltr">Janabi AI</span> · علي الجنابي · بغداد</span><span>نعلّم شباب العراق الذكاء الاصطناعي ببلاش</span></footer>
 </div>
 </main>
 
@@ -551,7 +562,7 @@ async function ask(text){if(busy||!text)return;busy=true;clearOpts();bubble(text
 function go(id){var t=$(id);t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
 function greet(){typeAi('أهلاً، نورتنا 👋\nأنا سراج، مساعد Janabi AI.\nتحب نتكلم كتابة، أو بصوتك؟',function(){
   opts([{t:'📞 كلّمني بصوتك',cls:'call',fn:openSheet},
-        {t:'✨ جرّب نموذج لمحلك',cls:'call',fn:function(){go('try')}},
+        {t:'✨ جرّب نموذج لشغلك',cls:'call',fn:function(){go('try')}},
         {t:'🧩 شوف خدماتنا',fn:function(){go('services')}},
         {t:'💡 عندي فكرة',fn:function(){ask('عندي فكرة مشروع وأريد أعرف منين أبدي')}}])},'big')}
 setTimeout(greet,700);
@@ -569,28 +580,33 @@ if('IntersectionObserver' in window)new IntersectionObserver(function(es){fab.cl
 
 /* builder */
 var D={
- cafe:{l:'كوفي',ph:'مثلاً: كوفي الياسمين',h:'قهوتك جاهزة',s:'اطلب من طاولتك بالباركود',cta:'احجز طاولة',bot:'هلا بيك! تحب أحجزلك طاولة؟',items:[['سبانش لاتيه','4,000'],['V60 إثيوبي','5,000'],['آيس موكا','4,500'],['كيكة تمر','3,500']]},
- food:{l:'مطعم',ph:'مثلاً: مطعم دجلة',h:'أكل البيت، بطعم أطيب',s:'اطلب توصيل أو احجز بالمطعم',cta:'اطلب بالواتساب',bot:'هلا بيك! أطلبلك توصيل لو حجز؟',items:[['مسگوف عراقي','25,000'],['تكة لحم','12,000'],['دولمة','10,000'],['قوزي على تمن','15,000']]},
+ food:{l:'مطعم وكوفي',ph:'مثلاً: كوفي الياسمين',h:'طلبك جاهز بدقيقة',s:'منيو بالباركود، وحجز طاولة',cta:'احجز طاولة',bot:'هلا بيك! تحب أحجزلك طاولة لو تطلب توصيل؟',items:[['سبانش لاتيه','4,000'],['V60 إثيوبي','5,000'],['مسگوف عراقي','25,000'],['كيكة تمر','3,500']]},
+ shop:{l:'متجر',ph:'مثلاً: متجر نور للعطور',h:'تسوّق من بيتك',s:'اطلب، والطلب يوصلك للباب',cta:'اطلب بالواتساب',bot:'هلا بيك! شنو تدور عليه اليوم؟',items:[['عطر مسائي','45,000'],['ساعة كلاسيك','60,000'],['حقيبة جلد','35,000'],['توصيل داخل بغداد','5,000']]},
+ org:{l:'مؤسسة',ph:'مثلاً: منتدى شباب بغداد',h:'خدماتنا أقرب لك',s:'استمارات، مواعيد، وأخبار',cta:'قدّم طلبك أونلاين',bot:'هلا بيك! شنو المعاملة اللي تحتاجها؟',items:[['التسجيل بالورش','مفتوح'],['حجز موعد','أونلاين'],['استمارة متابعة','دقيقة وحدة'],['آخر الأخبار','يومياً']]},
  clinic:{l:'عيادة',ph:'مثلاً: عيادة د. سارة',h:'موعدك بدقيقة',s:'احجز من تلفونك، بلا انتظار',cta:'احجز موعد',bot:'هلا بيك! أي يوم يناسبك للموعد؟',items:[['كشفية','25,000'],['تنظيف أسنان','40,000'],['تبييض','75,000'],['استشارة أونلاين','15,000']]},
  co:{l:'شركة',ph:'مثلاً: شركة الرافدين للتجارة',h:'شريكك الموثوق',s:'خدماتنا، عروضنا، وتواصل مباشر',cta:'اطلب عرض سعر',bot:'هلا بيك! شنو الخدمة اللي تحتاجها؟',items:[['استشارة أولى','مجانية'],['عرض سعر','خلال يوم'],['تنفيذ','حسب الاتفاق'],['دعم فني','24 ساعة']]}};
 var S={lux:{bg:'#0f1424',fg:'#f3eee2',acc:'#d4a24c',on:'#1b1404',hero:'linear-gradient(135deg,#1c2440,#2b2010)',hfg:'#f3eee2',card:'#1a2035'},
  warm:{bg:'#f6efe3',fg:'#3b2416',acc:'#8a4b2a',on:'#fff',hero:'linear-gradient(135deg,#e8d5b9,#d9b48c)',hfg:'#3b2416',card:'#efe3d0'},
  fresh:{bg:'#ffffff',fg:'#0d2a2a',acc:'#0f9b8e',on:'#fff',hero:'linear-gradient(135deg,#d9f4f0,#bfe8f5)',hfg:'#0d2a2a',card:'#f0f6f6'}};
-var sec='cafe',sty='lux',scr=$('screen');
+var sec='food',sty='lux',scr=$('screen');
 function pressGroup(g,attr,val){g.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset[attr]===val)})}
 $('sector').onclick=function(e){var b=e.target.closest('button');if(!b)return;sec=b.dataset.k;pressGroup(this,'k',sec);$('bn').placeholder=D[sec].ph;render(false)};
 $('style').onclick=function(e){var b=e.target.closest('button');if(!b)return;sty=b.dataset.s;pressGroup(this,'s',sty);render(false)};
 function nm(){var v=$('bn').value.trim();return v||D[sec].ph.replace('مثلاً: ','')}
 function render(anim){var d=D[sec],s=S[sty],n=nm();
   scr.style.setProperty('--p-bg',s.bg);scr.style.setProperty('--p-fg',s.fg);scr.style.setProperty('--p-acc',s.acc);scr.style.setProperty('--p-on',s.on);scr.style.setProperty('--p-hero',s.hero);scr.style.setProperty('--p-hfg',s.hfg);scr.style.setProperty('--p-card',s.card);
-  $('pn').textContent=n;var core=n.replace(/^(كوفي|كافيه|مطعم|عيادة|شركة|د\.)\s*/,'').replace(/^ال/,'');$('pl').textContent=(core||n).charAt(0);
+  $('pn').textContent=n;var core=n.replace(/^(كوفي|كافيه|مطعم|عيادة|شركة|متجر|منتدى|مؤسسة|دائرة|د\.)\s*/,'').replace(/^ال/,'');$('pl').textContent=(core||n).charAt(0);
   $('ph').textContent=d.h;$('ps').textContent=d.s;$('pc').textContent=d.cta;$('pb').textContent=d.bot.replace('هلا بيك!','هلا بيك بـ'+n+'!');
   $('pm').innerHTML='';d.items.forEach(function(it){var r=el('div','p-item');r.appendChild(el('b',null,''));r.firstChild.textContent=it[0];var sp=el('span');sp.textContent=it[1];r.appendChild(sp);$('pm').appendChild(r)});
   qr(n);if(anim)play();else{scr.className='screen';ticks(5)}}
 function ticks(n){$('ticks').querySelectorAll('li').forEach(function(li,i){li.classList.toggle('on',i<n)})}
-var timer=[];function play(){timer.forEach(clearTimeout);timer=[];if(still){scr.className='screen';ticks(5);return}
-  scr.className='screen build';ticks(0);for(var k=1;k<=5;k++)(function(k){timer.push(setTimeout(function(){scr.className='screen build s'+k;ticks(k)},k*650))})(k);
-  timer.push(setTimeout(function(){scr.className='screen'},6*650))}
+var timer=[],ph=document.querySelector('.phone'),qrb=document.querySelector('.qrbox');
+function play(){timer.forEach(clearTimeout);timer=[];if(still){scr.className='screen';ticks(5);return}
+  var n=$('pn').textContent,i=0;ph.classList.add('on');qrb.style.opacity='.15';
+  scr.className='screen build s1';ticks(0);$('pn').textContent='';$('pn').classList.add('caret');
+  (function tp(){i++;$('pn').textContent=n.slice(0,i);if(i<n.length)timer.push(setTimeout(tp,55));else $('pn').classList.remove('caret')})();
+  for(var k=1;k<=5;k++)(function(k){timer.push(setTimeout(function(){scr.className='screen build s'+k;ticks(k)},300+k*800))})(k);
+  timer.push(setTimeout(function(){scr.className='screen';qrb.style.transition='opacity .6s';qrb.style.opacity='1';ph.classList.remove('on')},300+6*800))}
 function qr(n){var msg='أريد نموذج مثل '+n;
   var url=WA+'?text='+encodeURIComponent(msg);
   try{var q=qrcode(0,'L');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:3,margin:2,scalable:true})}catch(e){$('qr').textContent='QR'}
@@ -598,6 +614,32 @@ function qr(n){var msg='أريد نموذج مثل '+n;
 $('build').onclick=function(){render(true);if(innerWidth<900)$('screen').scrollIntoView({behavior:still?'auto':'smooth',block:'center'})};
 $('bn').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();render(true)}});
 render(false);
+if('IntersectionObserver' in window){var seen=false;new IntersectionObserver(function(es){if(es[0].isIntersecting&&!seen){seen=true;render(true)}},{threshold:.45}).observe($('screen'))}
+
+/* rotating sector line */
+var RW=['المطاعم والكوفيات','العيادات','المتاجر','الشركات','المؤسسات'],ri=0,rot=$('rot');
+if(!still&&rot)setInterval(function(){ri=(ri+1)%RW.length;rot.textContent=RW[ri];rot.classList.remove('sw');void rot.offsetWidth;rot.classList.add('sw')},2400);
+
+/* interactive field: gold dots that drift and move away from finger / mouse */
+(function(){var c=$('fx');if(!c||still)return;var x=c.getContext('2d'),P=[],W,H,dpr=Math.min(2,devicePixelRatio||1),m={x:-999,y:-999},run=true;
+  function size(){var r=c.getBoundingClientRect();W=r.width;H=r.height;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.max(42,Math.min(80,W*H/8000)));P=[];for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.8+.9})}
+  function col(a){return dark()?'rgba(226,164,58,'+a+')':'rgba(154,100,9,'+a+')'}
+  function tick(){if(!run)return;x.clearRect(0,0,W,H);
+    for(var i=0;i<P.length;i++){var p=P[i],dx=p.x-m.x,dy=p.y-m.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<110){p.vx+=dx/d*.08;p.vy+=dy/d*.08}p.vx*=.985;p.vy*=.985;p.vx+=(Math.random()-.5)*.01;p.vy+=(Math.random()-.5)*.01;p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle=col(.9);x.fill();
+      for(var j=i+1;j<P.length;j++){var q=P[j],e=Math.hypot(p.x-q.x,p.y-q.y);if(e<100){x.strokeStyle=col((1-e/100)*.4);x.lineWidth=.8;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}}
+    requestAnimationFrame(tick)}
+  function pt(e){var r=c.getBoundingClientRect(),t=e.touches?e.touches[0]:e;m.x=t.clientX-r.left;m.y=t.clientY-r.top}
+  var hero=document.querySelector('.hero');hero.addEventListener('pointermove',pt);hero.addEventListener('touchmove',pt,{passive:true});
+  hero.addEventListener('pointerleave',function(){m.x=m.y=-999});hero.addEventListener('touchend',function(){m.x=m.y=-999});
+  new IntersectionObserver(function(es){var v=es[0].isIntersecting;if(v&&!run){run=true;tick()}else if(!v)run=false}).observe(hero);
+  addEventListener('resize',size);size();tick()})();
+
+/* preload Siraj voice panel so it opens fast */
+(window.requestIdleCallback||function(f){setTimeout(f,2500)})(function(){setTimeout(function(){if(!fr){fr=el('iframe');fr.src='/new/?embed=1';fr.title='سراج';fr.allow='microphone';fr.loading='eager';sheet.firstChild.appendChild(fr)}},2500)});
+
 
 /* ROI */
 function fmt(n){return n.toLocaleString('en-US')}
