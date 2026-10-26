@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src blob:; connect-src https://janabi-agent.1same42002.workers.dev; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="robots" content="noindex">
-<title>علي الجنابي · استشارات رقمية</title>
+<title>سراج · مساعد Janabi AI</title>
 <meta name="theme-color" content="#1f4fd1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 60'%3E%3Cpath d='M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z' fill='%23e3a13a'/%3E%3Crect x='12' y='28' width='16' height='29' rx='2.5' fill='none' stroke='%2313213a' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,7 +131,7 @@ html.embed .s.big{font-size:1.05rem}
 <body>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="/new/"><svg viewBox="0 0 40 52" aria-hidden="true"><path class="fl" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="var(--fg)" stroke-width="2"/></svg><span>علي الجنابي<small>استشارات رقمية</small></span></a>
+    <a class="brand" href="/new/"><svg viewBox="0 0 40 52" aria-hidden="true"><path class="fl" d="M20 3C27 13 26 19 20 23C14 19 13 13 20 3Z"/><line x1="20" y1="23" x2="20" y2="28" stroke="var(--fg)" stroke-width="2"/><rect x="11" y="28" width="18" height="40" rx="3" fill="none" stroke="var(--fg)" stroke-width="2"/></svg><span>Janabi AI<small>حلول واستشارات رقمية</small></span></a>
     <div class="acts">
     <a class="ic" href="/en/" lang="en" hreflang="en" aria-label="English">EN</a>
     <button class="ic" id="theme" type="button" aria-label="الإنارة"></button>
@@ -281,7 +281,7 @@ function grow(){ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,
 ta.addEventListener('input',grow);
 ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();f.requestSubmit()}});
 f.onsubmit=function(e){e.preventDefault();var v=ta.value.trim();if(!v||busy)return;ta.value='';grow();ask(v)};
-setTimeout(function(){say('هلا بيكم 👋\nآني <em>سراج</em>، مساعد علي الجنابي الذكي\nشلون أگدر أخدمكم اليوم؟','big',options)},500);
+setTimeout(function(){say('هلا بيكم 👋\nأنا <em>سراج</em>، مساعد Janabi AI\nشلون أگدر أخدمكم اليوم؟','big',options)},500);
 })();
 </script>
 
