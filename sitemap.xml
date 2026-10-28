@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://janabiai.com/</loc><lastmod>2026-10-26</lastmod><priority>1.0</priority>
+  <url><loc>https://janabiai.com/</loc><lastmod>2026-10-28</lastmod><priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://janabiai.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://janabiai.com/en/"/></url>
-  <url><loc>https://janabiai.com/en/</loc><lastmod>2026-10-26</lastmod><priority>0.9</priority>
+  <url><loc>https://janabiai.com/en/</loc><lastmod>2026-10-28</lastmod><priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="ar" href="https://janabiai.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://janabiai.com/en/"/></url>
+  <url><loc>https://janabiai.com/ali/</loc><lastmod>2026-10-28</lastmod><priority>0.8</priority></url>
 </urlset>
