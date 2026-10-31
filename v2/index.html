@@ -569,7 +569,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 <script>
 (function(){
 var R=document.documentElement,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var API='https://janabi-agent.1same42002.workers.dev',WA='https://wa.me/9647715110011';
+var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='https://wa.me/9647715110011';
 function $(i){return document.getElementById(i)}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
 
@@ -588,7 +588,11 @@ $('en').onclick=function(){try{localStorage.setItem('lang','en')}catch(e){}};
 /* ذاكرة الزائر: آخر كلامه ويا سراج (كتابة ومكالمة) محفوظة بمتصفحه بس */
 function memLoad(){try{return JSON.parse(localStorage.getItem('sj_mem')||'[]')}catch(e){return[]}}
 function memAdd(role,text){text=String(text||'').trim();if(!text)return;var m=memLoad();m.push({role:role,text:text.slice(0,600)});try{localStorage.setItem('sj_mem',JSON.stringify(m.slice(-30)))}catch(e){}}
-var log=$('log'),orb=$('orb'),hist=memLoad().slice(-12),busy=false;
+var log=$('log'),orb=$('orb'),hist=memLoad().slice(-12),busy=false,sess=[],sentN=0,SID=Math.random().toString(36).slice(2,10)+Date.now().toString(36);
+/* نهاية الزيارة: نرسل محادثة الكتابة والبصمات كاملة حتى تنحفظ بالشيت */
+function sendLog(){if(!sess.some(function(x){return x.role==='user'})||sess.length===sentN)return;sentN=sess.length;
+  try{navigator.sendBeacon(API+'/log',new Blob([JSON.stringify({sid:SID,history:sess})],{type:'text/plain'}))}catch(e){}}
+addEventListener('pagehide',sendLog);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')sendLog()});
 function down(){log.scrollTop=log.scrollHeight}
 function bubble(t,cls){var b=el('div','m '+cls);b.textContent=t;log.appendChild(b);down();return b}
 function typeAi(t,done,cls){var b=bubble('','ai'+(cls?' '+cls:''));if(still){b.textContent=t;done&&done();return}var i=0;(function s(){i+=2;b.textContent=t.slice(0,i);down();if(i<t.length)setTimeout(s,18);else done&&done()})()}
@@ -596,14 +600,15 @@ function opts(list){var w=el('div','s-opts');list.forEach(function(o){var c;if(o
 function clearOpts(){log.querySelectorAll('.s-opts').forEach(function(x){x.remove()})}
 function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
-  var body={text:text||'',history:hist.slice(-12),file:file||null};hist.push({role:'user',text:text||'[رسالة صوتية]'});memAdd('user',text||'[رسالة صوتية]');
+  var body={text:text||'',history:hist.slice(-12),file:file||null,sid:SID};var me={role:'user',text:text||'🎙️ (بصمة)'};hist.push(me);sess.push(me);
   var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
   try{var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    var tr=r.headers.get('X-Transcript');if(tr){try{me.text='🎙️ '+decodeURIComponent(tr)}catch(_){}}memAdd('user',me.text);
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
           try{var j=JSON.parse(line.slice(5)),c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];var t=ps.filter(function(p){return!p.thought}).map(function(p){return p.text||''}).join('');if(t){full+=t;w.className='m ai';w.textContent=clean(full);down()}}catch(_){}}}
-      full=clean(full).trim();w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full){hist.push({role:'model',text:full});memAdd('model',full)}}
+      full=clean(full).trim();w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full){var ai={role:'model',text:full};hist.push(ai);sess.push(ai);memAdd('model',full)}}
     else{var d={};try{d=await r.json()}catch(_){}w.className='m ai';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
   catch(e){w.className='m ai';w.textContent='ماكو اتصال هسه. جرّب بعد شوية، أو احچي ويا علي بالواتساب.'}
   orb.classList.remove('think');busy=false;down();
