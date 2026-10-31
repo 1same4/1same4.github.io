@@ -251,6 +251,7 @@ button{font:inherit}
 .scrim.on{display:block}
 .mic.rec{background:#c0392b!important;color:#fff!important;border-color:#c0392b!important;animation:recp 1s infinite}
 .mic.callb{background:var(--gbtn,linear-gradient(135deg,#F0BC5E,#D99B26))!important;color:var(--on-gold)!important;border:0!important}
+.hcall{margin-inline-start:auto;border:0;border-radius:999px;padding:7px 14px;background:var(--gbtn,linear-gradient(135deg,#F0BC5E,#D99B26));color:var(--on-gold);font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap}
 .callpill{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,140%);z-index:90;display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-radius:999px;background:var(--surface);color:var(--fg);border:1px solid var(--gold);box-shadow:0 10px 34px rgba(0,0,0,.28);transition:transform .35s ease;max-width:calc(100vw - 24px);font-size:.95rem}
 .callpill.on{transform:translate(-50%,0)}
 .callpill .cdot{width:10px;height:10px;border-radius:50%;background:var(--gold-2);flex:none}
@@ -385,7 +386,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 
     <div class="siraj" id="siraj">
       <div class="siraj-in">
-        <div class="s-head"><span class="orb" id="orb"><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M10 2C15 9 15 14 10 18C5 14 5 9 10 2Z" fill="#fff"/><rect x="7" y="22" width="6" height="16" rx="1.4" fill="#fff"/></svg></span><div><b>سراج</b><small>مساعد Janabi AI · متصل هسه</small></div><button class="ibtn s-x" id="sx2" type="button" aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="s-head"><span class="orb" id="orb"><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M10 2C15 9 15 14 10 18C5 14 5 9 10 2Z" fill="#fff"/><rect x="7" y="22" width="6" height="16" rx="1.4" fill="#fff"/></svg></span><div><b>سراج</b><small>مساعد Janabi AI · متصل هسه</small></div><button class="hcall" id="hcall" type="button" aria-label="اتصل بسراج بصوتك">📞 اتصل</button><button class="ibtn s-x" id="sx2" type="button" aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
         <div class="s-log" id="log" aria-live="polite"></div>
         <form class="s-form" id="sf" autocomplete="off">
           <input id="si" maxlength="600" placeholder="اكتب رسالتك لسراج…" aria-label="رسالتك لسراج">
@@ -660,12 +661,16 @@ async function startCall(){
   c.tick=setInterval(function(){var left=Math.max(0,300-(Date.now()-c.t0)/1000);ptm.textContent=fmt(left)+(DBG?'':'');if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok'},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
   c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
+  c.ws.onopen=function(){dbg('الموقع اتصل بالعامل')};
   c.ws.onerror=function(){if(!c.ready)fail(c,'ما گدرت أتصل بالمكالمة هسه. اكتب لي أو دز بصمة 🎙️')};
-  c.ws.onclose=function(){if(call===c)stopCall(c.ready?null:'ما گدرت أتصل بالمكالمة هسه. اكتب لي أو دز بصمة 🎙️')};
-  c.guard=setTimeout(function(){if(!c.ready)fail(c,'الاتصال تأخر. جرّب مرة ثانية أو اكتب لي.')},12000)}
+  c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:'ما گدرت أتصل بالمكالمة هسه'+(DBG&&c.why?' — '+c.why:'')+'. اكتب لي أو دز بصمة 🎙️')};
+  c.guard=setTimeout(function(){if(!c.ready)fail(c,'الاتصال تأخر. جرّب مرة ثانية أو اكتب لي.'+(DBG?' (حالة الاتصال: '+c.ws.readyState+')':''))},20000)}
 function fail(c,msg){if(call===c)stopCall(msg)}
 function say(c,key,txt,cls){if(!txt)return;if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean((c[key].textContent||'')+txt);down()}
+function dbg(t){if(DBG)bubble('🔧 '+t,'ai')}
 function onLive(c,m){
+  if(m.sirajStatus){dbg(m.sirajStatus);return}
+  if(m.sirajClosed!=null){dbg('Gemini سكّر: '+m.sirajClosed+' '+(m.reason||''));c.why='Gemini رفض الاتصال ('+m.sirajClosed+')';return}
   if(m.sirajError){fail(c,'الوكيل مشغول هسه. اكتب لي أو دز بصمة 🎙️');return}
   if(m.sirajLimit){bubble('خلصت دقايق المكالمة. إذا تحب نكمل، اكتب لي أو دز لعلي واتساب.','ai');return}
   if(m.sirajLead){bubble('✅ انحفظ طلبك','ai');return}
@@ -695,6 +700,7 @@ function stopCall(msg){var c=call;if(!c)return;call=null;clearInterval(c.tick);c
   pill.className='callpill';orb.classList.remove('think');
   if(msg)bubble(msg,'ai');
   opts([{t:'📞 كلّمني مرة ثانية',cls:'call',fn:startCall},{t:'💬 واتساب',href:WA}])}
+$('hcall').onclick=function(){call?stopCall():startCall()};
 $('callbtn').onclick=function(){call?stopCall():startCall()};$('cend').onclick=function(){stopCall()};
 
 document.querySelectorAll('[data-ask]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();float();setTimeout(function(){ask(a.dataset.ask)},300)})});
