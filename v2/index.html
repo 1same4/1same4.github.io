@@ -682,7 +682,7 @@ function onLive(c,m){
   if(sc){
     if(sc.interrupted){c.srcs.forEach(function(s){try{s.stop()}catch(_){}});c.srcs=[];c.next=0;cstate('أسمعك…','hear');c.ab=null}
     var ps=sc.modelTurn&&sc.modelTurn.parts||[];
-    ps.forEach(function(p){if(p.inlineData&&p.inlineData.data){try{play(c,p.inlineData.data)}catch(e){if(!c.perr){c.perr=1;dbg('خطأ تشغيل الصوت: '+e.message)}}}});
+    ps.forEach(function(p){if(p.inlineData&&p.inlineData.data){try{playPcm(c,p.inlineData.data)}catch(e){if(!c.perr){c.perr=1;dbg('خطأ تشغيل الصوت: '+e.message)}}}});
     if(sc.inputTranscription&&sc.inputTranscription.text){if(c.ab)c.ab=null;say(c,'ub',sc.inputTranscription.text,'m me')}
     if(sc.outputTranscription&&sc.outputTranscription.text){c.ub=null;say(c,'ab',sc.outputTranscription.text,'m ai')}
     if(sc.turnComplete){c.ub=null;c.ab=null;if(c.ending)setTimeout(function(){if(call===c)stopCall()},Math.max(0,(c.next-c.ctx.currentTime))*1000+500)}}
@@ -691,7 +691,7 @@ function onLive(c,m){
     if(fc.name==='end_call'){c.ending=true;setTimeout(function(){if(call===c)stopCall()},15000)}
     rs.push({id:fc.id,name:fc.name,response:{result:'ok'}})});
     c.ws.send(JSON.stringify({toolResponse:{functionResponses:rs}}))}}
-function play(c,b64){var buf=a2b(b64);if(buf.byteLength%2)buf=buf.slice(0,buf.byteLength-1);var u=new Int16Array(buf),f=new Float32Array(u.length);c.nAud=(c.nAud||0)+1;if(c.ctx.state!=='running')c.ctx.resume();for(var i=0;i<u.length;i++)f[i]=u[i]/32768;
+function playPcm(c,b64){var buf=a2b(b64);if(buf.byteLength%2)buf=buf.slice(0,buf.byteLength-1);var u=new Int16Array(buf),f=new Float32Array(u.length);c.nAud=(c.nAud||0)+1;if(c.ctx.state!=='running')c.ctx.resume();for(var i=0;i<u.length;i++)f[i]=u[i]/32768;
   var ab=c.ctx.createBuffer(1,f.length,24000);ab.getChannelData(0).set(f);var s=c.ctx.createBufferSource();s.buffer=ab;s.connect(c.ctx.destination);
   var at=Math.max(c.ctx.currentTime+0.02,c.next);s.start(at);c.next=at+ab.duration;c.srcs.push(s);cstate('سراج يحچي…','talk');
   s.onended=function(){var k=c.srcs.indexOf(s);if(k>=0)c.srcs.splice(k,1);if(!c.srcs.length&&call===c&&c.ready)cstate('أسمعك…','hear')}}
