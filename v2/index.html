@@ -644,6 +644,8 @@ async function voice(){
 mic.onclick=voice;
 
 /* ===== سراج لايف: مكالمة صوتية مباشرة (Gemini Live عبر الـWorker) ===== */
+var LIVE_SEC=240,CALLS_PER_DAY=3;
+function callsToday(add){var d=new Date().toDateString(),o={};try{o=JSON.parse(localStorage.getItem('sj_calls')||'{}')}catch(e){}if(o.d!==d)o={d:d,n:0};if(add){o.n++;try{localStorage.setItem('sj_calls',JSON.stringify(o))}catch(e){}}return o.n}
 var LIVE='wss://red-wood-5f23janabi-agent-live.1same42002.workers.dev/live',call=null,DBG=/[?&]debug=1/.test(location.search);
 var pill=$('callpill'),pst=$('cst'),ptm=$('ctm'),pus=$('cus'),usage={tok:0};
 function b2a(buf){var s='',u=new Uint8Array(buf);for(var i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
@@ -653,15 +655,16 @@ function sampleOpen(kind,name){if(!D[kind])return;sec=kind;pressGroup($('sector'
   var t=$('try');t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
 async function startCall(){
   if(call)return;clearOpts();
+  if(!DBG&&callsToday()>=CALLS_PER_DAY){bubble('اليوم سوينا '+CALLS_PER_DAY+' مكالمات 😄 كمّل وياي كتابة، أو دزلي بصمة، أو احچي ويا علي واتساب.','ai');opts([{t:'🎙️ دز بصمة',fn:voice},{t:'💬 واتساب',href:WA}]);return}
   if(!navigator.mediaDevices||!window.AudioWorklet||!window.WebSocket){bubble('متصفحك ما يدعم المكالمة. اكتب لي أو دز بصمة 🎙️','ai');return}
+  var ctx=new(window.AudioContext||window.webkitAudioContext)();ctx.resume();  /* نسويه لحظة الضغطة حتى الآيفون يسمح بالصوت */
   var st;try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}})}
-  catch(e){bubble('ما گدرت أفتح المايك. اسمح للموقع يستخدمه وجرّب مرة ثانية.','ai');return}
-  var ctx=new(window.AudioContext||window.webkitAudioContext)();
+  catch(e){try{ctx.close()}catch(_){}bubble('ما گدرت أفتح المايك. اسمح للموقع يستخدمه وجرّب مرة ثانية.','ai');return}
   try{await ctx.resume();await ctx.audioWorklet.addModule('/siraj-worklet.js')}catch(e){st.getTracks().forEach(function(t){t.stop()});bubble('صار خلل بتشغيل الصوت. جرّب مرة ثانية.','ai');return}
   var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
   var c=call={ws:new WebSocket(LIVE),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
   cstate('دا أتصل…','wait');orb.classList.add('think');
-  c.tick=setInterval(function(){var left=Math.max(0,300-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
+  c.tick=setInterval(function(){var left=Math.max(0,LIVE_SEC-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
   c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
   c.ws.onopen=function(){dbg('الموقع اتصل بالعامل')};
@@ -669,7 +672,7 @@ async function startCall(){
   c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:'ما گدرت أتصل بالمكالمة هسه'+(DBG&&c.why?' — '+c.why:'')+'. اكتب لي أو دز بصمة 🎙️')};
   c.guard=setTimeout(function(){if(!c.ready)fail(c,'الاتصال تأخر. جرّب مرة ثانية أو اكتب لي.'+(DBG?' (حالة الاتصال: '+c.ws.readyState+')':''))},20000)}
 function fail(c,msg){if(call===c)stopCall(msg)}
-function say(c,key,txt,cls){if(!txt)return;c[key+'T']=(c[key+'T']||'')+txt;var show=c[key+'T'];if(key==='ub'&&/[\u0900-\u0DFF]/.test(show))show='🎙️ …';if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean(show);down()}
+function say(c,key,txt,cls){if(!txt)return;c[key+'T']=(c[key+'T']||'')+txt;var show=c[key+'T'];if(!DBG)return;if(key==='ub'&&/[\u0900-\u0DFF]/.test(show))show='🎙️ …';if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean(show);down()}
 function keep(c){if(c.ubT)memAdd('user',c.ubT);if(c.abT)memAdd('model',c.abT);c.ubT=c.abT=''}
 function dbg(t){if(DBG)bubble('🔧 '+t,'ai')}
 function onLive(c,m){
@@ -678,9 +681,9 @@ function onLive(c,m){
   if(m.sirajError){fail(c,'الوكيل مشغول هسه. اكتب لي أو دز بصمة 🎙️');return}
   if(m.sirajLimit){bubble('خلصت دقايق المكالمة. إذا تحب نكمل، اكتب لي أو دز لعلي واتساب.','ai');return}
   if(m.sirajLead){bubble('✅ انحفظ طلبك','ai');return}
-  if(m.sirajPhone){var ph=m.sirajPhone;bubble('📱 '+ph.v+' · '+ph.n+' رقم '+(ph.ok?'✅':'⚠️ مو كامل'),'ai');return}
+  if(m.sirajPhone){if(!DBG)return;var ph=m.sirajPhone;bubble('📱 '+ph.v+' · '+ph.n+' رقم '+(ph.ok?'✅':'⚠️ مو كامل'),'ai');return}
   if(m.usageMetadata){usage.tok=m.usageMetadata.totalTokenCount||usage.tok;window.__sirajUsage={sec:Math.round((Date.now()-c.t0)/1000),tokens:usage.tok};if(DBG)console.log('usage',window.__sirajUsage)}
-  if(m.setupComplete){c.ready=true;clearTimeout(c.guard);if(DBG){try{var o=c.ctx.createOscillator(),g=c.ctx.createGain();g.gain.value=.15;o.frequency.value=660;o.connect(g);g.connect(c.ctx.destination);o.start();o.stop(c.ctx.currentTime+.25);dbg('صفرة اختبار 🔔 (لازم تسمعها) · الصوت: '+c.ctx.state)}catch(e){dbg('الصفرة فشلت: '+e.message)}}orb.classList.remove('think');cstate('أسمعك…','hear');
+  if(m.setupComplete){c.ready=true;c.tr=Date.now();callsToday(true);clearTimeout(c.guard);if(DBG){try{var o=c.ctx.createOscillator(),g=c.ctx.createGain();g.gain.value=.15;o.frequency.value=660;o.connect(g);g.connect(c.ctx.destination);o.start();o.stop(c.ctx.currentTime+.25);dbg('صفرة اختبار 🔔 (لازم تسمعها) · الصوت: '+c.ctx.state)}catch(e){dbg('الصفرة فشلت: '+e.message)}}orb.classList.remove('think');cstate('أسمعك…','hear');
     var mm=memLoad();var open0=mm.length?('هذا زائر رجع. ملخص كلامه السابق وياك (الزبون/سراج):\n'+mm.slice(-16).map(function(x){return(x.role==='user'?'الزبون: ':'سراج: ')+x.text}).join('\n').slice(-1800)+'\nهسه فتح مكالمة جديدة. رحّب بيه بجملة وحدة كأنك تتذكره، وكمّل وياه.'):'الزبون فتح المكالمة هسه. رحّب فيه بجملة وحدة.';
     c.ws.send(JSON.stringify({realtimeInput:{text:open0}}));return}
   var sc=m.serverContent;
@@ -705,7 +708,7 @@ function stopCall(msg){var c=call;if(!c)return;call=null;keep(c);clearInterval(c
   try{c.ws.readyState===1&&c.ws.send(JSON.stringify({sirajBye:true}))}catch(_){}try{c.ws.close()}catch(_){}
   c.srcs.forEach(function(s){try{s.stop()}catch(_){}});try{c.node.disconnect()}catch(_){}c.st.getTracks().forEach(function(t){t.stop()});try{c.ctx.close()}catch(_){}
   pill.className='callpill';orb.classList.remove('think');
-  if(msg)bubble(msg,'ai');
+  if(msg)bubble(msg,'ai');else if(c.tr){var sd=Math.round((Date.now()-c.tr)/1000);bubble('📞 انتهت المكالمة ويا سراج ('+Math.floor(sd/60)+':'+('0'+sd%60).slice(-2)+')','ai')}
   opts([{t:'📞 كلّمني مرة ثانية',cls:'call',fn:startCall},{t:'💬 واتساب',href:WA}])}
 $('hcall').onclick=function(){call?stopCall():startCall()};
 $('callbtn').onclick=function(){call?stopCall():startCall()};$('cend').onclick=function(){stopCall()};
