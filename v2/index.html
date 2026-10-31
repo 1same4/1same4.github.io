@@ -585,7 +585,10 @@ $('en').onclick=function(){try{localStorage.setItem('lang','en')}catch(e){}};
 
 
 /* siraj inline */
-var log=$('log'),orb=$('orb'),hist=[],busy=false;
+/* ذاكرة الزائر: آخر كلامه ويا سراج (كتابة ومكالمة) محفوظة بمتصفحه بس */
+function memLoad(){try{return JSON.parse(localStorage.getItem('sj_mem')||'[]')}catch(e){return[]}}
+function memAdd(role,text){text=String(text||'').trim();if(!text)return;var m=memLoad();m.push({role:role,text:text.slice(0,600)});try{localStorage.setItem('sj_mem',JSON.stringify(m.slice(-30)))}catch(e){}}
+var log=$('log'),orb=$('orb'),hist=memLoad().slice(-12),busy=false;
 function down(){log.scrollTop=log.scrollHeight}
 function bubble(t,cls){var b=el('div','m '+cls);b.textContent=t;log.appendChild(b);down();return b}
 function typeAi(t,done,cls){var b=bubble('','ai'+(cls?' '+cls:''));if(still){b.textContent=t;done&&done();return}var i=0;(function s(){i+=2;b.textContent=t.slice(0,i);down();if(i<t.length)setTimeout(s,18);else done&&done()})()}
@@ -593,14 +596,14 @@ function opts(list){var w=el('div','s-opts');list.forEach(function(o){var c;if(o
 function clearOpts(){log.querySelectorAll('.s-opts').forEach(function(x){x.remove()})}
 function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
-  var body={text:text||'',history:hist.slice(-12),file:file||null};hist.push({role:'user',text:text||'[رسالة صوتية]'});
+  var body={text:text||'',history:hist.slice(-12),file:file||null};hist.push({role:'user',text:text||'[رسالة صوتية]'});memAdd('user',text||'[رسالة صوتية]');
   var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
   try{var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
           try{var j=JSON.parse(line.slice(5)),c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];var t=ps.filter(function(p){return!p.thought}).map(function(p){return p.text||''}).join('');if(t){full+=t;w.className='m ai';w.textContent=clean(full);down()}}catch(_){}}}
-      full=clean(full).trim();w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full)hist.push({role:'model',text:full})}
+      full=clean(full).trim();w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full){hist.push({role:'model',text:full});memAdd('model',full)}}
     else{var d={};try{d=await r.json()}catch(_){}w.className='m ai';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
   catch(e){w.className='m ai';w.textContent='ماكو اتصال هسه. جرّب بعد شوية، أو احچي ويا علي بالواتساب.'}
   orb.classList.remove('think');busy=false;down();
@@ -666,7 +669,8 @@ async function startCall(){
   c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:'ما گدرت أتصل بالمكالمة هسه'+(DBG&&c.why?' — '+c.why:'')+'. اكتب لي أو دز بصمة 🎙️')};
   c.guard=setTimeout(function(){if(!c.ready)fail(c,'الاتصال تأخر. جرّب مرة ثانية أو اكتب لي.'+(DBG?' (حالة الاتصال: '+c.ws.readyState+')':''))},20000)}
 function fail(c,msg){if(call===c)stopCall(msg)}
-function say(c,key,txt,cls){if(!txt)return;if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean((c[key].textContent||'')+txt);down()}
+function say(c,key,txt,cls){if(!txt)return;c[key+'T']=(c[key+'T']||'')+txt;var show=c[key+'T'];if(key==='ub'&&/[\u0900-\u0DFF]/.test(show))show='🎙️ …';if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean(show);down()}
+function keep(c){if(c.ubT)memAdd('user',c.ubT);if(c.abT)memAdd('model',c.abT);c.ubT=c.abT=''}
 function dbg(t){if(DBG)bubble('🔧 '+t,'ai')}
 function onLive(c,m){
   if(m.sirajStatus){dbg(m.sirajStatus);return}
@@ -676,16 +680,17 @@ function onLive(c,m){
   if(m.sirajLead){bubble('✅ انحفظ طلبك','ai');return}
   if(m.usageMetadata){usage.tok=m.usageMetadata.totalTokenCount||usage.tok;window.__sirajUsage={sec:Math.round((Date.now()-c.t0)/1000),tokens:usage.tok};if(DBG)console.log('usage',window.__sirajUsage)}
   if(m.setupComplete){c.ready=true;clearTimeout(c.guard);if(DBG){try{var o=c.ctx.createOscillator(),g=c.ctx.createGain();g.gain.value=.15;o.frequency.value=660;o.connect(g);g.connect(c.ctx.destination);o.start();o.stop(c.ctx.currentTime+.25);dbg('صفرة اختبار 🔔 (لازم تسمعها) · الصوت: '+c.ctx.state)}catch(e){dbg('الصفرة فشلت: '+e.message)}}orb.classList.remove('think');cstate('أسمعك…','hear');
-    c.ws.send(JSON.stringify({realtimeInput:{text:'الزبون فتح المكالمة هسه. رحّب فيه بجملة وحدة.'}}));return}
+    var mm=memLoad();var open0=mm.length?('هذا زائر رجع. ملخص كلامه السابق وياك (الزبون/سراج):\n'+mm.slice(-16).map(function(x){return(x.role==='user'?'الزبون: ':'سراج: ')+x.text}).join('\n').slice(-1800)+'\nهسه فتح مكالمة جديدة. رحّب بيه بجملة وحدة كأنك تتذكره، وكمّل وياه.'):'الزبون فتح المكالمة هسه. رحّب فيه بجملة وحدة.';
+    c.ws.send(JSON.stringify({realtimeInput:{text:open0}}));return}
   var sc=m.serverContent;
   if(sc&&DBG&&!c.seenAud&&sc.modelTurn){c.seenAud=1;var pp=(sc.modelTurn.parts||[]).map(function(p){return Object.keys(p).join('+')+(p.inlineData?':'+p.inlineData.mimeType:'')}).join(' | ');dbg('أول رد صوتي: '+pp)}
   if(sc){
-    if(sc.interrupted){c.srcs.forEach(function(s){try{s.stop()}catch(_){}});c.srcs=[];c.next=0;cstate('أسمعك…','hear');c.ab=null}
+    if(sc.interrupted){keep(c);c.srcs.forEach(function(s){try{s.stop()}catch(_){}});c.srcs=[];c.next=0;cstate('أسمعك…','hear');c.ab=null}
     var ps=sc.modelTurn&&sc.modelTurn.parts||[];
     ps.forEach(function(p){if(p.inlineData&&p.inlineData.data){try{playPcm(c,p.inlineData.data)}catch(e){if(!c.perr){c.perr=1;dbg('خطأ تشغيل الصوت: '+e.message)}}}});
     if(sc.inputTranscription&&sc.inputTranscription.text){if(c.ab)c.ab=null;say(c,'ub',sc.inputTranscription.text,'m me')}
     if(sc.outputTranscription&&sc.outputTranscription.text){c.ub=null;say(c,'ab',sc.outputTranscription.text,'m ai')}
-    if(sc.turnComplete){c.ub=null;c.ab=null;if(c.ending)setTimeout(function(){if(call===c)stopCall()},Math.max(0,(c.next-c.ctx.currentTime))*1000+500)}}
+    if(sc.turnComplete){keep(c);c.ub=null;c.ab=null;if(c.ending)setTimeout(function(){if(call===c)stopCall()},Math.max(0,(c.next-c.ctx.currentTime))*1000+500)}}
   if(m.toolCall&&m.toolCall.functionCalls){var rs=[];m.toolCall.functionCalls.forEach(function(fc){var a=fc.args||{};
     if(fc.name==='open_sample'){sampleOpen(a.kind,a.name)}
     if(fc.name==='end_call'){c.ending=true;setTimeout(function(){if(call===c)stopCall()},15000)}
@@ -695,7 +700,7 @@ function playPcm(c,b64){var buf=a2b(b64);if(buf.byteLength%2)buf=buf.slice(0,buf
   var ab=c.ctx.createBuffer(1,f.length,24000);ab.getChannelData(0).set(f);var s=c.ctx.createBufferSource();s.buffer=ab;s.connect(c.ctx.destination);
   var at=Math.max(c.ctx.currentTime+0.02,c.next);s.start(at);c.next=at+ab.duration;c.srcs.push(s);cstate('سراج يحچي…','talk');
   s.onended=function(){var k=c.srcs.indexOf(s);if(k>=0)c.srcs.splice(k,1);if(!c.srcs.length&&call===c&&c.ready)cstate('أسمعك…','hear')}}
-function stopCall(msg){var c=call;if(!c)return;call=null;clearInterval(c.tick);clearTimeout(c.guard);
+function stopCall(msg){var c=call;if(!c)return;call=null;keep(c);clearInterval(c.tick);clearTimeout(c.guard);
   try{c.ws.readyState===1&&c.ws.send(JSON.stringify({sirajBye:true}))}catch(_){}try{c.ws.close()}catch(_){}
   c.srcs.forEach(function(s){try{s.stop()}catch(_){}});try{c.node.disconnect()}catch(_){}c.st.getTracks().forEach(function(t){t.stop()});try{c.ctx.close()}catch(_){}
   pill.className='callpill';orb.classList.remove('think');
