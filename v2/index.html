@@ -644,7 +644,7 @@ mic.onclick=voice;
 var LIVE='wss://red-wood-5f23janabi-agent-live.1same42002.workers.dev/live',call=null,DBG=/[?&]debug=1/.test(location.search);
 var pill=$('callpill'),pst=$('cst'),ptm=$('ctm'),pus=$('cus'),usage={tok:0};
 function b2a(buf){var s='',u=new Uint8Array(buf);for(var i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
-function a2b(b){var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u.buffer}
+function a2b(b){b=String(b).replace(/-/g,'+').replace(/_/g,'/').replace(/\s/g,'');while(b.length%4)b+='=';var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u.buffer}
 function cstate(t,cls){pst.textContent=t;pill.className='callpill on'+(cls?' '+cls:'')}
 function sampleOpen(kind,name){if(!D[kind])return;sec=kind;pressGroup($('sector'),'k',sec);$('bn').placeholder=D[sec].ph;if(name)$('bn').value=String(name).slice(0,28);render(true);
   var t=$('try');t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
@@ -658,7 +658,7 @@ async function startCall(){
   var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
   var c=call={ws:new WebSocket(LIVE),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
   cstate('دا أتصل…','wait');orb.classList.add('think');
-  c.tick=setInterval(function(){var left=Math.max(0,300-(Date.now()-c.t0)/1000);ptm.textContent=fmt(left)+(DBG?'':'');if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
+  c.tick=setInterval(function(){var left=Math.max(0,300-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
   c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
   c.ws.onopen=function(){dbg('الموقع اتصل بالعامل')};
@@ -682,7 +682,7 @@ function onLive(c,m){
   if(sc){
     if(sc.interrupted){c.srcs.forEach(function(s){try{s.stop()}catch(_){}});c.srcs=[];c.next=0;cstate('أسمعك…','hear');c.ab=null}
     var ps=sc.modelTurn&&sc.modelTurn.parts||[];
-    ps.forEach(function(p){if(p.inlineData&&p.inlineData.data)play(c,p.inlineData.data)});
+    ps.forEach(function(p){if(p.inlineData&&p.inlineData.data){try{play(c,p.inlineData.data)}catch(e){if(!c.perr){c.perr=1;dbg('خطأ تشغيل الصوت: '+e.message)}}}});
     if(sc.inputTranscription&&sc.inputTranscription.text){if(c.ab)c.ab=null;say(c,'ub',sc.inputTranscription.text,'m me')}
     if(sc.outputTranscription&&sc.outputTranscription.text){c.ub=null;say(c,'ab',sc.outputTranscription.text,'m ai')}
     if(sc.turnComplete){c.ub=null;c.ab=null;if(c.ending)setTimeout(function(){if(call===c)stopCall()},Math.max(0,(c.next-c.ctx.currentTime))*1000+500)}}
