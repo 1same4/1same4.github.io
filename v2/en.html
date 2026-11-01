@@ -613,7 +613,7 @@ async function wav(blob){var c=new(window.AudioContext||window.webkitAudioContex
   w(0,'RIFF');v.setUint32(4,36+len*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,len*2,true);
   for(var i=0;i<len;i++){var x=Math.max(-1,Math.min(1,out[i]));v.setInt16(44+i*2,x<0?x*32768:x*32767,true)}
   return{blob:new Blob([v],{type:'audio/wav'}),sec:buf.duration}}
-function fmt(t){t=Math.round(t);return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
+function fmtT(t){t=Math.round(t);return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
 async function voice(){
   if(rec&&rec.state==='recording'){rec.stop();return}
   if(busy)return;
@@ -621,10 +621,10 @@ async function voice(){
     rec.ondataavailable=function(e){chunks.push(e.data)};
     rec.onstop=async function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tick);clearTimeout(recT);mic.classList.remove('rec');inp.placeholder='Write to Siraj…';inp.disabled=false;
       var bl=new Blob(chunks,{type:rec.mimeType||'audio/webm'});if(bl.size<1500)return;var wv;try{wv=await wav(bl)}catch(_){wv={blob:bl,sec:(Date.now()-t0)/1000}}
-      var b=el('div','m me vn');var au=new Audio(URL.createObjectURL(wv.blob)),pb=el('button','chip','▶');pb.type='button';pb.onclick=function(){au.paused?au.play():au.pause()};b.appendChild(pb);b.appendChild(el('span',null,'🎙️ '+fmt(wv.sec)));log.appendChild(b);down();
+      var b=el('div','m me vn');var au=new Audio(URL.createObjectURL(wv.blob)),pb=el('button','chip','▶');pb.type='button';pb.onclick=function(){au.paused?au.play():au.pause()};b.appendChild(pb);b.appendChild(el('span',null,'🎙️ '+fmtT(wv.sec)));log.appendChild(b);down();
       ask('',{mime:(wv.blob.type||'audio/webm').split(';')[0],data:await b64(wv.blob)})};
     rec.start();t0=Date.now();mic.classList.add('rec');inp.disabled=true;inp.placeholder='🔴 Recording… 0:00 (tap the mic to send)';
-    tick=setInterval(function(){inp.placeholder='🔴 Recording… '+fmt((Date.now()-t0)/1000)+' (tap the mic to send)'},500);
+    tick=setInterval(function(){inp.placeholder='🔴 Recording… '+fmtT((Date.now()-t0)/1000)+' (tap the mic to send)'},500);
     recT=setTimeout(function(){if(rec&&rec.state==='recording')rec.stop()},60000)}
   catch(e){inp.placeholder='Could not open the mic. Please allow microphone access'}}
 mic.onclick=voice;
