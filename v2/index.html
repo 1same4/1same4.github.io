@@ -671,7 +671,7 @@ async function startCall(){
   try{await ctx.resume();await ctx.audioWorklet.addModule('/siraj-worklet.js')}catch(e){st.getTracks().forEach(function(t){t.stop()});bubble('صار خلل بتشغيل الصوت. جرّب مرة ثانية.','ai');return}
   var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
   var c=call={ws:new WebSocket(LIVE),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
-  cstate('دا أتصل…','wait');orb.classList.add('think');
+  fab.classList.remove('show');cstate('دا أتصل…','wait');orb.classList.add('think');
   c.tick=setInterval(function(){var left=Math.max(0,LIVE_SEC-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
   c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
@@ -727,10 +727,10 @@ document.querySelectorAll('[data-ask]').forEach(function(a){a.addEventListener('
 var fab=$('fab'),sir=$('siraj'),scrim=$('scrim'),ph0=null;
 function float(){if(sir.classList.contains('float'))return;var r=sir.getBoundingClientRect();if(r.top>=0&&r.bottom<=innerHeight)return;ph0=el('div');ph0.style.height=sir.offsetHeight+'px';sir.parentNode.insertBefore(ph0,sir);sir.classList.add('float');scrim.classList.add('on');fab.classList.remove('show')}
 function unfloat(){if(!sir.classList.contains('float'))return;sir.classList.remove('float');scrim.classList.remove('on');ph0&&ph0.remove();ph0=null;fabCheck()}
-function fabCheck(){if(sir.classList.contains('float'))return;var r=sir.getBoundingClientRect();fab.classList.toggle('show',!(r.bottom>0&&r.top<innerHeight))}
-fab.onclick=float;$('sx2').onclick=unfloat;scrim.onclick=unfloat;
+function fabCheck(){if(sir.classList.contains('float')||call)return;var r=sir.getBoundingClientRect();fab.classList.toggle('show',!(r.bottom>0&&r.top<innerHeight))}
+fab.onclick=float;$('sx2').onclick=function(){unfloat();fabCheck()};scrim.onclick=unfloat;
 document.addEventListener('keydown',function(e){if(e.key==='Escape')unfloat()});
-if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float'))fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
+if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float')&&!call)fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
 
 /* builder */
 var D={
