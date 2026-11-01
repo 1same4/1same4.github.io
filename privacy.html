@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://janabiai.com/privacy.html">
 <style>
 :root{--bg:#f7f3ea;--fg:#1b1f2a;--muted:#5b6170;--gold:#c98a1e;--card:#fff;--line:#e6dfcf}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1424;--fg:#eef0f4;--muted:#9aa3b2;--gold:#e2a43a;--card:#171c2e;--line:#262b3c}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1424;--fg:#eef0f4;--muted:#9aa3b2;--gold:#e2a43a;--card:#171c2e;--line:#262b3c}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:Tahoma,"Segoe UI",sans-serif;line-height:1.9}
 main{max-width:720px;margin:0 auto;padding:32px 16px 64px}
@@ -20,7 +20,9 @@ p,li{margin:0 0 6px}
 ul{margin:0;padding-inline-start:20px}
 a{color:var(--gold)}
 .back{display:inline-block;margin-top:18px;font-weight:700;text-decoration:none}
+:root[data-theme="dark"]{--bg:#0f1424;--fg:#eef0f4;--muted:#9aa3b2;--gold:#e2a43a;--card:#171c2e;--line:#262b3c}
 </style>
+<script>try{var T=localStorage.getItem("theme");if(T==="dark"||T==="light")document.documentElement.dataset.theme=T}catch(e){}</script>
 </head>
 <body>
 <main>
@@ -28,34 +30,10 @@ a{color:var(--gold)}
   <p class="d">آخر تحديث: 1 نوفمبر 2026 · Janabi AI · علي الجنابي</p>
 
   <section>
-    <h2>شنو نجمع</h2>
-    <ul>
-      <li>اللي تكتبه أو تحجيه ويا سراج (كتابة، بصمة، أو مكالمة).</li>
-      <li>اسمك ورقمك أو إيميلك، إذا انت عطيتهم حتى نتواصل وياك.</li>
-      <li>ما نجمع أي شي من تلفونك بدون ما تعطيه انت بنفسك.</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>ليش نجمعه</h2>
-    <p>حتى علي يرجعلك ويفهم شنو تحتاج بالضبط. بس هذا. ما نبيع معلوماتك، وما ننطيها لأي أحد.</p>
-  </section>
-
-  <section>
-    <h2>وين تنحفظ</h2>
-    <p>المحادثات والطلبات تنحفظ بجدول خاص بحساب Google مال علي، وما يشوفها غيره.</p>
-    <p>سراج يشتغل بخدمة Gemini من Google، فكلامك ويا سراج يمر من خلالها حتى يطلع الرد.</p>
-    <p>حتى نحمي الموقع من البوتات، نستخدم Cloudflare Turnstile، وهو يفحص المتصفح بالخلفية بدون ما يزعجك. تكدر تقرا سياسة الخصوصية مالتهم هنا: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare Privacy Policy</a> ، وشروط Turnstile: <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener">Turnstile Privacy Addendum</a>.</p>
-  </section>
-
-  <section>
-    <h2>سراج مو طبيب ولا محامي</h2>
-    <p>سراج مساعد ذكي يجاوب عن خدماتنا وينظم طلبك. لا تكتبله معلومات حساسة مثل تشخيص مرض أو أرقام حسابات أو كلمات سر.</p>
-  </section>
-
-  <section>
-    <h2>تريد نمسح معلوماتك؟</h2>
-    <p>دز لعلي على الواتساب <a href="https://wa.me/9647715110011" class="ltr" dir="ltr">07715110011</a> أو الإيميل <a href="mailto:ali@janabiai.com" dir="ltr">ali@janabiai.com</a>، ونمسحها خلال 7 أيام.</p>
+    <p>سراج يحفظ رقمك وكلامك بس حتى علي يرجعلك. ما نبيعه وما ننطيه لأحد.</p>
+    <p>سراج يشتغل بخدمة Google، والموقع محمي بـCloudflare (<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">سياستهم</a>، <a href="https://www.cloudflare.com/turnstile-privacy-policy/" target="_blank" rel="noopener">Turnstile</a>).</p>
+    <p>لا تكتب لسراج معلومات حساسة: أمراض، حسابات بنك، كلمات سر.</p>
+    <p>تريد نمسح معلوماتك؟ دز لعلي واتساب <a href="https://wa.me/9647715110011" dir="ltr">07715110011</a>.</p>
   </section>
 
   <a class="back" href="/">← رجوع للموقع</a>
