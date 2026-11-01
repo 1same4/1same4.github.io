@@ -569,7 +569,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 var R=document.documentElement,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
 var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='https://wa.me/9647715110011';
 /* 🛡️ Turnstile (حماية من البوتات): فحص خفي مرة وحدة، وبعدها «تصريح» ساعتين */
-var TS_KEY='__SITE_KEY__',PASSP=null;
+var TS_KEY='0x4AAAAAAFu_FHy-wIsEE9m7',PASSP=null;
 function passNow(){try{var o=JSON.parse(sessionStorage.getItem('sj_pass')||'null');if(o&&o.exp>Date.now()+60000)return o.p}catch(e){}return''}
 function getPass(){var p=passNow();if(p)return Promise.resolve(p);if(PASSP)return PASSP;
   PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;res(v||'')};setTimeout(fin,9000);
