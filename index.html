@@ -6,9 +6,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src blob:; connect-src https://janabi-agent.1same42002.workers.dev https://red-wood-5f23janabi-agent-live.1same42002.workers.dev wss://red-wood-5f23janabi-agent-live.1same42002.workers.dev; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Janabi AI | الجنابي AI · علي الجنابي · حلول رقمية وذكاء اصطناعي</title>
-<meta name="description" content="Janabi AI (الجنابي AI) وكالة حلول رقمية في بغداد: مواقع وتطبيقات وأنظمة ووكلاء ذكيين، تصميم وإعلانات، واستشارات مشاريع. فكرتك تصير مشروع.">
+<meta name="description" content="علي الجنابي، مؤسس Janabi AI: نبني مواقع ذكية، ووكيل ذكاء اصطناعي يرد على زباينك بأي وكت، وهوية تخلي شغلك ينذكر. جرّب نموذج شغلك هسه.">
 <meta property="og:title" content="Janabi AI · فكرتك تصير مشروع">
-<meta property="og:description" content="مواقع، أنظمة، وكلاء ذكيين، تصميم وإعلانات. جرّب نموذج محلك گدامك.">
+<meta property="og:description" content="مواقع، أنظمة، وكلاء ذكيين، تصميم وإعلانات. جرّب نموذج محلك كدامك.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://janabiai.com/">
 <meta property="og:image" content="https://janabiai.com/preview.jpg?v=3">
@@ -64,6 +64,9 @@ button{font:inherit}
 /* header */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0)}
 .top-in{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.top-in,.word b,.word small,.top .ibtn,.top .btn.sm{transition:all .25s ease}
+.top.shrink .top-in{padding-top:6px;padding-bottom:6px}.top.shrink .word b{font-size:1.15rem}.top.shrink .word small{max-height:0;margin:0;opacity:0;overflow:hidden}
+.top.shrink .ibtn{transform:scale(.88)}.top.shrink .btn.sm{transform:scale(.92)}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
 .mark{width:38px;height:38px;flex:none}
 .word{display:grid;line-height:1.1}
@@ -138,6 +141,12 @@ button{font:inherit}
 .s-form button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transform:scaleX(-1)}
 .s-form .mic{background:var(--brand-soft);color:var(--fg);border:1px solid var(--line)}
 .s-form .mic svg{transform:none}
+.s-form input{min-width:0}
+.s-note{margin:0;padding:6px 14px 10px;font-size:12px;color:var(--muted,#8a8f98);text-align:center}.s-note a{color:inherit;text-decoration:underline}
+.card .price{font-size:14px;margin:6px 0 10px;color:var(--fg)}.card .price b{color:var(--gold,#D99B26)}
+.qrlink{display:inline-block;margin-top:8px;font-weight:700;color:var(--gold,#D99B26);text-decoration:none}
+@media (min-width:900px){.qrlink{display:none}}
+@media (max-width:420px){.s-form{gap:6px;padding:10px}.s-form button{width:42px}}
 
 /* proof strip */
 .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-block:8px 20px}
@@ -355,6 +364,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 .reveal{opacity:1}
 @supports (animation-timeline:view()){.reveal{animation:up linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+.vn{display:flex;align-items:center;gap:10px}.vplay{width:36px;height:36px;border-radius:50%;border:0;background:var(--surface,#fff);color:var(--fg,#0F1D4A);display:grid;place-items:center;cursor:pointer;flex:none}.vplay svg{width:16px;height:16px;fill:currentColor}.vtime{font-variant-numeric:tabular-nums;font-weight:700}
 </style>
 <script>try{if("scrollRestoration" in history)history.scrollRestoration="manual";var B=/bot|crawl|spider|slurp|google|bing|yandex|lighthouse/i.test(navigator.userAgent);var L=B?"ar":localStorage.getItem("lang");if(L==="en")location.replace("/en/");else if(!L){var n=(navigator.languages&&navigator.languages[0])||navigator.language||"ar";if(!/^ar/i.test(n))location.replace("/en/")}var T=localStorage.getItem("theme");if(T==="dark"||T==="light")document.documentElement.dataset.theme=T}catch(e){}</script>
 </head>
@@ -364,7 +374,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     <a class="logo" href="#top">
       <span class="word"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b><small>حلول واستشارات رقمية</small></span>
     </a>
-    <nav aria-label="الأقسام"><a href="#try">جرّب گدامك</a><a href="#services">خدماتنا</a><a href="#roi">احسب توفيرك</a><a href="#impact">أثرنا</a><a href="#contact">تواصل</a></nav>
+    <nav aria-label="الأقسام"><a href="#try">جرّب كدامك</a><a href="#services">خدماتنا</a><a href="#roi">احسب توفيرك</a><a href="#impact">أثرنا</a><a href="#contact">تواصل</a></nav>
     <div class="acts">
       <a class="ibtn" href="/en/" id="en" lang="en" aria-label="EN English">EN</a>
       <button class="ibtn" id="theme" type="button" aria-label="تبديل الوضع"></button>
@@ -381,7 +391,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
       <span class="label">Janabi AI · حلول واستشارات رقمية · بغداد</span>
       <h1>فكرتك تصير<br><span class="g">مشروع شغّال</span></h1>
       <p class="rotline">حلول ذكية لـ<span class="rot" id="rot">المطاعم والكوفيات</span></p>
-      <p class="sub">نبني المواقع والأنظمة والوكلاء الأذكياء، نصمم هويتك، وندرس فكرتك قبل ما تصرف عليها. من فكرة على ورق، لمشروع يشتغل ويجيب زبائن.</p>
+      <p class="sub">نبني المواقع والأنظمة والوكلاء الأذكياء، نصمم هويتك، وندرس فكرتك قبل ما تصرف عليها. من فكرة على ورق، لمشروع يشتغل من أول يوم.</p>
     </div>
 
     <div class="siraj" id="siraj">
@@ -390,17 +400,17 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
         <div class="s-log" id="log" aria-live="polite"></div>
         <form class="s-form" id="sf" autocomplete="off">
           <input id="si" maxlength="600" placeholder="اكتب رسالتك لسراج…" aria-label="رسالتك لسراج">
-          <button class="mic callb" type="button" id="callbtn" aria-label="اتصل بسراج بصوتك"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></button>
-          <button class="mic" type="button" id="voice" aria-label="احچي ويا سراج بصوتك"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+          <button class="mic" type="button" id="voice" aria-label="احجي ويا سراج بصوتك"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
           <button type="submit" aria-label="إرسال"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         </form>
+        <p class="s-note">رقمك يوصل لعلي بس، وما ننطيه لأحد. <a href="/privacy.html">الخصوصية</a></p>
       </div>
     </div>
   </section>
 
 
   <section class="sec reveal" id="try">
-    <div class="sec-head"><span class="label">جرّب بنفسك</span><h2>اختار نوع شغلك، وشوف موقعك يتبنى</h2><p>اكتب اسم شغلك واختار الستايل. خلال ثواني يتركب نموذج موقعك، ويطلع باركود باسمك. هذا مو فيديو، يتبنى هسه گدامك.</p></div>
+    <div class="sec-head"><span class="label">جرّب بنفسك</span><h2>اختار نوع شغلك، وشوف موقعك ينبني كدامك</h2><p>اكتب اسم شغلك واختار الستايل. بثواني يجهز نموذج موقعك ويطلع باركود باسمك. هذا مو فيديو، الموقع ينبني هسه كدامك.</p></div>
     <div class="builder2">
       <div class="seg" id="sector">
           <button type="button" data-k="food" aria-pressed="true"><span>☕</span>مطعم وكوفي</button>
@@ -429,52 +439,49 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
           <button type="button" data-s="fresh" aria-pressed="false"><i><b style="background:#ffffff"></b><b style="background:#0f9b8e"></b></i>حديث</button>
         </div>
           </div>
-          <div class="qrrow"><div class="qrbox"><div id="qr" role="img" aria-label="باركود النموذج"></div><small id="qn">باركود طاولة رقم 1</small></div><p class="after">صوّر الباركود بتلفونك ✦ يفتحلك واتساب Janabi AI ويا اسم محلك.<br><small>الأصناف والأسعار مثال للتوضيح.</small></p></div>
+          <div class="qrrow"><div class="qrbox"><div id="qr" role="img" aria-label="باركود النموذج"></div><small id="qn">باركود طاولة رقم 1</small></div><p class="after">صوّر الباركود بتلفونك ✦ يفتحلك واتساب Janabi AI جاهز باسم مشروعك.<br><a class="qrlink" id="qrlink" href="#" target="_blank" rel="noopener">فاتح من التلفون؟ اضغط هنا وجرّبه بواتسابك ←</a><br><small>الأصناف والأسعار مثال للتوضيح.</small></p></div>
         </div>
       </div>
     </div>
   </section>
 
   <section class="sec reveal" id="services">
-    <div class="sec-head"><span class="label">خدماتنا</span><h2>ثلاث خدمات. كل وحدة تخلص شغل حقيقي</h2><p>أي شي يخص الإنترنت نشتغله: نسمع فكرتك، ندرسها، ونسلّمك شي يشتغل.</p></div>
+    <div class="sec-head"><span class="label">خدماتنا</span><h2>ثلاث خدمات. كل وحدة تخلص شغل حقيقي</h2><p>نسمع فكرتك، ندرسها على الأرض، ونسلّمك نظام كامل يشتغل.</p></div>
     <div class="svc">
       <article class="card">
         <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9l2 2-2 2M12 13h4"/></svg></span><span class="n ltr">01</span></div>
-        <h3>مواقع وأنظمة ووكلاء أذكياء</h3>
-        <p>شغلك يشتغل أونلاين ليل ونهار، حتى وأنت نايم.</p>
+        <h3>مواقع ووكلاء ذكاء اصطناعي</h3>
+        <p>يستلم طلبات زبائنك ويرد على أسئلتهم بأي وكت، ويوصلك الطلب فوراً، بدون ما يضيع منك زبون. مثلاً: منيو باركود لمطعم، أو حجز مواعيد لعيادة.</p>
         <ul class="get"><li>موقع وتطبيق باسمك</li><li>منيو بالباركود وحجوزات</li><li>وكيل ذكي يرد على زبائنك</li></ul>
-        <div class="sample"><span>النموذج الخام</span><em>قيد البناء</em></div>
-        <a class="btn gold cbtn" href="#try">جرّبه گدامك</a>
+        <a class="btn gold cbtn" href="#try">جرّبه كدامك</a>
       </article>
       <article class="card">
         <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8l5.5-.8z"/></svg></span><span class="n ltr">02</span></div>
-        <h3>هوية وتصميم</h3>
-        <p>هوية وحدة تخلي الناس تتذكرك من أول نظرة.</p>
+        <h3>هوية بصرية وإعلانات ذكية</h3>
+        <p>نرتب شكل مشروعك كدام الزبون، من الشعار والواجهة لحد إعلانات السوشيال ميديا. مثلاً: شعار ولافتة لمحل جديد، ويا ريل إعلاني يجذب الزباين.</p>
         <ul class="get"><li>شعار وكارت</li><li>لافتة، واجهة، وديكور</li><li>ريلز إعلانية بالذكاء الاصطناعي</li></ul>
-        <div class="sample"><span>النموذج الخام</span><em>قيد البناء</em></div>
         <a class="btn ghost cbtn" href="#contact">اطلب هويتك</a>
       </article>
       <article class="card">
         <div class="ch"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><span class="n ltr">03</span></div>
-        <h3>استشارات ودراسة مشاريع</h3>
-        <p>نحسب فكرتك قبل ما تصرف عليها دينار.</p>
-        <ul class="get"><li>الكلفة والربح وأسوأ احتمال</li><li>تجربة بأقل كلفة</li><li>خطة تمشي عليها خطوة بخطوة</li></ul>
-        <div class="sample"><span>نموذج دراسة</span><em>قيد البناء</em></div>
+        <h3>دراسة وتخطيط المشاريع</h3>
+        <p>نحسب كلفة مشروعك وربحه بالتفصيل، كبل ما تصرف عليه دينار واحد. مثلاً: دراسة تكاليف وخطة تشغيل لمتجر إلكتروني كبل إطلاقه.</p>
+        <ul class="get"><li>حساب الكلفة والربح وأسوأ الاحتمالات</li><li>تجربة بأقل كلفة</li><li>خطة تمشي عليها خطوة بخطوة</li></ul>
         <a class="btn ghost cbtn" href="#" data-ask="عندي فكرة مشروع وأريد رأيكم بيها">اسأل سراج عن فكرتك</a>
       </article>
     </div>
   </section>
 
   <section class="sec reveal" id="roi">
-    <div class="sec-head"><span class="label">احسب توفيرك</span><h2>شكد يوفرلك النظام الذكي؟</h2><p>حرّك المسطرة وشوف الرقم. الحساب تقريبي، حتى تعرف هل الفكرة تستاهل لشغلك.</p></div>
+    <div class="sec-head"><span class="label">احسب توفيرك</span><h2>شكد يوفرلك النظام الذكي؟</h2><p>حرّك المؤشر وشوف الفرق. هذا حساب تقريبي يراويك شكد توفر إذا دخلت النظام لشغلك.</p></div>
     <div class="roi">
       <div class="panel">
-        <div class="rng"><label for="h">كم ساعة باليوم تروح على الرسائل والحجوزات؟ <output id="ho">4</output></label><input type="range" id="h" min="1" max="10" value="4"></div>
+        <div class="rng"><label for="h">كم ساعة باليوم تضيع بالرد على الرسائل والحجوزات؟ <output id="ho">4</output></label><input type="range" id="h" min="1" max="10" value="4"></div>
         <div class="rng"><label for="w">راتب موظف الاستقبال بالشهر (ألف دينار) <output id="wo">500</output></label><input type="range" id="w" min="350" max="1000" step="25" value="500"></div>
         <div class="rng"><label for="c">كلفة النظام لمرة وحدة (ألف دينار، مثال) <output id="co">900</output></label><input type="range" id="c" min="300" max="3000" step="50" value="900"></div>
       </div>
       <div class="res" aria-live="polite">
-        <small>وقتك الضايع يسوى كل شهر تقريباً</small>
+        <small>قيمة وكتك الضايع كل شهر تقريباً</small>
         <div class="big"><span id="sv">300</span> <small style="font-size:1rem;opacity:1">ألف دينار</small></div>
         <div class="row2"><div><b id="pb2">3</b><small>شهور ويرجع راس مالك</small></div><div><b id="yr">3.6</b><small>مليون دينار توفير بالسنة</small></div></div>
         <small>تقدير على أساس دوام 8 ساعات. مو وعد، الرقم الحقيقي نحسبه وياك.</small>
@@ -483,7 +490,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
   </section>
 
   <section class="sec reveal" id="work">
-    <div class="sec-head"><span class="label">نماذج شغلنا</span><h2>لكل نوع شغل، نموذج احترافي</h2><p>نبني نموذج قوي لكل قطاع، وبعدين نفصّله على هوية كل زبون. النماذج تنزل هنا وحدة وحدة.</p></div>
+    <div class="sec-head"><span class="label">نماذج شغلنا</span><h2>لكل نوع شغل، نموذج احترافي</h2><p>نصمم نظام متكامل لكل قطاع، ونفصّله على قياس شغلك وهويتك. النماذج تنزل هنا وحدة وحدة.</p></div>
     <div class="work">
       <div class="slot"><span>☕</span><div><b>نظام الكوفي الذكي</b><small>منيو بالباركود، حجز طاولة، طلب للواتساب.</small></div><em>قريباً</em></div>
       <div class="slot"><span>🩺</span><div><b>عيادة</b><small>حجز مواعيد، وتذكير للمراجع.</small></div><em>قريباً</em></div>
@@ -496,7 +503,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     <div class="sec-head"><span class="label">طريقة الشغل</span><h2>أربع خطوات، بلا تعقيد</h2></div>
     <ol class="steps">
       <li><i class="ltr">01</i><b>نسمع فكرتك</b><span>رسالة واتساب أو مكالمة قصيرة تكفي.</span></li>
-      <li><i class="ltr">02</i><b>نموذج أول</b><span>تشوف الاتجاه قبل الدفع الكامل.</span></li>
+      <li><i class="ltr">02</i><b>نموذج أول</b><span>نص المبلغ مقدّم، وتشوف نموذج شغلك يشتغل كبل ما تدفع الباقي.</span></li>
       <li><i class="ltr">03</i><b>نعدّل سوا</b><span>لحد ما يطابق اللي اتفقنا عليه.</span></li>
       <li><i class="ltr">04</i><b>تسليم وفحص</b><span>رابط شغّال، ومعاه تقرير فحص السرعة.</span></li>
     </ol>
@@ -509,12 +516,12 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
       <div>
         <h3><a href="/ali/" style="color:inherit;text-decoration:none">علي الجنابي</a></h3>
         <span class="role">مؤسس Janabi AI</span>
-        <p>بديت من مطبعة ببغداد، وبعدها السفر والسياحة، وأسست شركتي الخاصة. تعلمت شلون أفهم الزبون وأحل مشكلته على الأرض. اليوم أحول هالخبرة لحلول رقمية بالذكاء الاصطناعي، أسرع وبكلفة أقل.</p>
+        <p>كل مرحلة بحياتي علمتني شي يفيد مشروعك: المطبعة علمتني الجودة والتفاصيل، والسياحة علمتني أفهم الناس وأحل مشاكلهم، وشركتي علمتني شلون يمشي الشغل من جوه. واليوم أحط كل هذا ويا الذكاء الاصطناعي، حتى أبنيلك حلول تختصر وكتك وتقلل كلفتك.</p>
         <div class="tl">
-          <details><summary><b>2017</b>إدارة مطبعة</summary><p>بديت مصمم، وصرت أدير مطبعة كاملة: تصميم، طباعة، ولافتات.</p></details>
-          <details><summary><b>2019</b>سفر وسياحة</summary><p>مندوب سياحة وقائد رحلات. تعلمت أتعامل ويا الناس وأحل مشاكلهم على الأرض.</p></details>
-          <details><summary><b>2021</b>شركتي الخاصة</summary><p>أسست شركة سفر وسياحة، وتعلمت شلون تمشي شركة من الصفر.</p></details>
-          <details><summary><b>2026</b><bdi>Janabi AI</bdi></summary><p>اليوم أحول كل هالخبرة لحلول رقمية بالذكاء الاصطناعي.</p></details>
+          <details><summary><b>2017</b>إدارة مطبعة</summary><p>بديت مصمم بمطبعة ببغداد، وبعدها صرت أدير المطبعة كلها: التصميم، والطباعة واللافتات، وصيانة الأجهزة، والحسابات. هناك تعلمت إن التفصيلة الصغيرة هي اللي تفرق بين شغل عادي وشغل يتذكره الزبون.</p></details>
+          <details><summary><b>2019</b>سفر وسياحة</summary><p>اشتغلت مندوب سفر وسياحة وقائد رحلات. كل رحلة بيها ناس مختلفين ومشاكل ما تستنى، فتعلمت أسمع الزبون، وأفهم شنو يريد بالضبط، وأحل المشكلة.</p></details>
+          <details><summary><b>2021</b>شركتي الخاصة</summary><p>أسست شركتي الخاصة للسفر والسياحة «القائد الصغير». هناك عرفت شلون تمشي شركة من جوه: الزباين، والحسابات، والقرارات الصعبة.</p></details>
+          <details><summary><b>2026</b><bdi>Janabi AI</bdi></summary><p>أسست Janabi AI حتى أجمع كل هالخبرة ويا الذكاء الاصطناعي، وأبني لأصحاب المشاريع حلول رقمية تشتغل من أول يوم.</p></details>
         </div>
       </div>
     </div>
@@ -522,21 +529,21 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 
   <section class="sec reveal" id="impact">
     <div class="impact">
-      <div class="sec-head"><span class="label">أثرنا</span><h2>نعلّم الشباب أدوات الذكاء الاصطناعي ببلاش</h2><p>ونسوي منهم قادة يعلّمون غيرهم. واللي يثبت نفسه، يشتغل ويانا.</p></div>
+      <div class="sec-head"><span class="label">أثرنا</span><h2>نعلّم الشباب أدوات الذكاء الاصطناعي ببلاش</h2><p>ونصنع منهم قادة يعلّمون غيرهم، واللي يثبت نفسه مكانه موجود ويانا.</p></div>
       <div class="ig">
-        <div class="ic2"><em>قريباً</em><b>المبادرة الخضراء</b><p>شباب يستخدمون الذكاء الاصطناعي لأفكار تخدم بيئتهم. كل شاب نسويه قائد، وكل قائد يصنع قادة.</p></div>
-        <div class="ic2"><em>قريباً</em><b>دروس مجانية</b><p>دروس قصيرة وبسيطة: شلون تتكلم ويا الذكاء الاصطناعي، وسيرتك الذاتية بعشر دقايق.</p><a href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%AE%D8%A8%D8%B1%D9%86%D9%8A%20%D8%A3%D9%88%D9%84%20%D9%85%D8%A7%20%D8%AA%D9%86%D8%B2%D9%84%20%D8%A7%D9%84%D8%AF%D8%B1%D9%88%D8%B3" target="_blank" rel="noopener">خبّرني أول ما تنزل ←</a></div>
-        <div class="ic2"><em>قريباً</em><b>كون شريكنا</b><p>جهة داعمة، شركة، أو صانع محتوى؟ ترعى ورشة، توفر أدوات، أو تفتح فرصة تدريب.</p><a href="#contact">تواصل ويانا ←</a></div>
+        <div class="ic2"><em>قريباً</em><b>المبادرة الخضراء</b><p>شباب يوظفون الذكاء الاصطناعي بمشاريع تخدم بيئتهم، حتى كل شاب يقود مبادرته بنفسه ويصنع قادة جدد.</p></div>
+        <div class="ic2"><em>قريباً</em><b>دروس مجانية</b><p>دروس عملية مختصرة: شلون تشتغل ويا الذكاء الاصطناعي، وتبني سيرتك الذاتية بعشر دقايق.</p><a href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%AE%D8%A8%D8%B1%D9%86%D9%8A%20%D8%A3%D9%88%D9%84%20%D9%85%D8%A7%20%D8%AA%D9%86%D8%B2%D9%84%20%D8%A7%D9%84%D8%AF%D8%B1%D9%88%D8%B3" target="_blank" rel="noopener">خبّرني أول ما تنزل ←</a></div>
+        <div class="ic2"><em>قريباً</em><b>شارك ويانا بالأثر</b><p>جهة داعمة، شركة، أو صانع محتوى؟ ترعى ورشة، توفر أدوات، أو تفتح فرصة تدريب.</p><a href="#contact">تواصل ويانا ←</a></div>
       </div>
       <div class="nums"><div><b>قريباً</b><span>شباب تدربوا</span></div><div><b>قريباً</b><span>ورش مجانية</span></div><div><b>قريباً</b><span>مشاريع شبابية</span></div></div>
     </div>
   </section>
 
-  <section class="sec reveal" id="why"><div class="sec-head"><span class="label">ليش Janabi AI</span><h2>أرقام تحچي عنا</h2></div>
+  <section class="sec reveal" id="why"><div class="sec-head"><span class="label">ليش Janabi AI</span><h2>أرقام تحجي عنا</h2></div>
   <div class="proof" style="padding:0">
-    <div class="pf"><b class="ltr">96/100</b><strong>سرعة مفحوصة</strong><span>موقعنا ياخذ 96 من 100 بفحص Google. ونسلّمك نفس الفحص ويا كل موقع نبنيه.</span></div>
-    <div class="pf"><b class="ltr">24/7</b><strong>مساعد ما ينام</strong><span>سراج يرد على زبائنك بأي وقت، حتى وأنت نايم.</span></div>
-    <div class="pf"><b class="ltr">2017</b><strong>خبرة من الميدان</strong><span>طباعة، سياحة، وشركة خاصة. واليوم كل هالخبرة بالذكاء الاصطناعي.</span></div>
+    <div class="pf"><b class="ltr">96/100</b><strong>سرعة مفحوصة</strong><span>موقعنا ياخذ 96 من 100 بفحص Google. <a href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fjanabiai.com%2F" target="_blank" rel="noopener">افحصه بنفسك ←</a></span></div>
+    <div class="pf"><b class="ltr">24/7</b><strong>مساعد ما ينام</strong><span>سراج يرد على زبائنك بأي وكت، حتى وأنت نايم.</span></div>
+    <div class="pf"><b class="ltr">2017</b><strong>خبرة من الميدان</strong><span>إدارة مطبعة، قيادة رحلات، وتأسيس شركة. واليوم كلها بخدمة مشروعك.</span></div>
   </div>
   </section>
 
@@ -549,7 +556,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
         <div class="ctas"><a class="btn gold" href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20Janabi%20AI%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D9%81%D9%83%D8%B1%D8%A9%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D8%A8%D8%AF%D9%8A" target="_blank" rel="noopener">راسلنا على واتساب</a><button class="btn ghost" type="button" data-ask="أريد أبدي مشروع، شنو تحتاج تعرف مني؟">اسأل سراج</button></div>
       </div>
       <div class="clinks">
-        <a class="cl" href="https://wa.me/9647715110011" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg><span><b>واتساب</b><small>رد سريع، كتابة أو صوت</small></span></a>
+        <a class="cl" href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%B4%D9%81%D8%AA%20%D9%85%D9%88%D9%82%D8%B9%20Janabi%20AI%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D8%B3%D8%AA%D9%81%D8%B3%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%D9%83%D9%85" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg><span><b>واتساب</b><small>رد سريع، كتابة أو صوت</small></span></a>
         <a class="cl" href="mailto:ali@janabiai.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span><b>الإيميل</b><small>للشركات والعروض الرسمية</small></span></a>
         <a class="cl" href="https://www.instagram.com/1same4" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg><span><b>إنستغرام</b><small>شوف شغلنا يومياً</small></span></a>
         <button class="cl" type="button" id="copy" style="font:inherit;cursor:pointer;text-align:start"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg><span><b>انسخ رقم الهاتف</b><small class="note" id="cn">بغداد، العراق</small></span></button>
@@ -557,7 +564,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
     </div>
   </section>
 
-  <footer><span>© 2026 <span class="ltr">Janabi AI</span> · علي الجنابي · بغداد</span><span>نعلّم شباب العراق الذكاء الاصطناعي ببلاش</span></footer>
+  <footer><span>© 2026 <span class="ltr">Janabi AI</span> · علي الجنابي · بغداد</span><span>نعلّم شباب العراق الذكاء الاصطناعي ببلاش · <a href="/privacy.html">الخصوصية</a></span></footer>
 </div>
 </main>
 
@@ -569,7 +576,20 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 <script>
 (function(){
 var R=document.documentElement,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='https://wa.me/9647715110011';
+var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D9%83%D9%86%D8%AA%20%D8%A3%D8%AD%D8%AC%D9%8A%20%D9%88%D9%8A%D8%A7%20%D8%B3%D8%B1%D8%A7%D8%AC%20%D8%A8%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9%20%D9%88%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A3%D9%83%D9%85%D9%84%20%D9%88%D9%8A%D8%A7%D9%83';
+/* 🛡️ Turnstile (حماية من البوتات): فحص خفي مرة وحدة، وبعدها «تصريح» ساعتين */
+var TS_KEY='0x4AAAAAAFu_FHy-wIsEE9m7',PASSP=null;
+function passNow(){try{var o=JSON.parse(sessionStorage.getItem('sj_pass')||'null');if(o&&o.exp>Date.now()+60000)return o.p}catch(e){}return''}
+function getPass(){var p=passNow();if(p)return Promise.resolve(p);if(PASSP)return PASSP;
+  PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;res(v||'')};setTimeout(fin,9000);
+    var n=0,w=setInterval(function(){if(!window.turnstile){if(++n>40){clearInterval(w);fin('')}return}clearInterval(w);
+      var box=document.getElementById('ts');if(!box){box=document.createElement('div');box.id='ts';box.style.display='none';document.body.appendChild(box)}
+      var cb=function(t){fetch(API+'/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})}).then(function(r){return r.json()}).then(function(d){
+          if(d.pass&&d.pass!=='off'){try{sessionStorage.setItem('sj_pass',JSON.stringify({p:d.pass,exp:Date.now()+110*60000}))}catch(e){}fin(d.pass)}else fin('')}).catch(function(){fin('')})};
+      try{if(window.__tsId!=null){turnstile.reset(window.__tsId)}else{window.__tsId=turnstile.render(box,{sitekey:TS_KEY,callback:cb,'error-callback':function(){fin('')}})}}catch(e){fin('')}},200)});
+  return PASSP}
+function dropPass(){try{sessionStorage.removeItem('sj_pass')}catch(e){}}
+(function(){var sc=document.createElement('script');sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';sc.async=true;document.head.appendChild(sc);setTimeout(getPass,1200)})();
 function $(i){return document.getElementById(i)}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
 
@@ -591,7 +611,7 @@ function memAdd(role,text){text=String(text||'').trim();if(!text)return;var m=me
 var log=$('log'),orb=$('orb'),hist=memLoad().slice(-12),busy=false,sess=[],sentN=0,SID=Math.random().toString(36).slice(2,10)+Date.now().toString(36);
 /* نهاية الزيارة: نرسل محادثة الكتابة والبصمات كاملة حتى تنحفظ بالشيت */
 function sendLog(){if(!sess.some(function(x){return x.role==='user'})||sess.length===sentN)return;sentN=sess.length;
-  try{navigator.sendBeacon(API+'/log',new Blob([JSON.stringify({sid:SID,history:sess})],{type:'text/plain'}))}catch(e){}}
+  try{navigator.sendBeacon(API+'/log',new Blob([JSON.stringify({sid:SID,history:sess,pass:passNow()})],{type:'text/plain'}))}catch(e){}}
 addEventListener('pagehide',sendLog);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')sendLog()});
 function down(){log.scrollTop=log.scrollHeight}
 function bubble(t,cls){var b=el('div','m '+cls);b.textContent=t;log.appendChild(b);down();return b}
@@ -602,20 +622,20 @@ function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
   var body={text:text||'',history:hist.slice(-12),file:file||null,sid:SID};var me={role:'user',text:text||'🎙️ (بصمة)'};hist.push(me);sess.push(me);
   var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
-  try{var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  try{var ps=await getPass();var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:ps?{'Content-Type':'application/json','X-Siraj-Pass':ps}:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     var tr=r.headers.get('X-Transcript');if(tr){try{me.text='🎙️ '+decodeURIComponent(tr)}catch(_){}}memAdd('user',me.text);
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
           try{var j=JSON.parse(line.slice(5)),c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];var t=ps.filter(function(p){return!p.thought}).map(function(p){return p.text||''}).join('');if(t){full+=t;w.className='m ai';w.textContent=clean(full);down()}}catch(_){}}}
       full=clean(full).trim();w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full){var ai={role:'model',text:full};hist.push(ai);sess.push(ai);memAdd('model',full)}}
-    else{var d={};try{d=await r.json()}catch(_){}w.className='m ai';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
-  catch(e){w.className='m ai';w.textContent='ماكو اتصال هسه. جرّب بعد شوية، أو احچي ويا علي بالواتساب.'}
+    else{var d={};try{d=await r.json()}catch(_){}if(r.status===403)dropPass();w.className='m ai';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
+  catch(e){w.className='m ai';w.textContent='ماكو اتصال هسه. جرّب بعد شوية، أو احجي ويا علي بالواتساب.'}
   orb.classList.remove('think');busy=false;down();
-  opts([{t:'📞 كلّمني بصوتك',cls:'call',fn:startCall},{t:'🎙️ دز بصمة',fn:voice},{t:'💬 واتساب',href:WA}])}
+  opts([{t:'📞 احجي وياي بصوتك',cls:'call',fn:startCall},{t:'💬 واتساب',href:WA}])}
 function go(id){unfloat();var t=$(id);t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
-function greet(){typeAi('أهلاً، نورتنا 👋\nأنا سراج، مساعد Janabi AI.\nشلون أگدر أساعدك؟ تحب نتكلم كتابة، أو تتصل وأحچي وياك بصوتي؟',function(){
-  opts([{t:'📞 كلّمني بصوتك',cls:'call',fn:startCall},
+function greet(){typeAi('هلا بيك، نورتنا 👋\nأنا سراج، مساعد Janabi AI.\nشلون أكدر أساعدك اليوم؟ تحب نراسل كتابة، لو تخابرني وأحجي وياك بصوتي؟',function(){
+  opts([{t:'📞 احجي وياي بصوتك',cls:'call',fn:startCall},
         {t:'✨ جرّب نموذج لشغلك',cls:'call',fn:function(){go('try')}},
         {t:'🧩 شوف خدماتنا',fn:function(){go('services')}},
         {t:'💡 عندي فكرة',fn:function(){ask('عندي فكرة مشروع وأريد أعرف منين أبدي')}}])},'big')}
@@ -632,7 +652,8 @@ async function wav(blob){var c=new(window.AudioContext||window.webkitAudioContex
   w(0,'RIFF');v.setUint32(4,36+len*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,len*2,true);
   for(var i=0;i<len;i++){var x=Math.max(-1,Math.min(1,out[i]));v.setInt16(44+i*2,x<0?x*32768:x*32767,true)}
   return{blob:new Blob([v],{type:'audio/wav'}),sec:buf.duration}}
-function fmt(t){t=Math.round(t);return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
+var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',PAUSE='<svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+function fmtT(t){t=Math.round(t);return Math.floor(t/60)+':'+('0'+t%60).slice(-2)}
 async function voice(){
   if(rec&&rec.state==='recording'){rec.stop();return}
   if(busy)return;
@@ -640,12 +661,12 @@ async function voice(){
     rec.ondataavailable=function(e){chunks.push(e.data)};
     rec.onstop=async function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tick);clearTimeout(recT);mic.classList.remove('rec');inp.placeholder='اكتب رسالتك لسراج…';inp.disabled=false;
       var bl=new Blob(chunks,{type:rec.mimeType||'audio/webm'});if(bl.size<1500)return;var wv;try{wv=await wav(bl)}catch(_){wv={blob:bl,sec:(Date.now()-t0)/1000}}
-      var b=el('div','m me vn');var au=new Audio(URL.createObjectURL(wv.blob)),pb=el('button','chip','▶');pb.type='button';pb.onclick=function(){au.paused?au.play():au.pause()};b.appendChild(pb);b.appendChild(el('span',null,'🎙️ '+fmt(wv.sec)));log.appendChild(b);down();
+      var b=el('div','m me vn');var au=new Audio(URL.createObjectURL(wv.blob)),pb=el('button','vplay',PLAY);pb.type='button';pb.setAttribute('aria-label','play');pb.onclick=function(){au.paused?au.play():au.pause()};au.onplay=function(){pb.innerHTML=PAUSE};au.onpause=au.onended=function(){pb.innerHTML=PLAY};b.appendChild(pb);b.appendChild(el('span','vtime',fmtT(wv.sec)));log.appendChild(b);down();
       ask('',{mime:(wv.blob.type||'audio/webm').split(';')[0],data:await b64(wv.blob)})};
     rec.start();t0=Date.now();mic.classList.add('rec');inp.disabled=true;inp.placeholder='🔴 يسجّل… 0:00 (اضغط المايك حتى ترسل)';
-    tick=setInterval(function(){inp.placeholder='🔴 يسجّل… '+fmt((Date.now()-t0)/1000)+' (اضغط المايك حتى ترسل)'},500);
+    tick=setInterval(function(){inp.placeholder='🔴 يسجّل… '+fmtT((Date.now()-t0)/1000)+' (اضغط المايك حتى ترسل)'},500);
     recT=setTimeout(function(){if(rec&&rec.state==='recording')rec.stop()},60000)}
-  catch(e){inp.placeholder='ما گدرت أفتح المايك. اسمح للموقع يستخدمه'}}
+  catch(e){inp.placeholder='ما كدرت أفتح المايك. اسمح للموقع يستخدمه'}}
 mic.onclick=voice;
 
 /* ===== سراج لايف: مكالمة صوتية مباشرة (Gemini Live عبر الـWorker) ===== */
@@ -660,21 +681,21 @@ function sampleOpen(kind,name){if(!D[kind])return;sec=kind;pressGroup($('sector'
   var t=$('try');t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
 async function startCall(){
   if(call)return;clearOpts();
-  if(!DBG&&callsToday()>=CALLS_PER_DAY){bubble('اليوم سوينا '+CALLS_PER_DAY+' مكالمات 😄 كمّل وياي كتابة، أو دزلي بصمة، أو احچي ويا علي واتساب.','ai');opts([{t:'🎙️ دز بصمة',fn:voice},{t:'💬 واتساب',href:WA}]);return}
+  if(!DBG&&callsToday()>=CALLS_PER_DAY){bubble('اليوم سوينا '+CALLS_PER_DAY+' مكالمات 😄 كمّل وياي كتابة، أو دزلي بصمة، أو احجي ويا علي واتساب.','ai');opts([{t:'🎙️ دز بصمة',fn:voice},{t:'💬 واتساب',href:WA}]);return}
   if(!navigator.mediaDevices||!window.AudioWorklet||!window.WebSocket){bubble('متصفحك ما يدعم المكالمة. اكتب لي أو دز بصمة 🎙️','ai');return}
   var ctx=new(window.AudioContext||window.webkitAudioContext)();ctx.resume();  /* نسويه لحظة الضغطة حتى الآيفون يسمح بالصوت */
   var st;try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}})}
-  catch(e){try{ctx.close()}catch(_){}bubble('ما گدرت أفتح المايك. اسمح للموقع يستخدمه وجرّب مرة ثانية.','ai');return}
+  catch(e){try{ctx.close()}catch(_){}bubble('ما كدرت أفتح المايك. اسمح للموقع يستخدمه وجرّب مرة ثانية.','ai');return}
   try{await ctx.resume();await ctx.audioWorklet.addModule('/siraj-worklet.js')}catch(e){st.getTracks().forEach(function(t){t.stop()});bubble('صار خلل بتشغيل الصوت. جرّب مرة ثانية.','ai');return}
   var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
-  var c=call={ws:new WebSocket(LIVE),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
-  cstate('دا أتصل…','wait');orb.classList.add('think');
+  var ps=await getPass();var c=call={ws:new WebSocket(LIVE+'?pass='+encodeURIComponent(ps)),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
+  fab.classList.remove('show');cstate('دا أتصل…','wait');orb.classList.add('think');
   c.tick=setInterval(function(){var left=Math.max(0,LIVE_SEC-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
   c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
   c.ws.onopen=function(){dbg('الموقع اتصل بالعامل')};
-  c.ws.onerror=function(){if(!c.ready)fail(c,'ما گدرت أتصل بالمكالمة هسه. اكتب لي أو دز بصمة 🎙️')};
-  c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:'ما گدرت أتصل بالمكالمة هسه'+(DBG&&c.why?' — '+c.why:'')+'. اكتب لي أو دز بصمة 🎙️')};
+  c.ws.onerror=function(){if(!c.ready)fail(c,'ما كدرت أتصل بالمكالمة هسه. اكتب لي أو دز بصمة 🎙️')};
+  c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:'ما كدرت أتصل بالمكالمة هسه'+(DBG&&c.why?' — '+c.why:'')+'. اكتب لي أو دز بصمة 🎙️')};
   c.guard=setTimeout(function(){if(!c.ready)fail(c,'الاتصال تأخر. جرّب مرة ثانية أو اكتب لي.'+(DBG?' (حالة الاتصال: '+c.ws.readyState+')':''))},20000)}
 function fail(c,msg){if(call===c)stopCall(msg)}
 function say(c,key,txt,cls){if(!txt)return;c[key+'T']=(c[key+'T']||'')+txt;var show=c[key+'T'];if(!DBG)return;if(key==='ub'&&/[\u0900-\u0DFF]/.test(show))show='🎙️ …';if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean(show);down()}
@@ -707,30 +728,31 @@ function onLive(c,m){
     c.ws.send(JSON.stringify({toolResponse:{functionResponses:rs}}))}}
 function playPcm(c,b64){var buf=a2b(b64);if(buf.byteLength%2)buf=buf.slice(0,buf.byteLength-1);var u=new Int16Array(buf),f=new Float32Array(u.length);c.nAud=(c.nAud||0)+1;if(c.ctx.state!=='running')c.ctx.resume();for(var i=0;i<u.length;i++)f[i]=u[i]/32768;
   var ab=c.ctx.createBuffer(1,f.length,24000);ab.getChannelData(0).set(f);var s=c.ctx.createBufferSource();s.buffer=ab;s.connect(c.ctx.destination);
-  var at=Math.max(c.ctx.currentTime+0.02,c.next);s.start(at);c.next=at+ab.duration;c.srcs.push(s);cstate('سراج يحچي…','talk');
+  var at=Math.max(c.ctx.currentTime+0.02,c.next);s.start(at);c.next=at+ab.duration;c.srcs.push(s);cstate('سراج يحجي…','talk');
   s.onended=function(){var k=c.srcs.indexOf(s);if(k>=0)c.srcs.splice(k,1);if(!c.srcs.length&&call===c&&c.ready)cstate('أسمعك…','hear')}}
 function stopCall(msg){var c=call;if(!c)return;call=null;keep(c);clearInterval(c.tick);clearTimeout(c.guard);
   try{c.ws.readyState===1&&c.ws.send(JSON.stringify({sirajBye:true}))}catch(_){}try{c.ws.close()}catch(_){}
   c.srcs.forEach(function(s){try{s.stop()}catch(_){}});try{c.node.disconnect()}catch(_){}c.st.getTracks().forEach(function(t){t.stop()});try{c.ctx.close()}catch(_){}
-  pill.className='callpill';orb.classList.remove('think');
+  pill.className='callpill';orb.classList.remove('think');setTimeout(fabCheck,300);
   if(msg)bubble(msg,'ai');else if(c.tr){var sd=Math.round((Date.now()-c.tr)/1000);bubble('📞 انتهت المكالمة ويا سراج ('+Math.floor(sd/60)+':'+('0'+sd%60).slice(-2)+')','ai')}
   opts([{t:'📞 كلّمني مرة ثانية',cls:'call',fn:startCall},{t:'💬 واتساب',href:WA}])}
 $('hcall').onclick=function(){call?stopCall():startCall()};
-$('callbtn').onclick=function(){call?stopCall():startCall()};$('cend').onclick=function(){stopCall()};
+$('cend').onclick=function(){stopCall()};
 
 document.querySelectorAll('[data-ask]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();float();setTimeout(function(){ask(a.dataset.ask)},300)})});
 
 /* "Ask Siraj" opens the same Siraj card floating above the page (same colors, same chat) */
 var fab=$('fab'),sir=$('siraj'),scrim=$('scrim'),ph0=null;
 function float(){if(sir.classList.contains('float'))return;var r=sir.getBoundingClientRect();if(r.top>=0&&r.bottom<=innerHeight)return;ph0=el('div');ph0.style.height=sir.offsetHeight+'px';sir.parentNode.insertBefore(ph0,sir);sir.classList.add('float');scrim.classList.add('on');fab.classList.remove('show')}
-function unfloat(){if(!sir.classList.contains('float'))return;sir.classList.remove('float');scrim.classList.remove('on');ph0&&ph0.remove();ph0=null}
-fab.onclick=float;$('sx2').onclick=unfloat;scrim.onclick=unfloat;
+function unfloat(){if(!sir.classList.contains('float'))return;sir.classList.remove('float');scrim.classList.remove('on');ph0&&ph0.remove();ph0=null;fabCheck()}
+function fabCheck(){if(sir.classList.contains('float')||call)return;var r=sir.getBoundingClientRect();fab.classList.toggle('show',!(r.bottom>0&&r.top<innerHeight))}
+fab.onclick=float;$('sx2').onclick=function(){unfloat();fabCheck()};scrim.onclick=unfloat;
 document.addEventListener('keydown',function(e){if(e.key==='Escape')unfloat()});
-if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float'))fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
+if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float')&&!call)fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
 
 /* builder */
 var D={
- food:{l:'مطعم وكوفي',ph:'مثلاً: كوفي الياسمين',h:'طلبك جاهز بدقيقة',s:'منيو بالباركود، وحجز طاولة',cta:'احجز طاولة',bot:'هلا بيك! تحب أحجزلك طاولة لو تطلب توصيل؟',items:[['سبانش لاتيه','4,000'],['V60 إثيوبي','5,000'],['مسگوف عراقي','25,000'],['كيكة تمر','3,500']]},
+ food:{l:'مطعم وكوفي',ph:'مثلاً: كوفي الياسمين',h:'طلبك جاهز بدقيقة',s:'منيو بالباركود، وحجز طاولة',cta:'احجز طاولة',bot:'هلا بيك! تحب أحجزلك طاولة لو ندزلك طلبك توصيل؟',items:[['سبانش لاتيه','4,000'],['V60 إثيوبي','5,000'],['مسكوف عراقي','25,000'],['كيكة تمر','3,500']]},
  shop:{l:'متجر',ph:'مثلاً: متجر نور للعطور',h:'تسوّق من بيتك',s:'اطلب، والطلب يوصلك للباب',cta:'اطلب بالواتساب',bot:'هلا بيك! شنو تدور عليه اليوم؟',items:[['عطر مسائي','45,000'],['ساعة كلاسيك','60,000'],['حقيبة جلد','35,000'],['توصيل داخل بغداد','5,000']]},
  org:{l:'مؤسسة',ph:'مثلاً: منتدى شباب بغداد',h:'خدماتنا أقرب لك',s:'استمارات، مواعيد، وأخبار',cta:'قدّم طلبك أونلاين',bot:'هلا بيك! شنو المعاملة اللي تحتاجها؟',items:[['التسجيل بالورش','مفتوح'],['حجز موعد','أونلاين'],['استمارة متابعة','دقيقة وحدة'],['آخر الأخبار','يومياً']]},
  clinic:{l:'عيادة',ph:'مثلاً: عيادة د. سارة',h:'موعدك بدقيقة',s:'احجز من تلفونك، بلا انتظار',cta:'احجز موعد',bot:'هلا بيك! أي يوم يناسبك للموعد؟',items:[['كشفية','25,000'],['تنظيف أسنان','40,000'],['تبييض','75,000'],['استشارة أونلاين','15,000']]},
@@ -758,7 +780,8 @@ function play(){timer.forEach(clearTimeout);timer=[];if(still){scr.className='sc
   for(var k=1;k<=5;k++)(function(k){timer.push(setTimeout(function(){scr.className='screen build s'+k;ticks(k)},300+k*800))})(k);
   timer.push(setTimeout(function(){scr.className='screen';qrb.style.transition='opacity .6s';qrb.style.opacity='1';ph.classList.remove('on')},300+6*800))}
 function qr(n){var msg='أريد نموذج مثل '+n;
-  var url=WA+'?text='+encodeURIComponent(msg);
+  var url='https://wa.me/9647715110011?text='+encodeURIComponent(msg);
+  var ql=$('qrlink');if(ql)ql.href=url;
   try{var q=qrcode(0,'L');q.addData(url);q.make();$('qr').innerHTML=q.createSvgTag({cellSize:3,margin:2,scalable:true})}catch(e){$('qr').textContent='QR'}
   $('qn').textContent='باركود '+n}
 var bt;$('bn').addEventListener('input',function(){clearTimeout(bt);bt=setTimeout(function(){render(true)},700)});
@@ -801,6 +824,8 @@ function roi(){var h=+$('h').value,w=+$('w').value,c=+$('c').value;$('ho').textC
 /* copy number */
 $('copy').onclick=function(){var t='07715110011';(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){$('cn').textContent='تم النسخ ✓'},function(){$('cn').textContent=t})};
 })();
+
+(function(){var t=document.querySelector('.top');if(!t)return;var f=function(){t.classList.toggle('shrink',scrollY>40)};addEventListener('scroll',f,{passive:true});f()})();
 </script>
 </body>
 </html>
