@@ -575,8 +575,8 @@ var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='http
 /* 🛡️ Turnstile (حماية من البوتات): فحص خفي مرة وحدة، وبعدها «تصريح» ساعتين */
 var TS_KEY='0x4AAAAAAFu_FHy-wIsEE9m7',PASSP=null;
 function passNow(){try{var o=JSON.parse(sessionStorage.getItem('sj_pass')||'null');if(o&&o.exp>Date.now()+60000)return o.p}catch(e){}return''}
-function getPass(){var p=passNow();if(p)return Promise.resolve(p);if(PASSP)return PASSP;
-  PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;res(v||'')};setTimeout(fin,9000);
+function getPass(){var p=passNow();if(p)return Promise.resolve(p);try{if(+sessionStorage.getItem('sj_off')>Date.now())return Promise.resolve('')}catch(e){}if(PASSP)return PASSP;
+  PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;if(!v){try{sessionStorage.setItem('sj_off',Date.now()+600000)}catch(e){}}res(v||'')};setTimeout(fin,4000);
     var n=0,w=setInterval(function(){if(!window.turnstile){if(++n>40){clearInterval(w);fin('')}return}clearInterval(w);
       var box=document.getElementById('ts');if(!box){box=document.createElement('div');box.id='ts';box.style.display='none';document.body.appendChild(box)}
       var cb=function(t){fetch(API+'/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})}).then(function(r){return r.json()}).then(function(d){
@@ -610,7 +610,7 @@ function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
   var body={text:text||'',history:hist.slice(-12),file:file||null};hist.push({role:'user',text:text||'[voice note]'});
   var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
-  try{var ps=await getPass();var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:ps?{'Content-Type':'application/json','X-Siraj-Pass':ps}:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  try{var ps=await Promise.race([getPass(),new Promise(function(r){setTimeout(function(){r('')},1200)})]);var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:ps?{'Content-Type':'application/json','X-Siraj-Pass':ps}:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
@@ -696,7 +696,7 @@ async function startCall(){
   catch(e){try{ctx.close()}catch(_){}bubble("I couldn't open your mic. Please allow microphone access and try again.",'ai');return}
   try{await ctx.resume();await ctx.audioWorklet.addModule('/siraj-worklet.js')}catch(e){st.getTracks().forEach(function(t){t.stop()});bubble('Something went wrong with the audio. Please try again.','ai');return}
   var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
-  var ps=await getPass();var c=call={ws:new WebSocket(LIVE+'&pass='+encodeURIComponent(ps)),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
+  var ps=await Promise.race([getPass(),new Promise(function(r){setTimeout(function(){r('')},1500)})]);var c=call={ws:new WebSocket(LIVE+'&pass='+encodeURIComponent(ps)),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
   fab.classList.remove('show');cstate('Connecting…','wait');orb.classList.add('think');
   c.tick=setInterval(function(){var left=Math.max(0,LIVE_SEC-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
   node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
