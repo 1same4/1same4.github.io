@@ -579,9 +579,9 @@ function getPass(){var p=passNow();if(p)return Promise.resolve(p);try{if(+sessio
   PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;if(!v){try{sessionStorage.setItem('sj_off',Date.now()+600000)}catch(e){}}res(v||'')};setTimeout(fin,4000);
     var n=0,w=setInterval(function(){if(!window.turnstile){if(++n>40){clearInterval(w);fin('')}return}clearInterval(w);
       var box=document.getElementById('ts');if(!box){box=document.createElement('div');box.id='ts';box.style.display='none';document.body.appendChild(box)}
-      var cb=function(t){fetch(API+'/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})}).then(function(r){return r.json()}).then(function(d){
+      var cb=function(t){fetch(API+'/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})}).then(function(r){return r.json()}).then(function(d){if(/[?&]debug=1/.test(location.search)){try{var m=document.createElement('div');m.className='m ai';m.textContent='🔧 verify: '+(d.pass?'ok':(d.error+' '+(d.why||'')));document.getElementById('log').appendChild(m)}catch(e){}}/*sjdbg*/
           if(d.pass&&d.pass!=='off'){try{sessionStorage.setItem('sj_pass',JSON.stringify({p:d.pass,exp:Date.now()+110*60000}))}catch(e){}fin(d.pass)}else fin('')}).catch(function(){fin('')})};
-      try{if(window.__tsId!=null){turnstile.reset(window.__tsId)}else{window.__tsId=turnstile.render(box,{sitekey:TS_KEY,callback:cb,'error-callback':function(){fin('')}})}}catch(e){fin('')}},200)});
+      try{if(window.__tsId!=null){turnstile.reset(window.__tsId)}else{window.__tsId=turnstile.render(box,{sitekey:TS_KEY,callback:cb,'error-callback':function(c){if(/[?&]debug=1/.test(location.search)){try{var m=document.createElement('div');m.className='m ai';m.textContent='🔧 turnstile error: '+c;document.getElementById('log').appendChild(m)}catch(e){}}fin('')}})}}catch(e){fin('')}},200)});
   return PASSP}
 function dropPass(){try{sessionStorage.removeItem('sj_pass')}catch(e){}}
 (function(){var sc=document.createElement('script');sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';sc.async=true;document.head.appendChild(sc);setTimeout(getPass,1200)})();
