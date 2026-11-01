@@ -346,6 +346,14 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 .reveal{opacity:1}
 @supports (animation-timeline:view()){.reveal{animation:up linear both;animation-timeline:view();animation-range:entry 0% entry 35%}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+.mic.callb{background:var(--gbtn,linear-gradient(135deg,#F0BC5E,#D99B26))!important;color:var(--on-gold)!important;border:0!important}
+.hcall{margin-inline-start:auto;border:0;border-radius:999px;padding:7px 14px;background:var(--gbtn,linear-gradient(135deg,#F0BC5E,#D99B26));color:var(--on-gold);font:inherit;font-size:.88rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.callpill{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,140%);z-index:90;display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border-radius:999px;background:var(--surface);color:var(--fg);border:1px solid var(--gold);box-shadow:0 10px 34px rgba(0,0,0,.28);transition:transform .35s ease;max-width:calc(100vw - 24px);font-size:.95rem}
+.callpill.on{transform:translate(-50%,0)}
+.callpill .cdot{width:10px;height:10px;border-radius:50%;background:var(--gold-2);flex:none}
+.callpill.hear .cdot{animation:recp 1.4s infinite}.callpill.talk .cdot{background:#2fb36b;animation:recp .7s infinite}.callpill.wait .cdot{opacity:.5}
+.callpill #ctm,.callpill #cus{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem}
+.callpill button{border:0;border-radius:999px;padding:7px 14px;background:#c0392b;color:#fff;font:inherit;font-size:.88rem;cursor:pointer}
 </style>
 <script>try{if("scrollRestoration" in history)history.scrollRestoration="manual";var T=localStorage.getItem("theme");if(T==="dark"||T==="light")document.documentElement.dataset.theme=T}catch(e){}</script>
 </head>
@@ -377,7 +385,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 
     <div class="siraj" id="siraj">
       <div class="siraj-in">
-        <div class="s-head"><span class="orb" id="orb"><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M10 2C15 9 15 14 10 18C5 14 5 9 10 2Z" fill="#fff"/><rect x="7" y="22" width="6" height="16" rx="1.4" fill="#fff"/></svg></span><div><b>Siraj</b><small>Janabi AI assistant · online now</small></div><button class="ibtn s-x" id="sx2" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+        <div class="s-head"><span class="orb" id="orb"><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M10 2C15 9 15 14 10 18C5 14 5 9 10 2Z" fill="#fff"/><rect x="7" y="22" width="6" height="16" rx="1.4" fill="#fff"/></svg></span><div><b>Siraj</b><small>Janabi AI assistant · online now</small></div><button class="hcall" id="hcall" type="button" aria-label="Call Siraj">📞 Call</button><button class="ibtn s-x" id="sx2" type="button" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
         <div class="s-log" id="log" aria-live="polite"></div>
         <form class="s-form" id="sf" autocomplete="off">
           <input id="si" maxlength="600" placeholder="Write to Siraj…" aria-label="Your message to Siraj">
@@ -551,6 +559,7 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 </div>
 </main>
 
+<div class="callpill" id="callpill" role="status" aria-live="polite"><span class="cdot"></span><b id="cst">Connecting…</b><span id="ctm">5:00</span><span id="cus"></span><button type="button" id="cend" aria-label="End call">End</button></div>
 <button class="fab" id="fab" type="button"><span class="orb"><svg viewBox="0 0 20 40" aria-hidden="true"><path d="M10 2C15 9 15 14 10 18C5 14 5 9 10 2Z" fill="#fff"/><rect x="7" y="22" width="6" height="16" rx="1.4" fill="#fff"/></svg></span>Ask Siraj</button>
 <div class="scrim" id="scrim"></div>
 
@@ -558,7 +567,20 @@ footer{border-top:1px solid var(--line);padding-block:26px 34px;display:flex;jus
 <script>
 (function(){
 var R=document.documentElement,still=matchMedia('(prefers-reduced-motion:reduce)').matches;
-var API='https://janabi-agent.1same42002.workers.dev',WA='https://wa.me/9647715110011';
+var API='https://red-wood-5f23janabi-agent-live.1same42002.workers.dev',WA='https://wa.me/9647715110011';
+/* 🛡️ Turnstile (حماية من البوتات): فحص خفي مرة وحدة، وبعدها «تصريح» ساعتين */
+var TS_KEY='__SITE_KEY__',PASSP=null;
+function passNow(){try{var o=JSON.parse(sessionStorage.getItem('sj_pass')||'null');if(o&&o.exp>Date.now()+60000)return o.p}catch(e){}return''}
+function getPass(){var p=passNow();if(p)return Promise.resolve(p);if(PASSP)return PASSP;
+  PASSP=new Promise(function(res){var done=0,fin=function(v){if(done)return;done=1;PASSP=null;res(v||'')};setTimeout(fin,9000);
+    var n=0,w=setInterval(function(){if(!window.turnstile){if(++n>40){clearInterval(w);fin('')}return}clearInterval(w);
+      var box=document.getElementById('ts');if(!box){box=document.createElement('div');box.id='ts';box.style.display='none';document.body.appendChild(box)}
+      var cb=function(t){fetch(API+'/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})}).then(function(r){return r.json()}).then(function(d){
+          if(d.pass&&d.pass!=='off'){try{sessionStorage.setItem('sj_pass',JSON.stringify({p:d.pass,exp:Date.now()+110*60000}))}catch(e){}fin(d.pass)}else fin('')}).catch(function(){fin('')})};
+      try{if(window.__tsId!=null){turnstile.reset(window.__tsId)}else{window.__tsId=turnstile.render(box,{sitekey:TS_KEY,callback:cb,'error-callback':function(){fin('')}})}}catch(e){fin('')}},200)});
+  return PASSP}
+function dropPass(){try{sessionStorage.removeItem('sj_pass')}catch(e){}}
+(function(){var sc=document.createElement('script');sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';sc.async=true;document.head.appendChild(sc);setTimeout(getPass,1200)})();
 function $(i){return document.getElementById(i)}
 function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
 
@@ -584,7 +606,7 @@ function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
   var body={text:text||'',history:hist.slice(-12),file:file||null};hist.push({role:'user',text:text||'[voice note]'});
   var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
-  try{var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  try{var ps=await getPass();var r=await fetch(API+'/chat?stream=1',{method:'POST',headers:{'Content-Type':'application/json','X-Siraj-Pass':ps},body:JSON.stringify(body)});
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
@@ -593,10 +615,10 @@ async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts
     else{var d={};try{d=await r.json()}catch(_){}w.className='m ai';w.textContent=d.error||'Something went wrong, please try again'}}
   catch(e){w.className='m ai';w.textContent='No connection right now. Try again shortly, or message us on WhatsApp.'}
   orb.classList.remove('think');busy=false;down();
-  opts([{t:'🎙️ Send a voice note',cls:'call',fn:voice},{t:'💬 WhatsApp',href:WA}])}
+  opts([{t:'📞 Talk to me by voice',cls:'call',fn:startCall},{t:'💬 WhatsApp',href:WA}])}
 function go(id){unfloat();var t=$(id);t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
-function greet(){typeAi('Welcome 👋\nI am Siraj, the Janabi AI assistant.\nWould you like to chat by text, or by voice?',function(){
-  opts([{t:'🎙️ Talk by voice',cls:'call',fn:voice},
+function greet(){typeAi('Welcome 👋\nI am Siraj, the Janabi AI assistant.\nWant to chat here, or hop on a quick voice call?',function(){
+  opts([{t:'📞 Call me',cls:'call',fn:startCall},
         {t:'✨ Try a demo for your business',cls:'call',fn:function(){go('try')}},
         {t:'🧩 See our services',fn:function(){go('services')}},
         {t:'💡 I have an idea',fn:function(){ask('I have a project idea and want to know where to start')}}])},'big')}
@@ -633,10 +655,11 @@ document.querySelectorAll('[data-ask]').forEach(function(a){a.addEventListener('
 /* "Ask Siraj" opens the same Siraj card floating above the page (same colors, same chat) */
 var fab=$('fab'),sir=$('siraj'),scrim=$('scrim'),ph0=null;
 function float(){if(sir.classList.contains('float'))return;var r=sir.getBoundingClientRect();if(r.top>=0&&r.bottom<=innerHeight)return;ph0=el('div');ph0.style.height=sir.offsetHeight+'px';sir.parentNode.insertBefore(ph0,sir);sir.classList.add('float');scrim.classList.add('on');fab.classList.remove('show')}
-function unfloat(){if(!sir.classList.contains('float'))return;sir.classList.remove('float');scrim.classList.remove('on');ph0&&ph0.remove();ph0=null}
+function unfloat(){if(!sir.classList.contains('float'))return;sir.classList.remove('float');scrim.classList.remove('on');ph0&&ph0.remove();ph0=null;fabCheck()}
+function fabCheck(){if(sir.classList.contains('float')||call)return;var r=sir.getBoundingClientRect();fab.classList.toggle('show',!(r.bottom>0&&r.top<innerHeight))}
 fab.onclick=float;$('sx2').onclick=unfloat;scrim.onclick=unfloat;
 document.addEventListener('keydown',function(e){if(e.key==='Escape')unfloat()});
-if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float'))fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
+if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(!sir.classList.contains('float')&&!call)fab.classList.toggle('show',!es[0].isIntersecting)}).observe(sir);
 
 /* builder */
 var D={
@@ -648,6 +671,76 @@ var D={
 var S={lux:{bg:'#0f1424',fg:'#f3eee2',acc:'#d4a24c',on:'#1b1404',hero:'linear-gradient(135deg,#1c2440,#2b2010)',hfg:'#f3eee2',card:'#1a2035'},
  warm:{bg:'#f6efe3',fg:'#3b2416',acc:'#8a4b2a',on:'#fff',hero:'linear-gradient(135deg,#e8d5b9,#d9b48c)',hfg:'#3b2416',card:'#efe3d0'},
  fresh:{bg:'#ffffff',fg:'#0d2a2a',acc:'#0f9b8e',on:'#fff',hero:'linear-gradient(135deg,#d9f4f0,#bfe8f5)',hfg:'#0d2a2a',card:'#f0f6f6'}};
+var SID='en'+Date.now().toString(36);function memLoad(){return[]}function memAdd(){}
+/* ===== سراج لايف: مكالمة صوتية مباشرة (Gemini Live عبر الـWorker) ===== */
+var LIVE_SEC=240,CALLS_PER_DAY=3;
+function callsToday(add){var d=new Date().toDateString(),o={};try{o=JSON.parse(localStorage.getItem('sj_calls')||'{}')}catch(e){}if(o.d!==d)o={d:d,n:0};if(add){o.n++;try{localStorage.setItem('sj_calls',JSON.stringify(o))}catch(e){}}return o.n}
+var LIVE='wss://red-wood-5f23janabi-agent-live.1same42002.workers.dev/live?lang=en',call=null,DBG=/[?&]debug=1/.test(location.search);
+var pill=$('callpill'),pst=$('cst'),ptm=$('ctm'),pus=$('cus'),usage={tok:0};
+function b2a(buf){var s='',u=new Uint8Array(buf);for(var i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
+function a2b(b){b=String(b).replace(/-/g,'+').replace(/_/g,'/').replace(/\s/g,'');while(b.length%4)b+='=';var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u.buffer}
+function cstate(t,cls){pst.textContent=t;pill.className='callpill on'+(cls?' '+cls:'')}
+function sampleOpen(kind,name){if(!D[kind])return;sec=kind;pressGroup($('sector'),'k',sec);$('bn').placeholder=D[sec].ph;if(name)$('bn').value=String(name).slice(0,28);render(true);
+  var t=$('try');t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
+async function startCall(){
+  if(call)return;clearOpts();
+  if(!DBG&&callsToday()>=CALLS_PER_DAY){bubble("We've had "+CALLS_PER_DAY+" calls today 😄 Let's continue by text or voice note, or message Ali on WhatsApp.",'ai');opts([{t:'🎙️ Send a voice note',fn:voice},{t:'💬 WhatsApp',href:WA}]);return}
+  if(!navigator.mediaDevices||!window.AudioWorklet||!window.WebSocket){bubble("Your browser doesn't support calls. Type to me or send a voice note 🎙️",'ai');return}
+  var ctx=new(window.AudioContext||window.webkitAudioContext)();ctx.resume();  /* نسويه لحظة الضغطة حتى الآيفون يسمح بالصوت */
+  var st;try{st=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1}})}
+  catch(e){try{ctx.close()}catch(_){}bubble("I couldn't open your mic. Please allow microphone access and try again.",'ai');return}
+  try{await ctx.resume();await ctx.audioWorklet.addModule('/siraj-worklet.js')}catch(e){st.getTracks().forEach(function(t){t.stop()});bubble('Something went wrong with the audio. Please try again.','ai');return}
+  var node=new AudioWorkletNode(ctx,'sir-cap'),src=ctx.createMediaStreamSource(st);src.connect(node);
+  var ps=await getPass();var c=call={ws:new WebSocket(LIVE+'&pass='+encodeURIComponent(ps)),ctx:ctx,st:st,node:node,srcs:[],next:0,ready:false,ending:false,t0:Date.now(),ub:null,ab:null,tick:0};
+  fab.classList.remove('show');cstate('Connecting…','wait');orb.classList.add('think');
+  c.tick=setInterval(function(){var left=Math.max(0,LIVE_SEC-(Date.now()-c.t0)/1000);ptm.textContent=Math.floor(left/60)+':'+('0'+Math.floor(left%60)).slice(-2);if(DBG)pus.textContent=Math.round(usage.tok/1000*10)/10+'k tok · 🔊'+(c.nAud||0)+' · '+c.ctx.state+' '+c.ctx.sampleRate},500);
+  node.port.onmessage=function(e){if(c.ready&&c.ws.readyState===1)c.ws.send(JSON.stringify({realtimeInput:{audio:{data:b2a(e.data),mimeType:'audio/pcm;rate=16000'}}}))};
+  c.ws.onmessage=function(ev){var m;try{m=JSON.parse(typeof ev.data==='string'?ev.data:'')}catch(_){return}onLive(c,m)};
+  c.ws.onopen=function(){dbg('الموقع اتصل بالعامل')};
+  c.ws.onerror=function(){if(!c.ready)fail(c,"I couldn't connect the call right now. Type to me or send a voice note 🎙️")};
+  c.ws.onclose=function(e){dbg('انقطع: '+e.code+' '+(e.reason||''));if(call===c)stopCall(c.ready?null:"I couldn't connect the call right now"+(DBG&&c.why?' — '+c.why:'')+'. Type to me or send a voice note 🎙️')};
+  c.guard=setTimeout(function(){if(!c.ready)fail(c,'The call is taking too long. Try again or type to me.'+(DBG?' (حالة الاتصال: '+c.ws.readyState+')':''))},20000)}
+function fail(c,msg){if(call===c)stopCall(msg)}
+function say(c,key,txt,cls){if(!txt)return;c[key+'T']=(c[key+'T']||'')+txt;var show=c[key+'T'];if(!DBG)return;if(key==='ub'&&/[\u0900-\u0DFF]/.test(show))show='🎙️ …';if(!c[key]){c[key]=bubble('',cls)}c[key].textContent=clean(show);down()}
+function keep(c){if(c.ubT)memAdd('user',c.ubT);if(c.abT)memAdd('model',c.abT);c.ubT=c.abT=''}
+function dbg(t){if(DBG)bubble('🔧 '+t,'ai')}
+function onLive(c,m){
+  if(m.sirajStatus){dbg(m.sirajStatus);return}
+  if(m.sirajClosed!=null){dbg('Gemini سكّر: '+m.sirajClosed+' '+(m.reason||''));c.why='Gemini رفض الاتصال ('+m.sirajClosed+')';return}
+  if(m.sirajError){fail(c,'Siraj is busy right now. Type to me or send a voice note 🎙️');return}
+  if(m.sirajLimit){bubble('Call time is up. To continue, type to me or message Ali on WhatsApp.','ai');return}
+  if(m.sirajLead){bubble('✅ Your request is saved','ai');return}
+  if(m.sirajPhone){if(!DBG)return;var ph=m.sirajPhone;bubble('📱 '+ph.v+' · '+ph.n+' رقم '+(ph.ok?'✅':'⚠️ مو كامل'),'ai');return}
+  if(m.usageMetadata){usage.tok=m.usageMetadata.totalTokenCount||usage.tok;window.__sirajUsage={sec:Math.round((Date.now()-c.t0)/1000),tokens:usage.tok};if(DBG)console.log('usage',window.__sirajUsage)}
+  if(m.setupComplete){c.ready=true;c.tr=Date.now();callsToday(true);clearTimeout(c.guard);if(DBG){try{var o=c.ctx.createOscillator(),g=c.ctx.createGain();g.gain.value=.15;o.frequency.value=660;o.connect(g);g.connect(c.ctx.destination);o.start();o.stop(c.ctx.currentTime+.25);dbg('صفرة اختبار 🔔 (لازم تسمعها) · الصوت: '+c.ctx.state)}catch(e){dbg('الصفرة فشلت: '+e.message)}}orb.classList.remove('think');cstate('Listening…','hear');
+    var mm=memLoad();var open0=mm.length?('هذا زائر رجع. ملخص كلامه السابق وياك (الزبون/سراج):\n'+mm.slice(-16).map(function(x){return(x.role==='user'?'الزبون: ':'سراج: ')+x.text}).join('\n').slice(-1800)+'\nهسه فتح مكالمة جديدة. رحّب بيه بجملة وحدة كأنك تتذكره، وكمّل وياه.'):'The visitor just opened the call from the English page. Greet them in English in one sentence.';
+    c.ws.send(JSON.stringify({realtimeInput:{text:open0}}));return}
+  var sc=m.serverContent;
+  if(sc&&DBG&&!c.seenAud&&sc.modelTurn){c.seenAud=1;var pp=(sc.modelTurn.parts||[]).map(function(p){return Object.keys(p).join('+')+(p.inlineData?':'+p.inlineData.mimeType:'')}).join(' | ');dbg('أول رد صوتي: '+pp)}
+  if(sc){
+    if(sc.interrupted){keep(c);c.srcs.forEach(function(s){try{s.stop()}catch(_){}});c.srcs=[];c.next=0;cstate('Listening…','hear');c.ab=null}
+    var ps=sc.modelTurn&&sc.modelTurn.parts||[];
+    ps.forEach(function(p){if(p.inlineData&&p.inlineData.data){try{playPcm(c,p.inlineData.data)}catch(e){if(!c.perr){c.perr=1;dbg('خطأ تشغيل الصوت: '+e.message)}}}});
+    if(sc.inputTranscription&&sc.inputTranscription.text){if(c.ab)c.ab=null;say(c,'ub',sc.inputTranscription.text,'m me')}
+    if(sc.outputTranscription&&sc.outputTranscription.text){c.ub=null;say(c,'ab',sc.outputTranscription.text,'m ai')}
+    if(sc.turnComplete){keep(c);c.ub=null;c.ab=null;if(c.ending)setTimeout(function(){if(call===c)stopCall()},Math.max(0,(c.next-c.ctx.currentTime))*1000+500)}}
+  if(m.toolCall&&m.toolCall.functionCalls){var rs=[];m.toolCall.functionCalls.forEach(function(fc){var a=fc.args||{};
+    if(fc.name==='open_sample'){sampleOpen(a.kind,a.name)}
+    if(fc.name==='end_call'){c.ending=true;setTimeout(function(){if(call===c)stopCall()},15000)}
+    rs.push({id:fc.id,name:fc.name,response:{result:'ok'}})});
+    c.ws.send(JSON.stringify({toolResponse:{functionResponses:rs}}))}}
+function playPcm(c,b64){var buf=a2b(b64);if(buf.byteLength%2)buf=buf.slice(0,buf.byteLength-1);var u=new Int16Array(buf),f=new Float32Array(u.length);c.nAud=(c.nAud||0)+1;if(c.ctx.state!=='running')c.ctx.resume();for(var i=0;i<u.length;i++)f[i]=u[i]/32768;
+  var ab=c.ctx.createBuffer(1,f.length,24000);ab.getChannelData(0).set(f);var s=c.ctx.createBufferSource();s.buffer=ab;s.connect(c.ctx.destination);
+  var at=Math.max(c.ctx.currentTime+0.02,c.next);s.start(at);c.next=at+ab.duration;c.srcs.push(s);cstate('Siraj is talking…','talk');
+  s.onended=function(){var k=c.srcs.indexOf(s);if(k>=0)c.srcs.splice(k,1);if(!c.srcs.length&&call===c&&c.ready)cstate('Listening…','hear')}}
+function stopCall(msg){var c=call;if(!c)return;call=null;keep(c);clearInterval(c.tick);clearTimeout(c.guard);
+  try{c.ws.readyState===1&&c.ws.send(JSON.stringify({sirajBye:true}))}catch(_){}try{c.ws.close()}catch(_){}
+  c.srcs.forEach(function(s){try{s.stop()}catch(_){}});try{c.node.disconnect()}catch(_){}c.st.getTracks().forEach(function(t){t.stop()});try{c.ctx.close()}catch(_){}
+  pill.className='callpill';orb.classList.remove('think');setTimeout(fabCheck,300);
+  if(msg)bubble(msg,'ai');else if(c.tr){var sd=Math.round((Date.now()-c.tr)/1000);bubble('📞 Call with Siraj ended ('+Math.floor(sd/60)+':'+('0'+sd%60).slice(-2)+')','ai')}
+  opts([{t:'📞 Call me again',cls:'call',fn:startCall},{t:'💬 WhatsApp',href:WA}])}
+$('hcall').onclick=function(){call?stopCall():startCall()};
+$('cend').onclick=function(){stopCall()};
 var sec='food',sty='lux',scr=$('screen');
 function pressGroup(g,attr,val){g.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset[attr]===val)})}
 $('sector').onclick=function(e){var b=e.target.closest('button');if(!b)return;sec=b.dataset.k;pressGroup(this,'k',sec);$('bn').placeholder=D[sec].ph;render(true)};
