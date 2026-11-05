@@ -8,10 +8,14 @@
 <title>Janabi AI | الجنابي AI · علي الجنابي · حلول رقمية وذكاء اصطناعي</title>
 <meta name="description" content="علي الجنابي، مؤسس Janabi AI: نبني مواقع ذكية، ووكيل ذكاء اصطناعي يرد على زباينك بأي وكت، وهوية تخلي شغلك ينذكر. جرّب نموذج شغلك هسه.">
 <meta property="og:title" content="Janabi AI · فكرتك تصير مشروع">
-<meta property="og:description" content="مواقع، أنظمة، وكلاء ذكيين، تصميم وإعلانات. جرّب نموذج محلك كدامك.">
+<meta property="og:description" content="مواقع ومنيو بالباركود ووكلاء ذكيين مثل سراج، يرد على زبائنك بالعراقي 24 ساعة. شوف نماذج حقيقية من شغلنا.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://janabiai.com/">
 <meta property="og:image" content="https://janabiai.com/preview.jpg?v=3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Janabi AI">
+<meta name="twitter:image" content="https://janabiai.com/preview.jpg?v=3">
 <meta property="og:locale" content="ar_IQ">
 <meta property="og:site_name" content="Janabi AI">
 <meta name="twitter:card" content="summary_large_image">
@@ -599,7 +603,7 @@ async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts
 function go(id){unfloat();var t=$(id);t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
 function greet(){typeAi('هلا بيك، نورتنا 👋\nأنا سراج، مساعد Janabi AI.\nشلون أكدر أساعدك اليوم؟ تحب نراسل كتابة، لو تخابرني وأحجي وياك بصوتي؟',function(){
   opts([{t:'📞 احجي وياي بصوتك',cls:'call',fn:startCall},
-        {t:'✨ جرّب نموذج لشغلك',cls:'call',fn:function(){go('try')}},
+        {t:'✨ شوف نماذج شغلنا',cls:'call',fn:function(){clearOpts();bubble('عندنا نموذجين حقيقيين، اختار:','ai');opts([{t:'🩺 موقع الدكتور علي زغير',fn:function(){sampleCard('clinic')}},{t:'☕ نموذج كوفي Huila',fn:function(){sampleCard('food')}}])}},
         {t:'🧩 شوف خدماتنا',fn:function(){go('services')}},
         {t:'💡 عندي فكرة',fn:function(){ask('عندي فكرة مشروع وأريد أعرف منين أبدي')}}])},'big')}
 setTimeout(greet,700);
