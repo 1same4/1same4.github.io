@@ -584,13 +584,13 @@ function clearOpts(){log.querySelectorAll('.s-opts').forEach(function(x){x.remov
 function clean(s){return s.replace(/\*\*|^#+\s*/gm,'')}
 async function ask(text,file){if(busy||(!text&&!file))return;busy=true;clearOpts();if(text)bubble(text,'me');
   var body={text:text||'',history:hist.slice(-12),file:file||null,sid:SID};var me={role:'user',text:text||'🎙️ (بصمة)'};hist.push(me);sess.push(me);
-  var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='';
+  var w=el('div','m ai dots','<i></i><i></i><i></i>');log.appendChild(w);down();orb.classList.add('think');var full='',T0=Date.now();
   try{var ps=await Promise.race([getPass(),new Promise(function(r){setTimeout(function(){r('')},1200)})]);var mk=function(ps){return fetch(API+'/chat?stream=1',{method:'POST',headers:ps?{'Content-Type':'application/json','X-Siraj-Pass':ps}:{'Content-Type':'application/json'},body:JSON.stringify(body)})};var r=await mk(ps);if(r.status===403){dropPass();try{sessionStorage.removeItem('sj_off')}catch(e){}ps=await getPass();if(ps)r=await mk(ps)}
     var tr=r.headers.get('X-Transcript');if(tr){try{me.text='🎙️ '+decodeURIComponent(tr)}catch(_){}}memAdd('user',me.text);
     if(r.ok&&r.body&&(r.headers.get('Content-Type')||'').indexOf('event-stream')>=0){var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
       while(true){var x=await rd.read();if(x.done)break;buf+=dec.decode(x.value,{stream:true});var i;
         while((i=buf.indexOf('\n'))>=0){var line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(line.indexOf('data:')!==0)continue;
-          try{var j=JSON.parse(line.slice(5));if(j.sirajFix){full=j.sirajFix;w.className='m ai';w.textContent=noTag(clean(full));down();continue}var c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];var t=ps.filter(function(p){return!p.thought}).map(function(p){return p.text||''}).join('');if(t){full+=t;w.className='m ai';w.textContent=noTag(clean(full));down()}}catch(_){}}}
+          try{var j=JSON.parse(line.slice(5));if(j.sirajDbg){if(/[?&]debug=1/.test(location.search))bubble('🔧 السيرفر: '+j.sirajDbg+' | المتصفح '+(Date.now()-T0)+'ms','ai');continue}if(j.sirajFix){full=j.sirajFix;w.className='m ai';w.textContent=noTag(clean(full));down();continue}var c=(j.candidates||[])[0],ps=(c&&c.content&&c.content.parts)||[];var t=ps.filter(function(p){return!p.thought}).map(function(p){return p.text||''}).join('');if(t){full+=t;w.className='m ai';w.textContent=noTag(clean(full));down()}}catch(_){}}}
       full=clean(full).trim();var kd=tagKind(full);full=noTag(full);w.className='m ai';w.textContent=full||'صار خلل، جرّب مرة ثانية';if(full){var ai={role:'model',text:full};hist.push(ai);sess.push(ai);memAdd('model',full)}if(kd)sampleCard(kd)}
     else{var d={};try{d=await r.json()}catch(_){}if(r.status===403){dropPass();try{sessionStorage.removeItem('sj_off')}catch(e){}}w.className='m ai';w.textContent=d.error||'صار خلل، جرّب مرة ثانية'}}
   catch(e){w.className='m ai';w.textContent='ماكو اتصال هسه. جرّب بعد شوية، أو احجي ويا علي بالواتساب.'}
