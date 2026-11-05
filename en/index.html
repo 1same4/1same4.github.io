@@ -685,8 +685,7 @@ var pill=$('callpill'),pst=$('cst'),ptm=$('ctm'),pus=$('cus'),usage={tok:0};
 function b2a(buf){var s='',u=new Uint8Array(buf);for(var i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)}
 function a2b(b){b=String(b).replace(/-/g,'+').replace(/_/g,'/').replace(/\s/g,'');while(b.length%4)b+='=';var s=atob(b),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u.buffer}
 function cstate(t,cls){pst.textContent=t;pill.className='callpill on'+(cls?' '+cls:'')}
-function sampleOpen(kind,name){if(!D[kind])return;sec=kind;pressGroup($('sector'),'k',sec);$('bn').placeholder=D[sec].ph;if(name)$('bn').value=String(name).slice(0,28);render(true);
-  var t=$('try');t&&t.scrollIntoView({behavior:still?'auto':'smooth',block:'start'})}
+function sampleOpen(kind,name){var R={food:{t:'🔗 Huila Cafe sample',u:'https://huila-cafe.janabi-studio-iq.workers.dev'},clinic:{t:'🔗 Dr. Ali Zghair website',u:'https://janabi-studio.github.io/ali-zghair/'}},r=R[kind];clearOpts();if(r){bubble('Here is a real sample of our work. It opens in a new tab and I stay right here with you.','ai');opts([{t:r.t,href:r.u}])}else{bubble('Ali will send you samples from your field when he contacts you. Tell me about your business so I can help.','ai')}}
 async function startCall(){
   if(call)return;clearOpts();
   if(!DBG&&callsToday()>=CALLS_PER_DAY){bubble("We've had "+CALLS_PER_DAY+" calls today 😄 Let's continue by text or voice note, or message Ali on WhatsApp.",'ai');opts([{t:'🎙️ Send a voice note',fn:voice},{t:'💬 WhatsApp',href:WA}]);return}
