@@ -1,7 +1,7 @@
 // sw.js — شرارة (Janabi AI)
 // Service Worker للعمل بدون انترنت (Offline-First PWA) باستخدام respondWith
 
-const CACHE_NAME = "sharara-v5";
+const CACHE_NAME = "sharara-v6";
 const ASSETS = [
   "./index.html",
   "./privacy.html",
