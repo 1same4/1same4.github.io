@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرارة | رتب يومك — Janabi AI</title>
+  <meta name="description" content="أداة تنظيم اليوم وبناء العادات للشباب من Janabi AI.">
+  <meta name="theme-color" content="#0F1D4A">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- الهيدر الاحترافي -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="https://janabiai.com" class="brand" aria-label="Janabi AI">
+        <div class="brand-logo"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b></div>
+        <span class="app-title">شرارة</span>
+      </a>
+
+      <div class="header-actions">
+        <div class="streak-pill" title="أيام الالتزام المتتالية">
+          🔥 <span id="streakCount">0</span> يوم
+        </div>
+        <button id="installBtn" class="icon-btn install-pill" type="button" style="display:none;" title="تثبيت التطبيق">📲 تثبيت</button>
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="تبديل الثيم">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+
+    <!-- إرشاد التثبيت للايفون/الأندرويد -->
+    <div id="installGuide" class="install-guide" style="display:none;">
+      <div class="guide-content">
+        <span>📲 <b>ثبت شرارة عالتلفون:</b> للايفون اضغط زر المشاركة (Share) ثم «إضافة إلى الشاشة الرئيسية (Add to Home Screen)». للأندرويد اضغط القائمة ثم «تثبيت التطبيق».</span>
+        <button type="button" id="closeGuide" class="close-guide">✕</button>
+      </div>
+    </div>
+
+    <!-- الهيرو الدائري المتقدم والتحفيز الذكي -->
+    <section class="card hero-card">
+      <div class="hero-inner-flex">
+        <div class="hero-text-side">
+          <h1 id="greetingHeading" class="hero-title">صباح الخير يا مبدع</h1>
+          <p id="todayDate" class="date-text"></p>
+          <p id="smartMotivation" class="motivation-text">ابدي بأهم شغلة عندك اليوم. الاستمرارية تصنع الفرق.</p>
+        </div>
+        <div class="ring-container" aria-label="مؤشر التقدم">
+          <svg class="progress-ring" width="90" height="90">
+            <circle class="ring-bg" cx="45" cy="45" r="38"></circle>
+            <circle class="ring-fill" id="ringFill" cx="45" cy="45" r="38"></circle>
+          </svg>
+          <div class="ring-text" id="ringPercent">0%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- التقدم الأسبوعي (7 أيام مرئية) -->
+    <section class="card weekly-card">
+      <h3 class="sub-title">التقدم الأسبوعي (آخر 7 أيام)</h3>
+      <div id="weeklyGrid" class="weekly-grid"></div>
+    </section>
+
+    <!-- 1. الهدف الأهم -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">الخطوة 01</span>
+          <h2 class="section-title">الهدف الأهم اليوم</h2>
+        </div>
+        <span class="section-hint">شنو إنجاز اليوم اللي يخليك فخور؟</span>
+      </div>
+      <div class="goal-box">
+        <input type="checkbox" id="mainGoalCheck" class="custom-check" aria-label="إنجاز الهدف الرئيسي">
+        <input type="text" id="mainGoalInput" class="goal-input" placeholder="مثال: إنهاء مشروع الزبون أو دراسة الفصل الأول..." maxlength="120">
+      </div>
+    </section>
+
+    <!-- 2. الأولويات (أهم 3 مهام) -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">الخطوة 02</span>
+          <h2 class="section-title">مهام اليوم (الأهم أولاً)</h2>
+        </div>
+        <span id="tasksCounter" class="counter-badge">0 / 0</span>
+      </div>
+      <form id="taskForm" class="add-form">
+        <input type="text" id="taskInput" class="text-input" placeholder="اكتب مهمة جديدة..." maxlength="120" required>
+        <label class="priority-toggle">
+          <input type="checkbox" id="taskPriorityCheck" checked>
+          <span>من أهم 3</span>
+        </label>
+        <button type="submit" class="btn btn-primary">إضافة</button>
+      </form>
+      <ul id="taskList" class="item-list"></ul>
+      <p id="emptyTasksMsg" class="empty-msg">ماكو مهام مضافة. ابدأ بأهم شغلات اليوم.</p>
+    </section>
+
+    <!-- 3. العادات اليومية -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">الخطوة 03</span>
+          <h2 class="section-title">عادات الالتزام اليومي</h2>
+        </div>
+        <span id="habitsCounter" class="counter-badge">0 / 0</span>
+      </div>
+      <ul id="habitList" class="item-list"></ul>
+      <form id="habitForm" class="add-form habit-add-form">
+        <input type="text" id="habitInput" class="text-input" placeholder="أضف عادة جديدة (مثل: قراءة، رياضة)..." maxlength="80" required>
+        <button type="submit" class="btn btn-outline">إضافة عادة</button>
+      </form>
+    </section>
+
+    <!-- الإنجازات والشارات (8 شارات احترافية) -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">شارات الشرف</span>
+          <h2 class="section-title">إنجازاتك وستريك الالتزام</h2>
+        </div>
+      </div>
+      <div id="badgesContainer" class="badges-grid"></div>
+    </section>
+
+    <!-- 4. مقفل اليوم ومشاركة الإنجاز -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">الخطوة 04</span>
+          <h2 class="section-title">مراجعة نهاية اليوم</h2>
+        </div>
+      </div>
+      <div class="review-grid">
+        <div class="field-group">
+          <label for="reviewWin" class="field-label">أفضل إنجاز أو التزام اليوم؟</label>
+          <textarea id="reviewWin" class="textarea-input" rows="2" placeholder="اكتب باختصار..."></textarea>
+        </div>
+        <div class="field-group">
+          <label for="reviewTomorrow" class="field-label">أول خطوة تبدأ بيها باجر الصبح؟</label>
+          <textarea id="reviewTomorrow" class="textarea-input" rows="2" placeholder="حدد شغلة وحدة واضحة لبكرى..."></textarea>
+        </div>
+      </div>
+      <div class="actions-row">
+        <button id="saveDayBtn" type="button" class="btn btn-primary">اقفل اليوم واحفظ بالسجل</button>
+        <button id="shareCardBtn" type="button" class="btn btn-outline">📸 شارك إنجازك (صورة)</button>
+        <button id="newDayBtn" type="button" class="btn btn-ghost">بداية يوم جديد</button>
+      </div>
+      <p id="actionFeedback" class="feedback-msg" aria-live="polite"></p>
+    </section>
+
+    <!-- السجل والأرشيف -->
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <span class="section-step">الأرشيف</span>
+          <h2 class="section-title">سجل الأيام السابقة</h2>
+        </div>
+        <button id="clearHistoryBtn" type="button" class="btn-text-danger">مسح السجل</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <p id="emptyHistoryMsg" class="empty-msg">ماكو أيام محفوظة لسه.</p>
+    </section>
+
+  </main>
+
+  <!-- الفوتر والهوية -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>من عائلة النور: <b>شمعة، سراج، شرارة</b></p>
+      <p class="brand-foot">تم تطويرها بواسطة <a href="https://janabiai.com" target="_blank" rel="noopener">Janabi AI</a> — بغداد، العراق.</p>
+      <div class="social-bar">
+        <a href="https://instagram.com/1SAME4" target="_blank" rel="noopener noreferrer" class="insta-link">📸 تابعني على انستغرام @1SAME4</a>
+      </div>
+      <p class="privacy-note">خصوصيتك محفوظة بالمرحلة أ: جميع بياناتك مخزونة حصرياً داخل جهازك.</p>
+    </div>
+  </footer>
+
+  <!-- مودال مشاركة البطاقة (Canvas) -->
+  <div id="shareModal" class="share-modal" style="display:none;">
+    <div class="share-box">
+      <h3>بطاقة إنجازك اليوم</h3>
+      <canvas id="shareCanvas" width="600" height="600"></canvas>
+      <div class="share-actions">
+        <a id="downloadCardBtn" class="btn btn-primary" download="sharara-achievement.png">تحميل الصورة</a>
+        <button type="button" id="closeShareModal" class="btn btn-ghost">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
