@@ -1744,3 +1744,35 @@ input:focus, select:focus {
 .janabi-wordmark .ii .flame{fill:#E2A43A}
 /* التنبيهات: واحد بالمرة */
 .toast-container .toast:not(:last-child){display:none}
+
+/* ===== تحديثات دودي ===== */
+.section-header-flex{flex-wrap:wrap;row-gap:8px}
+#totalFocusSummaryBadge{white-space:nowrap}
+.menu-toggle{display:inline-flex;flex-direction:column;justify-content:center;gap:4px;width:40px;height:40px;border-radius:12px;background:rgba(247,243,234,.08);border:1px solid rgba(226,164,58,.35);cursor:pointer;padding:0 10px;transition:background .2s}
+.menu-toggle span{display:block;height:2px;border-radius:2px;background:#F7F3EA;transition:transform .25s,opacity .2s}
+.menu-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-toggle.open span:nth-child(2){opacity:0}
+.menu-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.header-inner{position:relative}
+#headerActions{position:absolute;top:calc(100% + 10px);left:12px;flex-direction:column;align-items:stretch;gap:8px;min-width:200px;padding:12px;border-radius:18px;background:rgba(15,29,74,.82);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(226,164,58,.35);box-shadow:0 18px 40px rgba(0,0,0,.4);opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;transition:opacity .22s,transform .22s;z-index:200}
+#headerActions.open{opacity:1;transform:none;pointer-events:auto}
+#headerActions .icon-btn,#headerActions .header-pill-btn{width:100%;height:auto;border-radius:12px;padding:10px 12px;justify-content:flex-start;gap:10px}
+#headerActions .icon-btn::after{font:600 .85rem 'IBM Plex Sans Arabic',sans-serif;color:#F7F3EA}
+#shareBtn::after{content:"شارك انجازك"}
+#openSettingsModalBtn::after{content:"الاعدادات"}
+#themeToggleBtn::after{content:"المظهر: فاتح / غامق"}
+/* شعلة الهيدر تضوي حسب نسبة اليوم */
+.sharara-logo-svg{transition:filter .6s,transform .6s}
+[data-flame="0"] .sharara-logo-svg{filter:drop-shadow(0 0 3px rgba(226,164,58,.25)) saturate(.6);opacity:.75}
+[data-flame="1"] .sharara-logo-svg{filter:drop-shadow(0 0 7px rgba(226,164,58,.5))}
+[data-flame="2"] .sharara-logo-svg{filter:drop-shadow(0 0 11px rgba(226,164,58,.75))}
+[data-flame="3"] .sharara-logo-svg{filter:drop-shadow(0 0 16px rgba(255,210,125,.95));animation:hdrGlow 2.2s ease-in-out infinite}
+@keyframes hdrGlow{50%{transform:scale(1.08)}}
+/* الشعلة الرئيسية: رجفة حية */
+.flame-outer-path,.flame-inner-path{transform-box:fill-box;transform-origin:50% 100%;animation:flicker 2.6s ease-in-out infinite}
+.flame-inner-path{animation-duration:1.9s;animation-delay:-.6s}
+@keyframes flicker{0%,100%{transform:scaleY(1) skewX(0)}25%{transform:scaleY(1.05) skewX(-2deg)}50%{transform:scaleY(.97) skewX(1.5deg)}75%{transform:scaleY(1.03) skewX(-1deg)}}
+.flame-stage[data-level="0"] .flame-outer-path{animation-duration:4s;opacity:.7}
+.flame-stage[data-level="3"] #flameVectorGroup{filter:drop-shadow(0 0 14px rgba(255,210,125,.9))}
+.flame-stage[data-level="2"] #flameVectorGroup{filter:drop-shadow(0 0 9px rgba(226,164,58,.7))}
+@media (prefers-reduced-motion:reduce){.flame-outer-path,.flame-inner-path,[data-flame="3"] .sharara-logo-svg{animation:none}}

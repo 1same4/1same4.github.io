@@ -857,6 +857,7 @@
     }
 
     if (flameStage) flameStage.setAttribute("data-level", level);
+    document.documentElement.setAttribute("data-flame", level);
     if (heroCard) heroCard.classList.toggle("celebration-glow", pct === 100);
     if (flameGroup) {
       flameGroup.setAttribute("transform", `translate(110, 126) scale(${scale}) translate(-10, -10)`);
@@ -1866,7 +1867,7 @@
         } else if (isIosDevice() && iosModal) {
           iosModal.classList.remove("hidden");
         } else {
-          showToast("من قائمة المتصفح اختار «اضافة الى الشاشة الرئيسية»");
+          showToast("افتح قائمة المتصفح (⋮ فوق) واختار «تثبيت التطبيق» او «اضافة الى الشاشة الرئيسية»");
         }
       });
     }
@@ -2368,4 +2369,14 @@
       getTimerSecondsLeft: () => timerSecondsLeft
     }
   };
+})();
+
+/* قائمة الهيدر الزجاجية */
+(function(){
+  var t=document.getElementById("headerMenuToggle"), p=document.getElementById("headerActions");
+  if(!t||!p) return;
+  function close(){p.classList.remove("open");t.classList.remove("open");t.setAttribute("aria-expanded","false");}
+  t.addEventListener("click",function(e){e.stopPropagation();var o=p.classList.toggle("open");t.classList.toggle("open",o);t.setAttribute("aria-expanded",o?"true":"false");});
+  p.addEventListener("click",function(e){if(e.target.closest("button,a")) setTimeout(close,120);});
+  document.addEventListener("click",function(e){if(!p.contains(e.target)&&e.target!==t) close();});
 })();

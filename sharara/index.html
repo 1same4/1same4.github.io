@@ -115,7 +115,8 @@
         </div>
       </div>
 
-      <div class="header-actions">
+      <button type="button" id="headerMenuToggle" class="menu-toggle" aria-label="القائمة" aria-expanded="false"><span></span><span></span><span></span></button>
+      <div class="header-actions" id="headerActions">
         <button type="button" id="openAuthModalBtn" class="header-pill-btn" title="حسابي والمزامنة">
           <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="8" r="4"/>
@@ -567,7 +568,7 @@
     <section class="card glass-card motivation-card">
       <div class="quote-header">
         <span class="quote-tag" id="quoteTag">حكمة اليوم</span>
-        <button type="button" id="newQuoteBtn" class="btn-subtle">حكمة ثانية</button>
+        <button type="button" id="newQuoteBtn" class="btn-subtle hidden">حكمة ثانية</button>
       </div>
       <div id="quoteAnimatedWrap" class="quote-animated-wrap">
         <blockquote class="quote-text" id="quoteText"></blockquote>
@@ -588,7 +589,7 @@
             </svg>
             <h3>نصيحة اليوم بالاكل</h3>
           </div>
-          <button type="button" id="nextFoodTipBtn" class="btn-icon-subtle" title="نصيحة ثانية">↻</button>
+          <button type="button" id="nextFoodTipBtn" class="btn-icon-subtle hidden" title="نصيحة ثانية">↻</button>
         </div>
         <p id="foodTipText" class="tip-body-text"></p>
       </div>
@@ -601,7 +602,7 @@
             </svg>
             <h3>نصيحة الراحة النفسية</h3>
           </div>
-          <button type="button" id="nextMentalTipBtn" class="btn-icon-subtle" title="نصيحة ثانية">↻</button>
+          <button type="button" id="nextMentalTipBtn" class="btn-icon-subtle hidden" title="نصيحة ثانية">↻</button>
         </div>
         <p id="mentalTipText" class="tip-body-text"></p>
       </div>
@@ -674,11 +675,11 @@
             <circle cx="8.5" cy="8.5" r="1.5"/>
             <polyline points="21 15 16 10 5 21"/>
           </svg>
-          <h2>بطاقة «شارك انجازك» (ستوري 1080×1920)</h2>
+          <h2>شارك انجازك بستوري</h2>
         </div>
       </div>
 
-      <p class="section-hint">بطاقة ستوري انستغرام الكاملة (1080×1920) بحالة شعلتك ونسبة انجازك وحكمة اليوم:</p>
+      <p class="section-hint">شارك يومك وياه حالة شعلتك ونسبة انجازك وكلمة حلوة:</p>
 
       <div class="story-canvas-preview-wrap">
         <canvas id="storyCanvas" width="1080" height="1920" class="story-canvas"></canvas>
@@ -892,7 +893,7 @@
         <span>·</span>
         <button type="button" onclick="document.getElementById('deleteConfirmModal').classList.remove('hidden')" style="background:none;border:none;color:#E2A43A;cursor:pointer;font-family:inherit;">الخصوصية</button>
         <span>·</span>
-        <a href="https://janabiai.com/sharara/" class="num-font" dir="ltr">janabiai.com/sharara</a>
+        <a href="https://janabiai.com/" class="num-font" dir="ltr">janabiai.com</a>
       </p>
     </div>
   </footer>
