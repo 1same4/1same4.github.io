@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الخصوصية وحماية البيانات | شرارة · Janabi AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand" style="text-decoration:none; color:inherit;">
+        <svg class="sharara-logo-svg" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+          <path d="M12 2C17 9 17 14 12 18C7 14 7 9 12 2Z" fill="#E2A43A"/>
+          <path d="M12 7C14.5 11 14.5 14 12 16.5C9.5 14 9.5 11 12 7Z" fill="#F7F3EA" opacity="0.85"/>
+          <circle cx="12" cy="20.5" r="1.5" fill="#E2A43A"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title">شرارة</span>
+          <span class="janabi-wordmark" dir="ltr" aria-label="Janabi AI">
+            Janab<span class="ii"><span class="ii-stem"></span><svg class="ii-flame" viewBox="0 0 20 18" width="10" height="10" aria-hidden="true"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg></span><span class="ai-gold">AI</span>
+          </span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <a href="index.html" class="btn btn-subtle">الرجوع لشرارة</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content" style="max-width:680px; padding-top:28px;">
+    <section class="card glass-card">
+      <div class="section-title">
+        <h2>سياسة الخصوصية وحماية بياناتك</h2>
+      </div>
+      <p style="margin-bottom:16px;">
+        بتطبيق «شرارة» من وكالة <strong>Janabi AI</strong>، خصوصيتك وامان معلوماتك هي اولوية اساسية. صممنا التطبيق حتى يجمع اقل بيانات ممكنة ويشتغل بشفافية كاملة، مع مراعاة ان بعض المستخدمين من الشباب وطلبة المدارس تحت سن 18 سنة.
+      </p>
+
+      <h3 style="font-family:'Alexandria',sans-serif; font-size:1rem; margin:18px 0 8px; color:var(--accent-gold);">1. شنو البيانات اللي نحفظها؟</h3>
+      <ul style="padding-right:20px; display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+        <li><strong>بيانات تنظيم اليوم:</strong> اسمك الاول (او اللقب)، هدفك العام، وقت صحوتك، المهام اليومية، العادات، دقائق التركيز، ومراجعة الليل.</li>
+        <li><strong>بيانات الحساب (اختياري):</strong> اذا سجلت حساب لحفظ شغلك، نحفظ البريد الالكتروني والاسم فقط لتسجيل الدخول والمزامنة.</li>
+        <li><strong>بلا تتبع اعلاني:</strong> التطبيق ما يستخدم ادوات تتبع اعلانية ولا يبيع او يشارك بياناتك ويا اي طرف ثالث.</li>
+      </ul>
+
+      <h3 style="font-family:'Alexandria',sans-serif; font-size:1rem; margin:18px 0 8px; color:var(--accent-gold);">2. وين تنحفظ بياناتك؟</h3>
+      <ul style="padding-right:20px; display:flex; flex-direction:column; gap:8px; margin-bottom:16px;">
+        <li><strong>على جهازك (بدون نت):</strong> تنحفظ بياناتك محليا داخل متصفحك (localStorage) حتى يشتغل التطبيق بكل وقت حتى بلا انترنت.</li>
+        <li><strong>بالسحابة (عند تسجيل الدخول):</strong> تنحفظ نسخة مشفرة ومحمية بحسابك الخاص على خدمة Google Firebase Firestore بمسار مخصص الك وحدك (<code>users/{uid}</code>)، وما يكدر اي مستخدم ثاني يقراها.</li>
+      </ul>
+
+      <h3 style="font-family:'Alexandria',sans-serif; font-size:1rem; margin:18px 0 8px; color:var(--accent-gold);">3. شلون تصدر او تمسح بياناتك وحسابك؟</h3>
+      <p style="margin-bottom:16px;">
+        تكدر بأي لحظة تنزل نسخة كاملة من بياناتك كملف <code>JSON</code> من داخل التطبيق، وتكدر تمسح حسابك وكل بياناتك من جهازك ومن السحابة نهائيا وبضغطة زر وحدة من الزر الجوه او من داخل اعدادات الحساب بالتطبيق.
+      </p>
+
+      <div style="border-top:1px solid var(--border-color); padding-top:18px; margin-top:18px; display:flex; flex-direction:column; gap:12px;">
+        <button id="deleteEverythingBtn" class="btn" style="background:var(--danger); color:#fff; width:100%;">
+          امسح حسابي وبياناتي نهائيا
+        </button>
+        <div id="confirmDeleteBox" class="hidden" style="background:var(--bg-subtle); padding:14px; border-radius:12px; border:1px solid var(--danger);">
+          <p style="font-weight:600; margin-bottom:10px;">هل انت متأكد؟ راح ينمسح حسابك وكل سجل ايامك ومهامك من الجهاز ومن السحابة وماكو رجعة.</p>
+          <div style="display:flex; gap:10px;">
+            <button id="confirmDeleteYesBtn" class="btn" style="background:var(--danger); color:#fff; flex:1;">نعم، امسح كل شي</button>
+            <button id="confirmDeleteNoBtn" class="btn btn-subtle" style="flex:1;">الغاء</button>
+          </div>
+        </div>
+        <p id="privacyStatusMsg" style="font-weight:600; font-size:0.9rem; color:var(--accent-gold);"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>شرارة · من عائلة النور تحت <strong>Janabi AI</strong> · بغداد</p>
+      <p class="footer-sub"><a href="index.html" style="color:var(--accent-gold);">العودة للتطبيق</a> · <a href="https://janabiai.com" target="_blank" rel="noopener" style="color:var(--accent-gold);">janabiai.com</a></p>
+    </div>
+  </footer>
+
+  <script type="module" src="firebase.js"></script>
+  <script>
+    (function () {
+      const delBtn = document.getElementById("deleteEverythingBtn");
+      const confirmBox = document.getElementById("confirmDeleteBox");
+      const yesBtn = document.getElementById("confirmDeleteYesBtn");
+      const noBtn = document.getElementById("confirmDeleteNoBtn");
+      const statusMsg = document.getElementById("privacyStatusMsg");
+
+      delBtn.addEventListener("click", () => {
+        confirmBox.classList.remove("hidden");
+      });
+
+      noBtn.addEventListener("click", () => {
+        confirmBox.classList.add("hidden");
+      });
+
+      yesBtn.addEventListener("click", async () => {
+        statusMsg.textContent = "جاري مسح البيانات والحساب...";
+        try {
+          localStorage.removeItem("sharara_app_v3");
+          localStorage.removeItem("sharara_app_v4");
+        } catch (e) {}
+
+        if (window.ShararaFirebase && typeof window.ShararaFirebase.deleteAccountAndData === "function") {
+          const res = await window.ShararaFirebase.deleteAccountAndData();
+          if (!res.ok) {
+            statusMsg.textContent = "انمسحت بيانات الجهاز. تنبيه السحابة: " + res.error;
+            confirmBox.classList.add("hidden");
+            return;
+          }
+        }
+        confirmBox.classList.add("hidden");
+        statusMsg.textContent = "انمسحت كل بياناتك وحسابك بنجاح.";
+      });
+    })();
+  </script>
+</body>
+</html>

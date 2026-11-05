@@ -1,7 +1,9 @@
 {
-  "name": "شرارة — رتب يومك",
+  "name": "شرارة | Janabi AI",
   "short_name": "شرارة",
-  "description": "أداة تنظيم اليوم وبناء العادات للشباب من Janabi AI",
+  "description": "اداتك الذكية لتنظيم اليوم وبناء العادات والتركيز، تحت وكالة Janabi AI",
+  "lang": "ar",
+  "dir": "rtl",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0F1D4A",
@@ -21,4 +23,3 @@
     }
   ]
 }
-

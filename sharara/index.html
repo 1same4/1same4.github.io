@@ -1,200 +1,913 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="light">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شرارة | رتب يومك — Janabi AI</title>
-  <meta name="description" content="أداة تنظيم اليوم وبناء العادات للشباب من Janabi AI.">
-  <meta name="theme-color" content="#0F1D4A">
+  <title>شرارة | Janabi AI</title>
+  <meta name="description" content="شرارة: اداتك الذكية لتنظيم اليوم وبناء العادات والتركيز، من عائلة النور تحت وكالة Janabi AI.">
+
+  <!-- PWA Meta Tags -->
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0F1D4A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="شرارة">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+
+  <!-- Google Fonts: Alexandria, IBM Plex Sans Arabic, Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Style -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- الهيدر الاحترافي -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="https://janabiai.com" class="brand" aria-label="Janabi AI">
-        <div class="brand-logo"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b></div>
-        <span class="app-title">شرارة</span>
-      </a>
+  <!-- Moving Ambient Golden Glow Background -->
+  <div class="ambient-glow" aria-hidden="true"></div>
 
-      <div class="header-actions">
-        <div class="streak-pill" title="أيام الالتزام المتتالية">
-          🔥 <span id="streakCount">0</span> يوم
-        </div>
-        <button id="installBtn" class="icon-btn install-pill" type="button" style="display:none;" title="تثبيت التطبيق">📲 تثبيت</button>
-        <button id="themeToggle" class="icon-btn" type="button" aria-label="تبديل الثيم">🌙</button>
-      </div>
+  <!-- Confetti / Sparks Celebration Overlay (for 100% completion) -->
+  <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
+
+  <!-- Loading Screen with Sharara SVG -->
+  <div id="loadingScreen" class="loading-screen" aria-hidden="true">
+    <div class="loading-inner">
+      <svg class="loading-flame-svg" viewBox="0 0 20 20" width="64" height="64">
+        <path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="#E2A43A"/>
+        <path d="M10 6C12.8 10 12.8 13.5 10 16C7.2 13.5 7.2 10 10 6Z" fill="#9A6409" opacity="0.9"/>
+      </svg>
+      <div class="loading-title">شرارة</div>
+      <div class="loading-sub" dir="ltr">Janabi AI</div>
     </div>
-  </header>
+  </div>
 
-  <main class="container main-content">
-
-    <!-- إرشاد التثبيت للايفون/الأندرويد -->
-    <div id="installGuide" class="install-guide" style="display:none;">
-      <div class="guide-content">
-        <span>📲 <b>ثبت شرارة عالتلفون:</b> للايفون اضغط زر المشاركة (Share) ثم «إضافة إلى الشاشة الرئيسية (Add to Home Screen)». للأندرويد اضغط القائمة ثم «تثبيت التطبيق».</span>
-        <button type="button" id="closeGuide" class="close-guide">✕</button>
+  <!-- Onboarding 3-Screen Modal (First Visit) -->
+  <div id="onboardingModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <div class="modal-card glass-card onboarding-card">
+      <div class="onboarding-progress">
+        <span id="onboardStepDot1" class="step-dot active"></span>
+        <span id="onboardStepDot2" class="step-dot"></span>
+        <span id="onboardStepDot3" class="step-dot"></span>
       </div>
-    </div>
 
-    <!-- الهيرو الدائري المتقدم والتحفيز الذكي -->
-    <section class="card hero-card">
-      <div class="hero-inner-flex">
-        <div class="hero-text-side">
-          <h1 id="greetingHeading" class="hero-title">صباح الخير يا مبدع</h1>
-          <p id="todayDate" class="date-text"></p>
-          <p id="smartMotivation" class="motivation-text">ابدي بأهم شغلة عندك اليوم. الاستمرارية تصنع الفرق.</p>
-        </div>
-        <div class="ring-container" aria-label="مؤشر التقدم">
-          <svg class="progress-ring" width="90" height="90">
-            <circle class="ring-bg" cx="45" cy="45" r="38"></circle>
-            <circle class="ring-fill" id="ringFill" cx="45" cy="45" r="38"></circle>
+      <!-- Screen 1: Name -->
+      <div id="onboardScreen1" class="onboard-screen">
+        <div class="onboard-icon-wrap">
+          <svg viewBox="0 0 20 20" width="46" height="46" aria-hidden="true">
+            <path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="var(--accent-gold)"/>
+            <path d="M10 6C12.5 10 12.5 13 10 15.5C7.5 13 7.5 10 10 6Z" fill="#9A6409"/>
           </svg>
-          <div class="ring-text" id="ringPercent">0%</div>
+        </div>
+        <h2 id="onboardingTitle" class="onboard-heading">هلا بيك بشرارة</h2>
+        <p class="onboard-desc">شرارة تعيش وياك يوم بيوم حتى ترتب وقتك وتبني عاداتك بيدك وبهدوء. شنو تحب نناديك؟</p>
+        <input type="text" id="onboardNameInput" class="input-field" placeholder="اكتب اسمك الاول..." maxlength="40">
+        <div class="onboard-actions">
+          <button type="button" id="onboardNext1Btn" class="btn btn-gold btn-full">التالي</button>
         </div>
       </div>
-    </section>
 
-    <!-- التقدم الأسبوعي (7 أيام مرئية) -->
-    <section class="card weekly-card">
-      <h3 class="sub-title">التقدم الأسبوعي (آخر 7 أيام)</h3>
-      <div id="weeklyGrid" class="weekly-grid"></div>
-    </section>
-
-    <!-- 1. الهدف الأهم -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">الخطوة 01</span>
-          <h2 class="section-title">الهدف الأهم اليوم</h2>
+      <!-- Screen 2: Big Goal -->
+      <div id="onboardScreen2" class="onboard-screen hidden">
+        <h2 class="onboard-heading">شنو هدفك الجبير هالفترة؟</h2>
+        <p class="onboard-desc">حتى نتعرف على اتجاهك ونشجعك عليه يوم بيوم (انت راح تكتب مهامك وعاداتك بنفسك):</p>
+        <div id="onboardGoalsGrid" class="goals-choice-grid">
+          <button type="button" class="goal-choice-btn active" data-goal="study">دراسة وامتحانات</button>
+          <button type="button" class="goal-choice-btn" data-goal="work">شغل والتزام وظيفي</button>
+          <button type="button" class="goal-choice-btn" data-goal="fitness">رياضة وصحة</button>
+          <button type="button" class="goal-choice-btn" data-goal="project">بناء مشروع خاص</button>
+          <button type="button" class="goal-choice-btn" data-goal="skill">تعلم مهارة جديدة</button>
         </div>
-        <span class="section-hint">شنو إنجاز اليوم اللي يخليك فخور؟</span>
-      </div>
-      <div class="goal-box">
-        <input type="checkbox" id="mainGoalCheck" class="custom-check" aria-label="إنجاز الهدف الرئيسي">
-        <input type="text" id="mainGoalInput" class="goal-input" placeholder="مثال: إنهاء مشروع الزبون أو دراسة الفصل الأول..." maxlength="120">
-      </div>
-    </section>
-
-    <!-- 2. الأولويات (أهم 3 مهام) -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">الخطوة 02</span>
-          <h2 class="section-title">مهام اليوم (الأهم أولاً)</h2>
-        </div>
-        <span id="tasksCounter" class="counter-badge">0 / 0</span>
-      </div>
-      <form id="taskForm" class="add-form">
-        <input type="text" id="taskInput" class="text-input" placeholder="اكتب مهمة جديدة..." maxlength="120" required>
-        <label class="priority-toggle">
-          <input type="checkbox" id="taskPriorityCheck" checked>
-          <span>من أهم 3</span>
-        </label>
-        <button type="submit" class="btn btn-primary">إضافة</button>
-      </form>
-      <ul id="taskList" class="item-list"></ul>
-      <p id="emptyTasksMsg" class="empty-msg">ماكو مهام مضافة. ابدأ بأهم شغلات اليوم.</p>
-    </section>
-
-    <!-- 3. العادات اليومية -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">الخطوة 03</span>
-          <h2 class="section-title">عادات الالتزام اليومي</h2>
-        </div>
-        <span id="habitsCounter" class="counter-badge">0 / 0</span>
-      </div>
-      <ul id="habitList" class="item-list"></ul>
-      <form id="habitForm" class="add-form habit-add-form">
-        <input type="text" id="habitInput" class="text-input" placeholder="أضف عادة جديدة (مثل: قراءة، رياضة)..." maxlength="80" required>
-        <button type="submit" class="btn btn-outline">إضافة عادة</button>
-      </form>
-    </section>
-
-    <!-- الإنجازات والشارات (8 شارات احترافية) -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">شارات الشرف</span>
-          <h2 class="section-title">إنجازاتك وستريك الالتزام</h2>
+        <div class="onboard-actions split-actions">
+          <button type="button" id="onboardBack2Btn" class="btn btn-subtle">رجوع</button>
+          <button type="button" id="onboardNext2Btn" class="btn btn-gold">التالي</button>
         </div>
       </div>
-      <div id="badgesContainer" class="badges-grid"></div>
-    </section>
 
-    <!-- 4. مقفل اليوم ومشاركة الإنجاز -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">الخطوة 04</span>
-          <h2 class="section-title">مراجعة نهاية اليوم</h2>
+      <!-- Screen 3: Wake-up Time -->
+      <div id="onboardScreen3" class="onboard-screen hidden">
+        <h2 class="onboard-heading">شوكت تكعد الصبح غالبا؟</h2>
+        <p class="onboard-desc">حتى نرتب لحظات يومك (الصبح، النهار، الليل) على توقيتك:</p>
+        <div class="wake-time-wrap">
+          <input type="time" id="onboardWakeInput" class="input-field time-input num-font" value="07:00">
         </div>
-      </div>
-      <div class="review-grid">
-        <div class="field-group">
-          <label for="reviewWin" class="field-label">أفضل إنجاز أو التزام اليوم؟</label>
-          <textarea id="reviewWin" class="textarea-input" rows="2" placeholder="اكتب باختصار..."></textarea>
+        <div class="onboard-actions split-actions">
+          <button type="button" id="onboardBack3Btn" class="btn btn-subtle">رجوع</button>
+          <button type="button" id="onboardFinishBtn" class="btn btn-gold">اشعل الشرارة</button>
         </div>
-        <div class="field-group">
-          <label for="reviewTomorrow" class="field-label">أول خطوة تبدأ بيها باجر الصبح؟</label>
-          <textarea id="reviewTomorrow" class="textarea-input" rows="2" placeholder="حدد شغلة وحدة واضحة لبكرى..."></textarea>
-        </div>
-      </div>
-      <div class="actions-row">
-        <button id="saveDayBtn" type="button" class="btn btn-primary">اقفل اليوم واحفظ بالسجل</button>
-        <button id="shareCardBtn" type="button" class="btn btn-outline">📸 شارك إنجازك (صورة)</button>
-        <button id="newDayBtn" type="button" class="btn btn-ghost">بداية يوم جديد</button>
-      </div>
-      <p id="actionFeedback" class="feedback-msg" aria-live="polite"></p>
-    </section>
-
-    <!-- السجل والأرشيف -->
-    <section class="card">
-      <div class="section-header">
-        <div>
-          <span class="section-step">الأرشيف</span>
-          <h2 class="section-title">سجل الأيام السابقة</h2>
-        </div>
-        <button id="clearHistoryBtn" type="button" class="btn-text-danger">مسح السجل</button>
-      </div>
-      <div id="historyList" class="history-list"></div>
-      <p id="emptyHistoryMsg" class="empty-msg">ماكو أيام محفوظة لسه.</p>
-    </section>
-
-  </main>
-
-  <!-- الفوتر والهوية -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>من عائلة النور: <b>شمعة، سراج، شرارة</b></p>
-      <p class="brand-foot">تم تطويرها بواسطة <a href="https://janabiai.com" target="_blank" rel="noopener">Janabi AI</a> — بغداد، العراق.</p>
-      <div class="social-bar">
-        <a href="https://instagram.com/1SAME4" target="_blank" rel="noopener noreferrer" class="insta-link">📸 تابعني على انستغرام @1SAME4</a>
-      </div>
-      <p class="privacy-note">خصوصيتك محفوظة بالمرحلة أ: جميع بياناتك مخزونة حصرياً داخل جهازك.</p>
-    </div>
-  </footer>
-
-  <!-- مودال مشاركة البطاقة (Canvas) -->
-  <div id="shareModal" class="share-modal" style="display:none;">
-    <div class="share-box">
-      <h3>بطاقة إنجازك اليوم</h3>
-      <canvas id="shareCanvas" width="600" height="600"></canvas>
-      <div class="share-actions">
-        <a id="downloadCardBtn" class="btn btn-primary" download="sharara-achievement.png">تحميل الصورة</a>
-        <button type="button" id="closeShareModal" class="btn btn-ghost">إغلاق</button>
       </div>
     </div>
   </div>
 
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <svg class="sharara-logo-svg" viewBox="0 0 24 24" width="34" height="34" aria-hidden="true">
+          <path d="M12 2C17 9 17 14 12 19C7 14 7 9 12 2Z" fill="#E2A43A"/>
+          <path d="M12 7.2C14.5 11.2 14.5 14.5 12 17C9.5 14.5 9.5 11.2 12 7.2Z" fill="#9A6409" opacity="0.9"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-title">شرارة</span>
+          <a href="https://janabiai.com/" target="_blank" rel="noopener" class="janabi-wordmark" dir="ltr" aria-label="Janabi AI"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b>
+          </a>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button type="button" id="openAuthModalBtn" class="header-pill-btn" title="حسابي والمزامنة">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span id="headerAccountLabel">حفظ شغلك</span>
+        </button>
+
+        <button type="button" id="shareBtn" class="icon-btn" title="شارك انجازك" aria-label="شارك انجازك">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>
+            <line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/>
+          </svg>
+        </button>
+
+        <button type="button" id="openSettingsModalBtn" class="icon-btn" title="الاعدادات" aria-label="الاعدادات">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+
+        <button type="button" id="themeToggleBtn" class="icon-btn" title="تغيير المظهر" aria-label="تغيير المظهر">
+          <svg id="themeIconMoon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg id="themeIconSun" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container main-content">
+
+    <!-- 0. INSTALL PWA BANNER (يظهر بلطف اول زيارة ويختفي اذا انضاف او رفضه) -->
+    <section id="installAppBanner" class="card glass-card install-banner hidden">
+      <div class="install-banner-inner">
+        <div class="install-icon-wrap">
+          <svg viewBox="0 0 20 18" width="22" height="22" aria-hidden="true">
+            <path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="var(--accent-gold)"/>
+          </svg>
+        </div>
+        <div class="install-text-wrap">
+          <strong class="install-title">نزل تطبيق «شرارة» على شاشة جهازك</strong>
+          <p id="installHintText" class="install-desc">يشتغل بسرعة وبلا انترنت مثل التطبيقات الاصلية.</p>
+        </div>
+        <div class="install-actions">
+          <button type="button" id="installActionBtn" class="btn btn-gold btn-sm">نزل التطبيق</button>
+          <button type="button" id="dismissInstallBtn" class="btn-icon-subtle" title="اخفاء" aria-label="اخفاء">✕</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. THE LIVING FLAME HERO (روح التطبيق) -->
+    <section id="heroFlameCard" class="card glass-card flame-hero-card">
+      <div class="hero-top-meta">
+        <div class="day-counter-pill">
+          <span>اليوم</span>
+          <span id="dayCounterBadge" class="num-font">1</span>
+          <span class="meta-sep">·</span>
+          <span id="userGreetingName">اهلا بيك</span>
+        </div>
+        <div class="streak-pill" title="ايام الاستمرارية">
+          <svg viewBox="0 0 20 18" width="15" height="15" aria-hidden="true">
+            <path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="var(--accent-gold)"/>
+          </svg>
+          <span id="streakValue" class="num-font">0</span>
+          <span>يوم متتالي</span>
+        </div>
+      </div>
+
+      <!-- Comeback Banner (Shows if missed >= 1 full day) -->
+      <div id="comebackBanner" class="comeback-banner hidden">
+        <span id="comebackBannerText">رجعت، خل نشعلها من جديد</span>
+      </div>
+
+      <!-- Central Animated SVG Flame + Progress Ring -->
+      <div class="flame-stage" id="flameStage" data-level="0">
+        <svg class="flame-ring-svg" viewBox="0 0 220 220" width="210" height="210" aria-hidden="true">
+          <defs>
+            <radialGradient id="flameAuraGrad" cx="50%" cy="55%" r="50%">
+              <stop offset="0%" stop-color="#E2A43A" stop-opacity="0.52"/>
+              <stop offset="65%" stop-color="#9A6409" stop-opacity="0.16"/>
+              <stop offset="100%" stop-color="#0F1D4A" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="outerFlameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#9A6409"/>
+              <stop offset="60%" stop-color="#E2A43A"/>
+              <stop offset="100%" stop-color="#FFD27D"/>
+            </linearGradient>
+          </defs>
+          <!-- Background Ring -->
+          <circle cx="110" cy="110" r="92" fill="none" stroke="var(--border-color)" stroke-width="6"/>
+          <!-- Dynamic Progress Ring -->
+          <circle id="todayRingCircle" cx="110" cy="110" r="92" fill="none" stroke="var(--accent-gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="578" stroke-dashoffset="578" transform="rotate(-90 110 110)"/>
+          <!-- Glowing Aura -->
+          <circle id="flameAuraCircle" cx="110" cy="115" r="74" fill="url(#flameAuraGrad)"/>
+          <!-- Sparks when active/complete -->
+          <g id="flameSparksGroup" class="flame-sparks">
+            <circle cx="76" cy="56" r="2.5" fill="#E2A43A"/>
+            <circle cx="144" cy="62" r="2.0" fill="#FFD27D"/>
+            <circle cx="110" cy="36" r="2.8" fill="#E2A43A"/>
+            <circle cx="68" cy="100" r="1.8" fill="#E2A43A"/>
+            <circle cx="152" cy="102" r="2.2" fill="#FFD27D"/>
+            <circle cx="92" cy="44" r="1.6" fill="#FFD27D"/>
+            <circle cx="128" cy="46" r="1.9" fill="#E2A43A"/>
+          </g>
+          <!-- Core Janabi AI Flame Shape Scaled in Center -->
+          <g id="flameVectorGroup" class="flame-vector-group" transform="translate(110, 126) scale(3) translate(-10, -10)">
+            <path class="flame-outer-path" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="url(#outerFlameGrad)"/>
+            <path class="flame-inner-path" d="M10 6.2C12.8 10.2 12.8 13.4 10 15.8C7.2 13.4 7.2 10.2 10 6.2Z" fill="#9A6409" opacity="0.88"/>
+          </g>
+        </svg>
+
+        <div class="flame-percent-overlay">
+          <span id="todayPercent" class="num-font">0%</span>
+        </div>
+      </div>
+
+      <!-- Living Flame Status & Smart Motivation -->
+      <div class="flame-status-box">
+        <p id="flameStateTitle" class="flame-state-title">الشعلة هادئة، ناطرتك تبدي بأول خطوة</p>
+        <p id="smartMotivationText" class="smart-motivation-text">اكتب اول مهمة الك اليوم وسمي بسم الله.</p>
+      </div>
+
+      <!-- Well-Aligned Numeric Stats Strip -->
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <polyline points="12 7 12 12 15 15"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value-row">
+              <span id="focusTodayValue" class="stat-value num-font">0</span>
+              <span class="stat-unit">دقيقة</span>
+            </div>
+            <span class="stat-label">تركيز اليوم</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value-row">
+              <span id="tasksDoneStat" class="stat-value num-font" dir="ltr">0 / 0</span>
+            </div>
+            <span class="stat-label">مهام وعادات</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="8" r="6"/>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value-row">
+              <span id="badgesCount" class="stat-value num-font" dir="ltr">0 / 12</span>
+            </div>
+            <span class="stat-label">شارات مفتوحة</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. FROM HEART TO HEART CARD (من القلب للقلب — كلام دافئ من علي لصاحبه) -->
+    <section id="heartToHeartCard" class="card glass-card advisor-card">
+      <div class="advisor-inner">
+        <div class="advisor-icon">
+          <svg viewBox="0 0 20 18" width="20" height="20" aria-hidden="true">
+            <path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="var(--accent-gold)"/>
+          </svg>
+        </div>
+        <div class="advisor-content">
+          <span class="advisor-label">من القلب للقلب</span>
+          <p id="heartToHeartText">يوم جديد وفرصة نظيفة كدامك، اكتب مهامك بيدك وابدأ بأول خطوة بهدوء.</p>
+        </div>
+        <button type="button" id="smartAdvisorActionBtn" class="btn btn-subtle btn-sm hidden">تطبيق</button>
+      </div>
+    </section>
+
+    <!-- 3. THE 3 MOMENTS OF THE DAY + OPTIONAL TEMPLATES -->
+    <section class="card glass-card moments-nav-card">
+      <div class="moments-header">
+        <div>
+          <span class="moment-badge" id="currentMomentBadge">لحظة اليوم</span>
+          <h2 id="currentMomentHeading" class="moment-heading">ترتيب الصبح والانطلاق</h2>
+        </div>
+        <button type="button" id="openTemplatesBtn" class="btn btn-subtle btn-sm">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          <span>القوالب الجاهزة</span>
+        </button>
+      </div>
+
+      <!-- 3 Moments Switcher -->
+      <div class="moments-tabs" role="tablist">
+        <button type="button" class="moment-tab active" data-moment="morning" role="tab">
+          <span>1. الصبح</span>
+          <small>هدف + مهام + عادات</small>
+        </button>
+        <button type="button" class="moment-tab" data-moment="day" role="tab">
+          <span>2. النهار</span>
+          <small>جلسة تركيز</small>
+        </button>
+        <button type="button" class="moment-tab" data-moment="night" role="tab">
+          <span>3. الليل</span>
+          <small>مراجعة + تقييم اليوم</small>
+        </button>
+      </div>
+
+      <!-- Optional Templates Drawer -->
+      <div id="templatesDrawer" class="templates-drawer hidden">
+        <p class="templates-hint">اختياري: اذا تحب تنزل قالب جاهز وتعدل عليه بيدك اختار واحد:</p>
+        <div class="templates-grid">
+          <button type="button" class="template-chip" data-template="student">طالب امتحانات</button>
+          <button type="button" class="template-chip" data-template="employee">موظف</button>
+          <button type="button" class="template-chip" data-template="freelancer">فريلانسر</button>
+          <button type="button" class="template-chip" data-template="athlete">رياضي</button>
+          <button type="button" class="template-chip" data-template="weekend">يوم عطلة</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. MAIN GOAL OF THE DAY -->
+    <section id="mainGoalSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="6"/>
+            <circle cx="12" cy="12" r="2"/>
+          </svg>
+          <h2>الهدف الرئيسي لليوم</h2>
+        </div>
+        <span class="counter-badge">اهم خطوة</span>
+      </div>
+
+      <div class="main-goal-wrapper">
+        <div id="mainGoalInputRow" class="input-inline">
+          <input type="text" id="mainGoalInput" placeholder="مثال: اكمال مراجعة الفصل الاول، او تسليم عرض الزبون..." maxlength="120">
+          <button type="button" id="setMainGoalBtn" class="btn btn-gold">حفظ</button>
+        </div>
+        <div id="mainGoalDisplay" class="main-goal-display hidden">
+          <div class="goal-checkbox-wrap">
+            <input type="checkbox" id="mainGoalCheckbox" class="custom-checkbox">
+            <label for="mainGoalCheckbox" id="mainGoalText"></label>
+          </div>
+          <div class="goal-actions">
+            <button type="button" id="focusMainGoalBtn" class="btn-icon-subtle" title="شغل مؤقت التركيز على الهدف">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </button>
+            <button type="button" id="editMainGoalBtn" class="btn-icon-subtle" title="تعديل الهدف">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TASKS CHECKLIST (تبدأ فاضية بأمثلة باهتة داخل الخانة فقط) -->
+    <section id="tasksSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+          <h2>مهام اليوم</h2>
+        </div>
+        <span class="counter-badge num-font" id="tasksCounter" dir="ltr">0 / 0</span>
+      </div>
+
+      <!-- Warning when > 5 tasks -->
+      <div id="tooManyTasksBanner" class="smart-inline-banner hidden">
+        <span>اكثر من 5 مهام؟ اختار 3 مهام اساسية اليوم حتى ما تتشتت.</span>
+        <button type="button" id="keepTop3TasksBtn" class="btn btn-subtle btn-sm">ابقي اول 3</button>
+      </div>
+
+      <form id="addTaskForm" class="add-item-form">
+        <input type="text" id="taskInput" placeholder="مثال: حل 10 اسئلة وزارية، او كتابة مسودة المشروع..." maxlength="100" required>
+        <button type="submit" class="btn btn-gold">اضافة</button>
+      </form>
+
+      <ul id="taskList" class="checklist"></ul>
+    </section>
+
+    <!-- 6. DAILY HABITS CHECKLIST (تبدأ فاضية بأمثلة باهتة داخل الخانة فقط) -->
+    <section id="habitsSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="23 4 23 10 17 10"/>
+            <polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          <h2>عادات اليوم</h2>
+        </div>
+        <span class="counter-badge num-font" id="habitsCounter" dir="ltr">0 / 0</span>
+      </div>
+
+      <form id="addHabitForm" class="add-item-form">
+        <input type="text" id="habitInput" placeholder="مثال: شرب كلاص مي الصبح، او مشي 15 دقيقة..." maxlength="80" required>
+        <button type="submit" class="btn btn-gold">اضافة</button>
+      </form>
+
+      <ul id="habitList" class="checklist"></ul>
+    </section>
+
+    <!-- 7. POMODORO FOCUS TIMER (قابل لتعديل المدة ويعمل على الوقت الفعلي) -->
+    <section id="focusTimerSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="13" r="8"/>
+            <path d="M12 9v4l2 2"/>
+            <path d="M9 2h6"/>
+          </svg>
+          <h2>مؤقت التركيز</h2>
+        </div>
+        <span class="counter-badge num-font" id="focusWeekBadge">الاسبوع: 0 د</span>
+      </div>
+
+      <div class="focus-task-selector-wrap">
+        <label for="focusTaskSelect" class="field-label">المهمة المربوطة بالتركيز:</label>
+        <select id="focusTaskSelect" class="input-field select-field"></select>
+      </div>
+
+      <div class="timer-custom-durations">
+        <div class="duration-field">
+          <label for="focusDurationInput">مدة التركيز (دقيقة)</label>
+          <input type="number" id="focusDurationInput" class="input-field num-font duration-input" min="1" max="180" value="25">
+        </div>
+        <div class="duration-field">
+          <label for="breakDurationInput">مدة الاستراحة (دقيقة)</label>
+          <input type="number" id="breakDurationInput" class="input-field num-font duration-input" min="1" max="60" value="5">
+        </div>
+      </div>
+
+      <div class="timer-display-box">
+        <div class="timer-mode-pills">
+          <button type="button" id="timerModeFocusBtn" class="mode-pill active">وقت التركيز</button>
+          <button type="button" id="timerModeBreakBtn" class="mode-pill">وقت الاستراحة</button>
+        </div>
+        <div id="timerClockDisplay" class="timer-clock num-font" dir="ltr">25:00</div>
+        <p id="timerActiveTaskLabel" class="timer-task-label">اختار مهمة واضغط تشغيل للتركيز الهادئ</p>
+        <div class="timer-controls">
+          <button type="button" id="timerStartPauseBtn" class="btn btn-gold">تشغيل</button>
+          <button type="button" id="timerResetBtn" class="btn btn-subtle">اعادة ضبط</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. NIGHT REVIEW, DAY RATING (1-5) & TOMORROW'S STEP -->
+    <section id="nightReviewSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <path d="M12 20h9"/>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          <h2>مراجعة الليل وتقييم اليوم</h2>
+        </div>
+        <span class="counter-badge">هدوء المساء</span>
+      </div>
+
+      <!-- 1 to 5 Small Flames Rating -->
+      <div class="day-rating-box">
+        <span class="rating-label">تقييمك ليومك (من 1 الى 5 شعلات):</span>
+        <div id="dayRatingFlames" class="rating-flames-row" role="radiogroup" aria-label="تقييم اليوم من 1 الى 5">
+          <button type="button" class="rating-flame-btn" data-rating="1" aria-label="1 من 5">
+            <svg viewBox="0 0 20 18" width="26" height="26"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="rating-flame-btn" data-rating="2" aria-label="2 من 5">
+            <svg viewBox="0 0 20 18" width="26" height="26"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="rating-flame-btn" data-rating="3" aria-label="3 من 5">
+            <svg viewBox="0 0 20 18" width="26" height="26"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="rating-flame-btn" data-rating="4" aria-label="4 من 5">
+            <svg viewBox="0 0 20 18" width="26" height="26"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" class="rating-flame-btn" data-rating="5" aria-label="5 من 5">
+            <svg viewBox="0 0 20 18" width="26" height="26"><path d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+        <span id="dayRatingValueLabel" class="rating-value-text num-font">لم يقيم بعد</span>
+      </div>
+
+      <div class="reflection-grid">
+        <div class="reflection-field">
+          <label for="refWin">شنو اهم خطوة انجزتها اليوم؟</label>
+          <input type="text" id="refWin" placeholder="حتى لو كانت خطوة صغيرة...">
+        </div>
+
+        <div class="reflection-field">
+          <label for="refLearn">فكرة او درس طلعت بيه اليوم:</label>
+          <input type="text" id="refLearn" placeholder="معلومة، تجربة، او ملاحظة عن يومك...">
+        </div>
+
+        <div class="reflection-field">
+          <label for="refGrateful">شيء انت ممتن اله اليوم:</label>
+          <input type="text" id="refGrateful" placeholder="نعمة، موقف طيب، او شخص بحياتك...">
+        </div>
+
+        <div class="reflection-field">
+          <label for="refTomorrow">اهم خطوة لباجر (تنتقل تلقائيا لهدفك باجر):</label>
+          <input type="text" id="refTomorrow" placeholder="اكتب اول خطوة تبدي بيها باجر الصبح...">
+        </div>
+      </div>
+
+      <button type="button" id="saveReflectionBtn" class="btn btn-gold btn-full margin-top-md">حفظ مراجعة وتقييم اليوم</button>
+    </section>
+
+    <!-- 9. WISDOM OF THE DAY & PRACTICAL IRAQI TIPS (حكمة اليوم + زر حكمة ثانية) -->
+    <section class="card glass-card motivation-card">
+      <div class="quote-header">
+        <span class="quote-tag" id="quoteTag">حكمة اليوم</span>
+        <button type="button" id="newQuoteBtn" class="btn-subtle">حكمة ثانية</button>
+      </div>
+      <div id="quoteAnimatedWrap" class="quote-animated-wrap">
+        <blockquote class="quote-text" id="quoteText"></blockquote>
+        <p class="quote-author" id="quoteAuthor"></p>
+      </div>
+    </section>
+
+    <section class="tips-dual-grid">
+      <div class="card glass-card tip-card">
+        <div class="tip-header">
+          <div class="tip-title-wrap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+            <h3>نصيحة اليوم بالاكل</h3>
+          </div>
+          <button type="button" id="nextFoodTipBtn" class="btn-icon-subtle" title="نصيحة ثانية">↻</button>
+        </div>
+        <p id="foodTipText" class="tip-body-text"></p>
+      </div>
+
+      <div class="card glass-card tip-card">
+        <div class="tip-header">
+          <div class="tip-title-wrap">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4z"/>
+            </svg>
+            <h3>نصيحة الراحة النفسية</h3>
+          </div>
+          <button type="button" id="nextMentalTipBtn" class="btn-icon-subtle" title="نصيحة ثانية">↻</button>
+        </div>
+        <p id="mentalTipText" class="tip-body-text"></p>
+      </div>
+    </section>
+
+    <!-- 10. PROGRESS & ACHIEVEMENTS DASHBOARD (لوحة التقدم والانجازات) -->
+    <section class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/>
+          </svg>
+          <h2>لوحة التقدم والاستمرارية</h2>
+        </div>
+        <span class="counter-badge num-font" id="totalFocusSummaryBadge">مجموع التركيز: 0 د</span>
+      </div>
+
+      <!-- Friday / Weekly Report Box -->
+      <div id="fridayReportBox" class="friday-report-box">
+        <div class="friday-report-header">
+          <strong id="weeklyReportTitle">التقرير الاسبوعي (مراجعة الجمعة)</strong>
+          <span id="weeklyReportBadge" class="counter-badge num-font">7 ايام</span>
+        </div>
+        <p id="weeklyReportSummaryText" class="friday-report-text"></p>
+      </div>
+
+      <!-- 7-Day Week Bars -->
+      <div class="sub-block">
+        <h3 class="sub-heading">اداء اخر 7 ايام</h3>
+        <div id="weekBarsGrid" class="week-bars-grid"></div>
+      </div>
+
+      <!-- 30-Day Habits Heatmap Grid -->
+      <div class="sub-block">
+        <div class="sub-header-flex">
+          <h3 class="sub-heading">خريطة الالتزام (30 يوم)</h3>
+          <span class="heatmap-legend">خافت = بداية · ذهبي = يوم مكتمل</span>
+        </div>
+        <div id="heatmap30Grid" class="heatmap-30-grid"></div>
+      </div>
+
+      <!-- Recent History Log -->
+      <div class="sub-block">
+        <h3 class="sub-heading">سجل الايام المحفوظة</h3>
+        <div id="historyList" class="history-list"></div>
+      </div>
+    </section>
+
+    <!-- 11. 12 SVG BADGES SECTION -->
+    <section class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          <h2>شارات الانجاز (12 شارة)</h2>
+        </div>
+      </div>
+      <div id="badgesGrid" class="badges-grid"></div>
+    </section>
+
+    <!-- 12. SHARE YOUR ACHIEVEMENT CARD (1080x1920 Instagram Story) -->
+    <section id="shareCardSection" class="card glass-card section-card">
+      <div class="section-header-flex">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <h2>بطاقة «شارك انجازك» (ستوري 1080×1920)</h2>
+        </div>
+      </div>
+
+      <p class="section-hint">بطاقة ستوري انستغرام الكاملة (1080×1920) بحالة شعلتك ونسبة انجازك وحكمة اليوم:</p>
+
+      <div class="story-canvas-preview-wrap">
+        <canvas id="storyCanvas" width="1080" height="1920" class="story-canvas"></canvas>
+      </div>
+
+      <div class="story-actions-row">
+        <button type="button" id="shareStoryApiBtn" class="btn btn-gold">مشاركة الستوري</button>
+        <button type="button" id="downloadStoryBtn" class="btn btn-subtle">حفظ الصورة</button>
+      </div>
+
+      <div class="insta-follow-wrap">
+        <a href="https://instagram.com/1SAME4" target="_blank" rel="noopener" class="btn btn-insta-follow btn-full">
+          <span>تابعني على انستغرام</span>
+          <strong class="num-font" dir="ltr">@1SAME4</strong>
+        </a>
+      </div>
+    </section>
+
+    <!-- 13. ASK FOR ADVICE SECTION (اطلب نصيحة) -->
+    <section class="card glass-card section-card advice-support-card">
+      <div class="section-title">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-gold)" stroke-width="2" aria-hidden="true">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        <h2>اطلب نصيحة</h2>
+      </div>
+      <p class="advice-calm-text">
+        احجي ويا شخص قريب عليك وتثق بيه، او اطلب النصيحة من علي، هو حاضر.
+      </p>
+      <p class="advice-disclaimer-text">
+        ولو حسيت الشي اكبر من طاقتك ويأثر على صحتك او نومك، راجع طبيب او مختص نفسي. هذا التطبيق لتنظيم اليوم والرفقة الطيبة، مو للتشخيص ولا للنصائح الطبية.
+      </p>
+      <a href="https://wa.me/9647715110011?text=%D9%87%D9%84%D8%A7%20%D8%B9%D9%84%D9%8A%D8%8C%20%D8%A7%D9%86%D9%8A%20%D9%85%D9%86%20%D9%85%D8%B3%D8%AA%D8%AE%D8%AF%D9%85%D9%8A%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%B4%D8%B1%D8%A7%D8%B1%D8%A9%20%D9%88%D8%A7%D8%AD%D8%AA%D8%A7%D8%AC%20%D9%86%D8%B5%D9%8A%D8%AD%D8%A9%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B1%D8%AA%D9%8A%D8%A8%20%D9%8A%D9%88%D9%85%D9%8A%20%D9%88%D9%87%D8%AF%D9%81%D9%8A." target="_blank" rel="noopener" class="btn btn-gold btn-full">
+        تواصل ويا علي على واتساب
+      </a>
+    </section>
+
+  </main>
+
+  <!-- Settings Modal (تضم كتم الصوت، تعديل البداية، وتصدير/استرجاع البيانات بجملة توضيح بسيطة) -->
+  <div id="settingsModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h2 id="settingsModalTitle">الاعدادات والبيانات</h2>
+        <button type="button" id="closeSettingsModalBtn" class="btn-icon-subtle" aria-label="اغلاق">✕</button>
+      </div>
+
+      <div class="settings-stack">
+        <!-- Sound Mute Toggle -->
+        <div class="settings-row">
+          <div>
+            <strong class="settings-label">صوت الاحتفال والتنبيه</strong>
+            <p class="settings-sub">تشغيل نغمة هادئة عند اكمال اليوم 100% او انتهاء المؤقت</p>
+          </div>
+          <button type="button" id="toggleSoundMuteBtn" class="btn btn-subtle btn-sm">مفعل</button>
+        </div>
+
+        <!-- Edit Name & Wake Time -->
+        <div class="settings-row">
+          <div>
+            <strong class="settings-label">الاسم والهدف ووقت الصحوة</strong>
+            <p class="settings-sub">تعديل اجوبة شاشات البداية الثلاث</p>
+          </div>
+          <button type="button" id="editOnboardingBtn" class="btn btn-subtle btn-sm">تعديل</button>
+        </div>
+
+        <!-- Export / Import Data inside Settings -->
+        <div class="settings-block">
+          <strong class="settings-label">تصدير واسترجاع البيانات</strong>
+          <p class="settings-sub">احفظ نسخة احتياطية من سجل ايامك ومهامك كملف على جهازك، او استرجعها بأي وقت.</p>
+          <div class="data-actions-row">
+            <button type="button" id="exportJsonBtn" class="btn btn-subtle">تصدير البيانات</button>
+            <label for="importJsonInput" class="btn btn-subtle" style="cursor:pointer;">استرجاع البيانات</label>
+            <input type="file" id="importJsonInput" accept=".json,application/json" class="hidden">
+          </div>
+        </div>
+
+        <!-- Privacy & Delete Account -->
+        <div class="privacy-links-row">
+          <button type="button" onclick="document.getElementById('deleteConfirmModal').classList.remove('hidden')" class="privacy-link" style="background:none;border:none;cursor:pointer;font-family:inherit;">سياسة الخصوصية</button>
+          <span class="meta-sep">·</span>
+          <button type="button" id="deleteAllFromHomeBtn" class="text-danger-btn">امسح حسابي وبياناتي</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Task / Habit Inline Modal (لتعديل نص اي مهمة او عادة بسهولة) -->
+  <div id="editItemModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="editItemModalTitle">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3 id="editItemModalTitle">تعديل العنصر</h3>
+        <button type="button" id="closeEditItemModalBtn" class="btn-icon-subtle" aria-label="اغلاق">✕</button>
+      </div>
+      <form id="editItemForm" class="auth-form">
+        <input type="text" id="editItemInput" class="input-field" maxlength="100" required>
+        <div class="split-actions">
+          <button type="button" id="cancelEditItemBtn" class="btn btn-subtle">الغاء</button>
+          <button type="submit" class="btn btn-gold">حفظ التعديل</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- iOS Install Guide Modal -->
+  <div id="iosInstallModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3>تثبيت «شرارة» على الايفون</h3>
+        <button type="button" id="closeIosInstallModalBtn" class="btn-icon-subtle" aria-label="اغلاق">✕</button>
+      </div>
+      <p class="modal-desc">حتى ينزل التطبيق على شاشتك الرئيسية بضغطة وحدة:</p>
+      <ol class="ios-steps-list">
+        <li>اضغط على زر <strong>المشاركة (Share)</strong> بأسفل متصفح سفاري.</li>
+        <li>اختار <strong>«اضافة الى الشاشة الرئيسية» (Add to Home Screen)</strong>.</li>
+        <li>اضغط <strong>اضافة (Add)</strong> بالاعلى.</li>
+      </ol>
+      <button type="button" id="gotItIosBtn" class="btn btn-gold btn-full margin-top-md">واضح، شكرا</button>
+    </div>
+  </div>
+
+  <!-- Authentication & Cloud Sync Modal -->
+  <div id="authModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h2 id="authModalTitle">حساب شرارة والمزامنة</h2>
+        <button type="button" id="closeAuthModalBtn" class="btn-icon-subtle" aria-label="اغلاق">✕</button>
+      </div>
+
+      <!-- Logged-out View -->
+      <div id="authLoggedOutView">
+        <p class="modal-desc">سجل حسابك حتى ينحفظ شغلك وستريك ايامك بالسحابة وما يضيع لو بدلت جهازك. البيانات قبل التسجيل تنتقل تلقائيا لحسابك.</p>
+
+        <div class="auth-tabs">
+          <button type="button" id="tabLoginBtn" class="auth-tab active">تسجيل دخول</button>
+          <button type="button" id="tabRegisterBtn" class="auth-tab">حساب جديد</button>
+        </div>
+
+        <form id="authForm" class="auth-form">
+          <div id="authNameFieldWrap" class="hidden">
+            <label for="authNameInput" class="field-label">الاسم الاول</label>
+            <input type="text" id="authNameInput" class="input-field" placeholder="اسمك..." maxlength="40">
+          </div>
+          <div>
+            <label for="authEmailInput" class="field-label">البريد الالكتروني</label>
+            <input type="email" id="authEmailInput" class="input-field num-font" dir="ltr" placeholder="name@example.com" required>
+          </div>
+          <div>
+            <label for="authPasswordInput" class="field-label">كلمة السر</label>
+            <input type="password" id="authPasswordInput" class="input-field num-font" dir="ltr" placeholder="••••••••" minlength="6" required>
+          </div>
+          <button type="submit" id="authSubmitBtn" class="btn btn-gold btn-full">دخول</button>
+        </form>
+
+        <div class="auth-secondary-row">
+          <button type="button" id="forgotPasswordBtn" class="link-btn">نسيت كلمة السر؟</button>
+        </div>
+
+        <div class="auth-divider"><span>او</span></div>
+
+        <button type="button" id="googleSignInBtn" class="btn btn-subtle btn-full google-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M21.35 11.1h-9.17v2.73h6.51c-.33 1.81-1.5 3.34-3.2 4.37v3.62h5.18c3.03-2.79 4.78-6.9 4.78-11.72 0-.8-.08-1.57-.22-2.3z" fill="#4285F4"/>
+            <path d="M12.18 22c4.32 0 7.95-1.43 10.6-3.88l-5.18-3.62c-1.43.96-3.26 1.53-5.42 1.53-4.17 0-7.7-2.81-8.96-6.59H-2.1v3.73C.54 18.42 5.94 22 12.18 22z" fill="#34A853"/>
+            <path d="M3.22 13.44A9.96 9.96 0 0 1 2.7 10c0-1.19.21-2.35.52-3.44V2.83H-2.1A11.96 11.96 0 0 0 .18 10c0 1.93.46 3.76 1.28 5.44l5.28-3.73z" fill="#FBBC05"/>
+            <path d="M12.18 3.97c2.35 0 4.46.81 6.12 2.4l4.59-4.59C20.12-.78 16.5 0 12.18 0 5.94 0 .54 3.58-2.1 8.83l5.32 3.73c1.26-3.78 4.79-6.59 8.96-6.59z" fill="#EA4335"/>
+          </svg>
+          <span>الدخول بحساب Google</span>
+        </button>
+      </div>
+
+      <!-- Logged-in View -->
+      <div id="authLoggedInView" class="hidden">
+        <div class="account-summary-box">
+          <p class="account-status-tag">متصل ومحفوظ بالسحابة</p>
+          <p id="accountUserEmail" class="num-font" dir="ltr"></p>
+        </div>
+        <div class="account-actions-stack">
+          <button type="button" id="syncNowBtn" class="btn btn-gold btn-full">مزامنة بياناتي الان</button>
+          <button type="button" id="logoutBtn" class="btn btn-subtle btn-full">تسجيل خروج</button>
+          <button type="button" id="deleteAccountModalBtn" class="btn btn-danger-outline btn-full">امسح حسابي وبياناتي</button>
+        </div>
+      </div>
+
+      <p id="authFeedbackMsg" class="auth-feedback-msg"></p>
+    </div>
+  </div>
+
+  <!-- In-page Confirmation Modal for Deleting Account/Data -->
+  <div id="deleteConfirmModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-card glass-card">
+      <h3 class="onboard-heading">مسح الحساب والبيانات نهائيا</h3>
+      <p class="modal-desc">هل انت متأكد؟ راح ينمسح كل سجل ايامك ومهامك وعاداتك من جهازك ومن السحابة بشكل نهائي.</p>
+      <div class="split-actions">
+        <button type="button" id="cancelDeleteModalBtn" class="btn btn-subtle">الغاء</button>
+        <button type="button" id="confirmDeleteModalBtn" class="btn" style="background:var(--danger); color:#fff;">نعم، امسح كل شي</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand-line">
+        <span>شرارة · من عائلة النور (شمعة · سراج · شرارة) تحت</span>
+        <a href="https://janabiai.com/" target="_blank" rel="noopener" class="janabi-wordmark" dir="ltr" aria-label="Janabi AI"><b class="wm">Janab<span class="ii"><svg viewBox="0 0 20 30" aria-hidden="true"><path class="flame" d="M10 1C15 8 15 13 10 17C5 13 5 8 10 1Z"/></svg></span><i>AI</i></b>
+        </a>
+      </div>
+      <p class="footer-sub">
+        <a href="https://instagram.com/1SAME4" target="_blank" rel="noopener" class="num-font" dir="ltr">@1SAME4</a>
+        <span>·</span>
+        <button type="button" onclick="document.getElementById('deleteConfirmModal').classList.remove('hidden')" style="background:none;border:none;color:#E2A43A;cursor:pointer;font-family:inherit;">الخصوصية</button>
+        <span>·</span>
+        <a href="https://janabiai.com/sharara/" class="num-font" dir="ltr">janabiai.com/sharara</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="quotes.js"></script>
+  <script type="module" src="firebase.js"></script>
   <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => { navigator.serviceWorker.register("./sw.js").catch(() => {}); });
+    }
+  </script>
 </body>
 </html>
-
