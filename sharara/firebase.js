@@ -19,7 +19,8 @@ import {
   doc,
   getDoc,
   setDoc,
-  deleteDoc
+  deleteDoc,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -36,6 +37,13 @@ let auth = null;
 let db = null;
 let currentUser = null;
 let syncTimeout = null;
+let unsubLive = null;
+const SYNCED_KEY = "sharara_synced_at";
+function getSyncedAt(){ try { return Number(localStorage.getItem(SYNCED_KEY) || 0); } catch (e) { return 0; } }
+function setSyncedAt(v){ try { localStorage.setItem(SYNCED_KEY, String(v || Date.now())); } catch (e) {} }
+function hasContent(st){ return !!st && ((Array.isArray(st.tasks) && st.tasks.length) || (Array.isArray(st.habits) && st.habits.length) || (Array.isArray(st.history) && st.history.length) || (st.mainGoal && String(st.mainGoal.text || st.mainGoal || "").trim())); }
+let applying = false;
+function applyCloud(data){ applying = true; try { if (window.ShararaApp && typeof window.ShararaApp.applySyncedState === "function") { window.ShararaApp.applySyncedState(data); } } finally { applying = false; } setSyncedAt(Date.now() + 5); }
 const googleProvider = new GoogleAuthProvider();
 
 function translateFirebaseError(err) {
@@ -135,6 +143,11 @@ async function pullAndMergeCloudState(user) {
 
     if (snap.exists()) {
       const cloudData = snap.data();
+      const localDirty = localState && hasContent(localState) && Number(localState.updatedAt || 0) > getSyncedAt();
+      if (!localDirty) {
+        applyCloud(cloudData);
+        return cloudData;
+      }
       const merged = mergeLocalAndCloud(localState, cloudData);
       if (user.displayName && merged.profile && !merged.profile.name) {
         merged.profile.name = user.displayName;
@@ -168,6 +181,7 @@ async function pushStateToCloud(stateObj) {
     const cleanData = JSON.parse(JSON.stringify(stateObj));
     cleanData.updatedAt = Date.now();
     await setDoc(ref, cleanData, { merge: true });
+    setSyncedAt(cleanData.updatedAt);
     return true;
   } catch (err) {
     console.warn("Sharara Cloud Push Warning:", err);
@@ -176,7 +190,7 @@ async function pushStateToCloud(stateObj) {
 }
 
 function schedulePush(stateObj) {
-  if (!currentUser || !navigator.onLine) return;
+  if (applying || !currentUser || !navigator.onLine) return;
   if (syncTimeout) clearTimeout(syncTimeout);
   syncTimeout = setTimeout(() => {
     pushStateToCloud(stateObj);
@@ -194,8 +208,17 @@ function initFirebase() {
       if (window.ShararaApp && typeof window.ShararaApp.onAuthChanged === "function") {
         window.ShararaApp.onAuthChanged(currentUser);
       }
+      if (unsubLive) { unsubLive(); unsubLive = null; }
       if (currentUser && navigator.onLine) {
         await pullAndMergeCloudState(currentUser);
+      }
+      if (currentUser) {
+        unsubLive = onSnapshot(doc(db, "users", currentUser.uid), (snap) => {
+          if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+          const cloud = snap.data();
+          const local = window.ShararaApp && window.ShararaApp.getState ? window.ShararaApp.getState() : null;
+          if (!local || Number(cloud.updatedAt || 0) > Number(local.updatedAt || 0)) applyCloud(cloud);
+        }, (err) => console.warn("Sharara live sync:", err));
       }
     });
 
